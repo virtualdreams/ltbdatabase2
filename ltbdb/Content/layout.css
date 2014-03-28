@@ -130,9 +130,11 @@ input {
     text-indent: 22px;
 }
 
+/* menu link list */
 .link-list {
-	margin: 0;
-	padding: 0;
+	/*margin: 0;
+	padding: 0;*/
+	padding-top: 10px;
 	list-style: none outside none;
 	padding-left: 10px;
 	overflow-x: hidden;	
@@ -142,13 +144,53 @@ input {
 	margin-bottom: 5px;
 }
 
+/* tag cloud */
 .tag-cloud {
 	overflow: hidden;
 	padding-left: 10px;
+	padding-top: 10px;
 }
 
 .tag-cloud a {
 	display: inline-block;
 	padding-right: 5px;
 	padding-bottom: 5px;
+}
+
+/* book list */
+.book {
+	padding: 0;
+	margin: 0 auto;
+	list-style: none none none;
+	overflow: hidden;
+}
+
+.book li {
+	list-style-type: none;
+	float: left;
+	/*border: 1px solid #6B7B95;*/
+	margin-left: 21px;
+	margin-right: 21px;
+	margin-bottom: 25px;
+	width: 180px;
+	position: relative;
+}
+
+.book .book-number {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-weight: bold;
+}
+
+.book span {
+	font-size: 10pt;
+	text-align: center;
+	display: block;
+}
+
+.book img {
+	height: 120px;
+	margin: 0 auto;
+	display: block;
 }
