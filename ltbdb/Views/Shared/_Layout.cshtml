@@ -18,17 +18,28 @@
 		<div class="wrapper">
 			<div class="header">
 				<div class="header-left">
-					<a href="/">Lustiges Taschenbuch Datenbank</a>
+					<h1 class="header-logo">
+						<a href="/">Lustiges Taschenbuch Datenbank</a>
+					</h1>
 				</div>
-				<div class="headr-right">
-
+				<div class="header-right">
+					<div class="header-searchbox">
+						<form action="#">
+							<input type="text" name="search" value="" placeholder="Suche..." />
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="content">
-				@RenderBody()
+				<div class="content-left">
+					@RenderBody()
+				</div>
+				<div class="content-right">
+					<h2>Menu</h2>
+				</div>
 			</div>
 			<div class="footer">
-				<span class="footer-copy">Copyright &copy; 2014 by www.stichelbiene.de. All rights reserved. Version vXXX</span>
+				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version vXXX</div>
 			</div>
 		</div>
 	</body>
