@@ -1,80 +1,22 @@
-﻿@{
+﻿@model ltbdb.Models.BookViewModel
+@using ltbdb.Models
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Das letzte...</h2>
 <ul class="book">
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
-	<li>
-		<a href="#">
-			<div class="book-number">Nr. 1</div>
-			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
-			</div>
-			<span>Der Kolumbusfalter</span>
-		</a>
-	</li>
+	@foreach (BookModel book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id })">
+				<div class="book-number">Nr. @book.Number</div>
+				<div>
+					<img src="@Url.Content("~/Content/no-image.png")" />
+				</div>
+				<span>@book.Name</span>
+			</a>
+		</li>
+	 }
 </ul>

@@ -1,0 +1,41 @@
+﻿@model ltbdb.Models.BookDetailModel
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nr. @Model.Number - @Model.Name</h2>
+<ul class="story-list">
+	<li>Vorgeschichte</li>
+	<li>Der Kolumbusfalter</li>
+	<li>Der Wagen</li>
+	<li>Gerechtigkeit</li>
+	<li>Donald im Glück</li>
+	<li>Wider erwarten!</li>
+</ul>
+
+<h2>Tags</h2>
+<div class="tag-container">
+	<div class="tag"><a href="#">Donald</a></div>
+	<div class="tag"><a href="#">Dagobert</a></div>
+	<div class="tag"><a href="#">Falter</a></div>
+	<div class="tag"><a href="#">Gut</a></div>
+	<div class="tag"><a href="#">Schwarz-Weiß</a></div>
+	<div class="tag"><a href="#">Original</a></div>
+	<div class="tag"><a href="#">Tick, Trick und Track</a></div>
+	<div class="tag"><a href="#">Tick, Trick und Track</a></div>
+	<div class="tag"><a href="#">Tick, Trick und Track</a></div>
+	<div class="tag"><a href="#">Tick, Trick und Track</a></div>
+	<div class="tag"><a href="#">Tick, Trick und Track</a></div>
+</div>
+
+<h2>Details</h2>
+<dl class="details">
+	<dt>Nr.</dt>
+	<dd>@Model.Number</dd>
+	<dt>Kategorie</dt>
+	<dd><a href="#">@Model.Category</a></dd>
+	<dt>Hinzugefügt</dt>
+	<dd>Dienstag, 1. April 2014</dd>
+</dl>

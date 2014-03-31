@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ltbdb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,10 @@ namespace ltbdb.Controllers
 		[HttpGet]
         public ActionResult Index()
         {
-            return View();
+			BookViewModel view = new BookViewModel();
+			view.Books = new BookModel[] { };
+			
+			return View(view);
         }
     }
 }
