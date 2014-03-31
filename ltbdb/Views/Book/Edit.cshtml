@@ -1,0 +1,63 @@
+﻿@model ltbdb.Models.BookModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="@Url.Action("save", "book")" method="post" enctype="multipart/form-data">
+	<h2>Edit</h2>
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="number">Nummer</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="number" name="number" value="" placeholder="Nummer..." />
+		</div>
+	</div>	
+
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="title">Titel</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="title" name="title" value="" placeholder="Titel..." />
+		</div>
+	</div>
+		
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="category">Kategorie</label>
+		</div>
+		<div class="form-element-field">
+			<select id="category" name="categoryid">
+				<option value="1">Störung</option>
+				<option value="2">Bereichsausfall</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-element">	
+		<div class="form-element-field">
+			<label for="tags">Tags</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="tags" name="tags" value="" placeholder="Tags" />
+		</div>
+		<div class="form-element-field" id="tag-container">
+		</div>
+	</div>	
+
+	<h2>Geschichten</h2>
+	<div class="form">
+
+	</div>
+
+	<h2>Bild</h2>
+
+	<div class="form-element">
+		<div class="form-element-button-bar">
+			<input type="submit" value="Absenden" />
+		</div>
+	</div>
+</form>

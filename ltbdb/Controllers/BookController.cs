@@ -54,7 +54,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			return View();
+			return View("Edit");
 		}
 
 		[HttpGet]
