@@ -207,7 +207,7 @@ img {
 }
 
 .tag-container {
-	padding-left: 10px;
+	margin-left: 10px;
 }
 
 .tag {
@@ -231,6 +231,10 @@ img {
 {
     background-color: #dddddd;
 	background-image: linear-gradient(#eeeeee, #dddddd);
+}
+
+.tag > span {
+	color: #6B7B95;
 }
 
 .details {
@@ -273,29 +277,37 @@ img {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
 	color: #333333;
 	width: 500px;
-	margin-top: 5px;
 }
 
-.form-element input[type=text]:focus, select:focus
-{
+.form-element input[type=text]:focus, select:focus {
 	border: 1px solid #a8dd6d;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(96, 176, 68, 0.5)
 }
 
-.form-element select
-{
+.form-element select {
 	width: 516px;
 }
 
 .form-element label {
 	font-weight: bold;
 	color: #6B7B95;
+	display: block;
+	padding-bottom: 5px;
 }
 
-.form-element input[type=submit]
-{
+.form-element-field.story {
+	padding-bottom: 5px;
+}
+
+.form-element-field.tag-container {
+	margin: 0;
+	padding: 0;
+	margin-top: 15px;
+}
+
+/* buttons */
+.button-green {
 	background-color: #60B044;
-	border-radius: 3px;
 	background-image: linear-gradient(#a8dd6d, #60b044);
 	border: 1px solid #5ca941;
 	display: inline-block;
@@ -306,4 +318,46 @@ img {
 	font-weight: bold;
 	color: #ffffff;
 	font-size: 13px;
+}
+
+.button-green:hover {
+	background-image: linear-gradient(#79d858, #569e3d);
+}
+
+.button-red {
+	background-color: #eeeeee;
+	background-image: linear-gradient(#fcfcfc, #eeeeee);
+	border: 1px solid #dddddd;
+	display: inline-block;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-weight: bold;
+	color: #990000;
+	font-size: 13px;
+}
+
+.button-red:hover {
+	background-image: linear-gradient(#df3e3e, #b33630);
+	border: 1px solid #990000;
+	color: #ffffff;
+}
+
+.button-grey {
+	background-color: #eeeeee;
+	background-image: linear-gradient(#fcfcfc, #eeeeee);
+	border: 1px solid #dddddd;
+	display: inline-block;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-weight: bold;
+	color: #6B7B95;
+	font-size: 13px;
+}
+
+.button-grey:hover {
+	background-image: linear-gradient(#eeeeee, #dddddd);
 }
