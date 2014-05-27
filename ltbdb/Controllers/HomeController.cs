@@ -1,5 +1,5 @@
 ﻿using Castle.Core.Logging;
-using ltbdb.Core;
+using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
@@ -40,8 +40,11 @@ namespace ltbdb.Controllers
 			BookViewModel view = new BookViewModel();
 			view.Books = new BookModel[] { };
 
-			string c = castle.Hello();
-			log.Info(c);
+			Store store = new Store();
+			var recent = store.GetRecentlyAdded();
+
+			//string c = castle.Hello();
+			//log.Info(c);
 			
 			
 			return View(view);

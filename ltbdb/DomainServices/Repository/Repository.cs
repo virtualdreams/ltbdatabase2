@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 
-namespace ltbdb.Core
+namespace ltbdb.DomainServices.Repository
 {
 	public interface IRepository
 	{
@@ -16,7 +16,7 @@ namespace ltbdb.Core
 	{
 		T Add(T item);
 		T Get(object id);
-		IQueryable<T> GetAll();
+		IEnumerable<T> GetAll();
 		void Update(T item);
 		void Delete(T item);
 	}
@@ -34,7 +34,7 @@ namespace ltbdb.Core
 
 		abstract public T Add(T item);
 		abstract public T Get(object id);
-		abstract public IQueryable<T> GetAll();
+		abstract public IEnumerable<T> GetAll();
 		abstract public void Update(T item);
 		abstract public void Delete(T item);
 	}

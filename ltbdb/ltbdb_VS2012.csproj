@@ -139,16 +139,22 @@
   <ItemGroup>
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Core\DbContextModule.cs" />
+    <Compile Include="Core\DbContextModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Helpers\IOHelper.cs" />
-    <Compile Include="Core\Repository\BookRepository.cs" />
-    <Compile Include="Core\Repository\CategoryRepository.cs" />
-    <Compile Include="Core\Storage\Category.cs" />
-    <Compile Include="Core\Storage\Book.cs" />
-    <Compile Include="Core\BookStore.cs" />
-    <Compile Include="Core\Storage\Tag.cs" />
-    <Compile Include="Core\Storage\Story.cs" />
-    <Compile Include="Core\Repository\Repository.cs" />
+    <Compile Include="DomainServices\Category.cs" />
+    <Compile Include="DomainServices\Book.cs" />
+    <Compile Include="DomainServices\DatabaseContext.cs" />
+    <Compile Include="DomainServices\Tag.cs" />
+    <Compile Include="DomainServices\Story.cs" />
+    <Compile Include="DomainServices\Repository\BookRepository.cs" />
+    <Compile Include="DomainServices\Repository\Repository.cs" />
+    <Compile Include="DomainServices\DTO\BookDTO.cs" />
+    <Compile Include="DomainServices\DTO\CategoryDTO.cs" />
+    <Compile Include="DomainServices\DTO\StoryDTO.cs" />
+    <Compile Include="DomainServices\DTO\TagDTO.cs" />
+    <Compile Include="DomainServices\Store.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +192,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AppServices\" />
     <Folder Include="Logs\" />
     <Folder Include="Scripts\" />
   </ItemGroup>

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SqlDataMapper;
 
-namespace ltbdb.Core
+namespace ltbdb.DomainServices.DTO
 {
-	public class Category
+	public class CategoryDTO
 	{
+		[SqlMapperAttributes(SqlMapperProperty.Required)]
 		public int Id { get; set; }
+
 		public string Name { get; set; }
 	}
 }

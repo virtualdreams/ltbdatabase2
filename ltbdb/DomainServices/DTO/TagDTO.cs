@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SqlDataMapper;
 
-namespace ltbdb.Core
+namespace ltbdb.DomainServices.DTO
 {
-	public class Story
+	public class TagDTO
 	{
+		[SqlMapperAttributes(SqlMapperProperty.Required)]
 		public int Id { get; set; }
-		public int BookId { get; set; }
+
 		public string Name { get; set; }
 	}
 }

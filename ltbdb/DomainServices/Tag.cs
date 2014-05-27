@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ltbdb.Core
+namespace ltbdb.DomainServices
 {
 	public class Tag
 	{
