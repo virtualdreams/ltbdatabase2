@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Castle.Windsor;
+using Castle.Windsor.Installer;
+using ltbdb.Windsor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +22,22 @@ namespace ltbdb
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+			MvcApplication.BootstrapWindsor();
+		}
+
+		private static IWindsorContainer container;
+		protected void Application_End()
+		{
+			container.Dispose();
+		}
+
+		private static void BootstrapWindsor()
+		{
+			container = new WindsorContainer().Install(FromAssembly.This());
+
+			var controllerFactory = new WindsorControllerFactory(container.Kernel);
+			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 		}
 	}
 }
