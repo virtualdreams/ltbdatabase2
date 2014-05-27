@@ -21,20 +21,21 @@ namespace ltbdb.DomainServices.Repository
 
 		public override BookDTO Get(object id)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("getBook");
+			query.SetEntity("id", id);
+
+			var result = this.Context.QueryForObject<BookDTO>(query);
+
+			return result;
 		}
 
 		public override IEnumerable<BookDTO> GetAll()
 		{
-			BookDTO[] books = new BookDTO[] { 
-				new BookDTO { Id = 211, Category = 1, CategoryName = "LTB", Name = "Demo1", Number = 231, Added = DateTime.Now},
-				new BookDTO { Id = 212, Category = 1, CategoryName = "LTB", Name = "Demo2", Number = 232, Added = DateTime.Now},
-				new BookDTO { Id = 213, Category = 1, CategoryName = "LTB", Name = "Demo3", Number = 233, Added = DateTime.Now},
-				new BookDTO { Id = 214, Category = 1, CategoryName = "LTB", Name = "Demo4", Number = 234, Added = DateTime.Now},
-				new BookDTO { Id = 215, Category = 1, CategoryName = "LTB", Name = "Demo5", Number = 235, Added = DateTime.Now}
-			};
+			SqlQuery query = this.Config.CreateQuery("getBooks");
 
-			return books;
+			var result = this.Context.QueryForList<BookDTO>(query);
+
+			return result;
 		}
 
 		public override void Update(BookDTO item)
