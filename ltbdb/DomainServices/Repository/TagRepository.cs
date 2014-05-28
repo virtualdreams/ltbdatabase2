@@ -47,5 +47,19 @@ namespace ltbdb.DomainServices.Repository
 		{
 			throw new NotImplementedException();
 		}
+
+		#region Additional
+
+		public IEnumerable<TagDTO> GetByBook(object id)
+		{
+			SqlQuery query = this.Config.CreateQuery("getTagsByBook");
+			query.SetEntity("id", id);
+
+			var result = this.Context.QueryForList<TagDTO>(query);
+
+			return result;
+		}
+
+		#endregion
 	}
 }

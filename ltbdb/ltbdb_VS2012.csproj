@@ -146,8 +146,10 @@
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />
     <Compile Include="DomainServices\DatabaseContext.cs" />
+    <Compile Include="DomainServices\DTO\Tag2BookDTO.cs" />
     <Compile Include="DomainServices\Repository\CategoryRepository.cs" />
     <Compile Include="DomainServices\Repository\StoryRepository.cs" />
+    <Compile Include="DomainServices\Repository\Tag2BookRepository.cs" />
     <Compile Include="DomainServices\Repository\TagRepository.cs" />
     <Compile Include="DomainServices\Tag.cs" />
     <Compile Include="DomainServices\Story.cs" />

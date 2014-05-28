@@ -42,10 +42,14 @@ namespace ltbdb.Controllers
 
 			Store store = new Store();
 			var recent = store.GetRecentlyAdded();
-			var book = store.GetBook(10);
+			var book1 = store.GetBook(20);
+			var book2 = store.GetBook(300);
 
 			var tags = store.GetTags();
-			var tag = store.GetTag(6);
+			var tag = store.GetTag(1);
+
+			var tags1 = book1.GetTags();
+			var tags2 = book2.GetTags();
 
 			//string c = castle.Hello();
 			//log.Info(c);

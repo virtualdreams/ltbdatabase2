@@ -25,15 +25,15 @@ namespace ltbdb.DomainServices
 		{
 			BookRepository bookRepo = new BookRepository(this.Config, this.Context);
 
-			var bookDTO = bookRepo.GetAll();
+			var books = bookRepo.GetAll();
 
 			var mapper = Mapper.CreateMap<BookDTO, Book>();
 			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
 			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
 
-			var books = Mapper.Map<IEnumerable<BookDTO>, Book[]>(bookDTO);
+			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
 
-			return books;
+			return result;
 		}
 
 		/// <summary>
@@ -55,15 +55,15 @@ namespace ltbdb.DomainServices
 		{
 			BookRepository bookRepo = new BookRepository(this.Config, this.Context);
 
-			var bookDTO = bookRepo.Get(id);
+			var book = bookRepo.Get(id);
 
 			var mapper = Mapper.CreateMap<BookDTO, Book>();
 			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
 			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
 
-			var book = Mapper.Map<Book>(bookDTO);
+			var result = Mapper.Map<Book>(book);
 
-			return book;
+			return result;
 		}
 
 		/// <summary>
@@ -83,13 +83,13 @@ namespace ltbdb.DomainServices
 		{
 			CategoryRepository catRepo = new CategoryRepository(this.Config, this.Context);
 
-			var catDTO = catRepo.GetAll();
+			var categories = catRepo.GetAll();
 			
 			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
 
-			var category = Mapper.Map<IEnumerable<CategoryDTO>, Category[]>(catDTO);
+			var result = Mapper.Map<IEnumerable<CategoryDTO>, Category[]>(categories);
 
-			return category;
+			return result;
 		}
 
 		/// <summary>
@@ -111,13 +111,13 @@ namespace ltbdb.DomainServices
 		{
 			CategoryRepository catRepo = new CategoryRepository(this.Config, this.Context);
 
-			var catDTO = catRepo.Get(id);
+			var category = catRepo.Get(id);
 
 			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
 
-			var category = Mapper.Map<Category>(catDTO);
+			var result = Mapper.Map<Category>(category);
 
-			return category;
+			return result;
 		}
 
 		/// <summary>
@@ -128,13 +128,13 @@ namespace ltbdb.DomainServices
 		{
 			TagRepository tagRepo = new TagRepository(this.Config, this.Context);
 
-			var tagDTO = tagRepo.GetAll();
+			var tags = tagRepo.GetAll();
 
 			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
-			var tags = Mapper.Map<IEnumerable<TagDTO>, Tag[]>(tagDTO);
+			var result = Mapper.Map<IEnumerable<TagDTO>, Tag[]>(tags);
 
-			return tags;
+			return result;
 		}
 
 		/// <summary>
@@ -146,13 +146,13 @@ namespace ltbdb.DomainServices
 		{
 			TagRepository tagRepo = new TagRepository(this.Config, this.Context);
 
-			var tagDTO = tagRepo.Get(id);
+			var tag = tagRepo.Get(id);
 
 			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
-			var tag = Mapper.Map<Tag>(tagDTO);
+			var result = Mapper.Map<Tag>(tag);
 
-			return tag;
+			return result;
 		}
 
 		public Book AddBook(Book book)
