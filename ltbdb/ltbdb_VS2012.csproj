@@ -143,6 +143,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Helpers\IOHelper.cs" />
+    <Compile Include="Core\Helpers\StringHelper.cs" />
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />
     <Compile Include="DomainServices\DatabaseContext.cs" />

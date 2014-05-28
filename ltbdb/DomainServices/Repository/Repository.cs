@@ -37,5 +37,10 @@ namespace ltbdb.DomainServices.Repository
 		abstract public IEnumerable<T> GetAll();
 		abstract public void Update(T item);
 		abstract public void Delete(T item);
+
+		public int GetLastInsertId()
+		{
+			return this.Context.QueryForScalar<int>(this.Config.CreateQuery("getLastInsertId"));
+		}
 	}
 }

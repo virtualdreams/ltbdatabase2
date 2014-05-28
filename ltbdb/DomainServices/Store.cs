@@ -7,6 +7,7 @@ using SqlDataMapper;
 using AutoMapper;
 using ltbdb.DomainServices.DTO;
 using System.Collections;
+using CS.Helper;
 
 namespace ltbdb.DomainServices
 {
@@ -143,13 +144,42 @@ namespace ltbdb.DomainServices
 			return result;
 		}
 
+		/// <summary>
+		/// Search for books:
+		/// searchterm can be name or story
+		/// </summary>
+		/// <param name="term"></param>
+		/// <returns></returns>
 		public Book[] Search(string term)
 		{
-			throw new NotImplementedException();
+			string eterm = term.Filter(@"%\^#").Escape().Trim();
+
+			var books = this.BookEntity.GetByTerm(eterm);
+
+			var mapper = Mapper.CreateMap<BookDTO, Book>();
+			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
+			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
+
+			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
+
+			return result;
 		}
 
+		/// <summary>
+		/// Add a new book.
+		/// </summary>
+		/// <param name="book"></param>
+		/// <returns></returns>
 		public Book AddBook(Book book)
 		{
+			if (book == null)
+				throw new ArgumentNullException("book");
+
+			if (book.Category == null)
+				throw new ArgumentNullException("category");
+
+			
+			
 			throw new NotImplementedException();
 		}
 

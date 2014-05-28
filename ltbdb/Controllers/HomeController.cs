@@ -56,6 +56,7 @@ namespace ltbdb.Controllers
 
 			var stories = store.GetBook(1).GetStories();
 
+			var search = store.Search("onkel");
 			
 			
 

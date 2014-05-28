@@ -70,6 +70,16 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
+		public IEnumerable<BookDTO> GetByTerm(string term)
+		{
+			SqlQuery query = this.Config.CreateQuery("getBookByTerm");
+			query.SetString("term", String.Format("%{0}%", term));
+
+			var result = this.Context.QueryForList<BookDTO>(query);
+
+			return result;
+		}
+
 		#endregion
 	}
 }
