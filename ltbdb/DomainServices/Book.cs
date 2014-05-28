@@ -16,6 +16,10 @@ namespace ltbdb.DomainServices
 		public Category Category { get; set; }
 		public DateTime Created { get; set; }
 
+		/// <summary>
+		/// Get all tags related to this book.
+		/// </summary>
+		/// <returns></returns>
 		public Tag[] GetTags()
 		{
 			TagRepository tagRepo = new TagRepository(this.Config, this.Context);

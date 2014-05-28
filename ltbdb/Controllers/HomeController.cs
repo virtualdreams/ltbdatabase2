@@ -48,6 +48,8 @@ namespace ltbdb.Controllers
 			var tags = store.GetTags();
 			var tag = store.GetTag(1);
 
+			var books = tag.GetBooks();
+
 			var tags1 = book1.GetTags();
 			var tags2 = book2.GetTags();
 

@@ -155,6 +155,11 @@ namespace ltbdb.DomainServices
 			return result;
 		}
 
+		public Book[] Search(string term)
+		{
+			return new Book[] { };
+		}
+
 		public Book AddBook(Book book)
 		{
 			throw new NotImplementedException();
