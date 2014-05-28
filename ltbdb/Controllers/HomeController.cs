@@ -44,6 +44,7 @@ namespace ltbdb.Controllers
 			var recent = store.GetRecentlyAdded();
 			var book1 = store.GetBook(20);
 			var book2 = store.GetBook(300);
+			var book3 = store.GetBook(900);
 
 			var tags = store.GetTags();
 			var tag = store.GetTag(1);
@@ -52,6 +53,11 @@ namespace ltbdb.Controllers
 
 			var tags1 = book1.GetTags();
 			var tags2 = book2.GetTags();
+
+			var stories = store.GetBook(1).GetStories();
+
+			
+			
 
 			//string c = castle.Hello();
 			//log.Info(c);

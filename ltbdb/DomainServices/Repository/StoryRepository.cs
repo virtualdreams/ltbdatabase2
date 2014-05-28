@@ -38,5 +38,19 @@ namespace ltbdb.DomainServices.Repository
 		{
 			throw new NotImplementedException();
 		}
+
+		#region Additional
+
+		public IEnumerable<StoryDTO> GetByBook(object id)
+		{
+			SqlQuery query = this.Config.CreateQuery("getStoriesByBook");
+			query.SetEntity("id", id);
+
+			var result = this.Context.QueryForList<StoryDTO>(query);
+
+			return result;
+		}
+
+		#endregion
 	}
 }

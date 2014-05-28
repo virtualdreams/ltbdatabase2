@@ -1,13 +1,31 @@
-﻿using System;
+﻿using AutoMapper;
+using ltbdb.DomainServices.DTO;
+using ltbdb.DomainServices.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace ltbdb.DomainServices
 {
-	public class Category
+	public class Category: DatabaseContext
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+
+		/// <summary>
+		/// Get all books related ti this category.
+		/// </summary>
+		/// <returns></returns>
+		public Book[] GetBooks()
+		{
+			var books = this.BookEntity.GetByCategory(this.Id);
+
+			var mapper = Mapper.CreateMap<BookDTO, Book>();
+
+			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
+
+			return result;
+		}
 	}
 }

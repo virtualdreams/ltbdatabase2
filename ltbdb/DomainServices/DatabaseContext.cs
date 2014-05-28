@@ -1,4 +1,5 @@
-﻿using SqlDataMapper;
+﻿using ltbdb.DomainServices.Repository;
+using SqlDataMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,25 @@ namespace ltbdb.DomainServices
 {
 	public class DatabaseContext
 	{
-		public SqlConfig Config { get; private set; }
-		public SqlContext Context { get; private set; }
+		protected SqlConfig SqlConfig { get; private set; }
+		protected SqlContext SqlContext { get; private set; }
+
+		protected BookRepository BookEntity { get; private set; }
+		protected CategoryRepository CategoryEntity { get; private set; }
+		protected TagRepository TagEntity { get; private set; }
+		protected Tag2BookRepository Tag2BookEntity { get; private set; }
+		protected StoryRepository StoryEntity { get; private set; }
 
 		public DatabaseContext()
 		{
-			this.Config = HttpContext.Current.Items["config"] as SqlConfig;
-			this.Context = HttpContext.Current.Items["context"] as SqlContext;
+			this.SqlConfig = HttpContext.Current.Items["config"] as SqlConfig;
+			this.SqlContext = HttpContext.Current.Items["context"] as SqlContext;
+
+			BookEntity = new BookRepository(this.SqlConfig, this.SqlContext);
+			CategoryEntity = new CategoryRepository(this.SqlConfig, this.SqlContext);
+			TagEntity = new TagRepository(this.SqlConfig, this.SqlContext);
+			Tag2BookEntity = new Tag2BookRepository(this.SqlConfig, this.SqlContext);
+			StoryEntity = new StoryRepository(this.SqlConfig, this.SqlContext);
 		}
 	}
 }

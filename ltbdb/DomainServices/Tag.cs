@@ -19,9 +19,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book[] GetBooks()
 		{
-			BookRepository bookRepo = new BookRepository(this.Config, this.Context);
-
-			var books = bookRepo.GetByTag(this.Id);
+			var books = this.BookEntity.GetByTag(this.Id);
 
 			var mapper = Mapper.CreateMap<BookDTO, Book>();
 

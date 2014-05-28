@@ -22,13 +22,26 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Tag[] GetTags()
 		{
-			TagRepository tagRepo = new TagRepository(this.Config, this.Context);
-
-			var tags = tagRepo.GetByBook(this.Id);
+			var tags = this.TagEntity.GetByBook(this.Id);
 
 			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
 			var result = Mapper.Map<IEnumerable<TagDTO>, Tag[]>(tags);
+
+			return result;
+		}
+
+		/// <summary>
+		/// Get all stories related to this book
+		/// </summary>
+		/// <returns></returns>
+		public Story[] GetStories()
+		{
+			var stories = this.StoryEntity.GetByBook(this.Id);
+
+			var mapper = Mapper.CreateMap<StoryDTO, Story>();
+
+			var result = Mapper.Map<IEnumerable<StoryDTO>, Story[]>(stories);
 
 			return result;
 		}

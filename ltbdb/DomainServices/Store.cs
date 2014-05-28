@@ -23,9 +23,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book[] GetBooks()
 		{
-			BookRepository bookRepo = new BookRepository(this.Config, this.Context);
-
-			var books = bookRepo.GetAll();
+			var books = this.BookEntity.GetAll();
 
 			var mapper = Mapper.CreateMap<BookDTO, Book>();
 			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
@@ -53,9 +51,7 @@ namespace ltbdb.DomainServices
 		/// <returns>Book</returns>
 		public Book GetBook(int id)
 		{
-			BookRepository bookRepo = new BookRepository(this.Config, this.Context);
-
-			var book = bookRepo.Get(id);
+			var book = this.BookEntity.Get(id);
 
 			var mapper = Mapper.CreateMap<BookDTO, Book>();
 			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
@@ -81,9 +77,7 @@ namespace ltbdb.DomainServices
 		/// <returns>List of categories</returns>
 		public Category[] GetCategories()
 		{
-			CategoryRepository catRepo = new CategoryRepository(this.Config, this.Context);
-
-			var categories = catRepo.GetAll();
+			var categories = this.CategoryEntity.GetAll();
 			
 			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
 
@@ -109,9 +103,7 @@ namespace ltbdb.DomainServices
 		/// <returns>Category</returns>
 		public Category GetCategory(int id)
 		{
-			CategoryRepository catRepo = new CategoryRepository(this.Config, this.Context);
-
-			var category = catRepo.Get(id);
+			var category = this.CategoryEntity.Get(id);
 
 			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
 
@@ -126,9 +118,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Tag[] GetTags()
 		{
-			TagRepository tagRepo = new TagRepository(this.Config, this.Context);
-
-			var tags = tagRepo.GetAll();
+			var tags = this.TagEntity.GetAll();
 
 			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
@@ -144,9 +134,7 @@ namespace ltbdb.DomainServices
 		/// <returns>Tag</returns>
 		public Tag GetTag(int id)
 		{
-			TagRepository tagRepo = new TagRepository(this.Config, this.Context);
-
-			var tag = tagRepo.Get(id);
+			var tag = this.TagEntity.Get(id);
 
 			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
@@ -157,7 +145,7 @@ namespace ltbdb.DomainServices
 
 		public Book[] Search(string term)
 		{
-			return new Book[] { };
+			throw new NotImplementedException();
 		}
 
 		public Book AddBook(Book book)

@@ -60,6 +60,16 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
+		public IEnumerable<BookDTO> GetByCategory(object id)
+		{
+			SqlQuery query = this.Config.CreateQuery("getBooksByCategory");
+			query.SetEntity("id", id);
+
+			var result = this.Context.QueryForList<BookDTO>(query);
+
+			return result;
+		}
+
 		#endregion
 	}
 }
