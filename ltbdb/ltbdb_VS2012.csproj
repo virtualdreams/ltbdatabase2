@@ -225,6 +225,7 @@
     <None Include="Properties\PublishProfiles\Folder.pubxml" />
     <Content Include="Views\Book\View.cshtml" />
     <Content Include="Views\Book\Edit.cshtml" />
+    <Content Include="Views\Shared\_PartialTags.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -255,6 +256,10 @@
       <UserProperties BuildVersion_IncrementBeforeBuild="False" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

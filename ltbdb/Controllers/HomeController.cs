@@ -47,6 +47,16 @@ namespace ltbdb.Controllers
 			return View(view);
         }
 
+		[ChildActionOnly]
+		public ActionResult Tags()
+		{
+			var _tags = new Store().GetTags();
+
+			var tags = Mapper.Map<TagModel[]>(_tags);
+			
+			return View("_PartialTags", tags);
+		}
+
 		private void Test()
 		{
 			//Store store = new Store();
