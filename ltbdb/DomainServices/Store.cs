@@ -26,11 +26,7 @@ namespace ltbdb.DomainServices
 		{
 			var books = this.BookEntity.GetAll();
 
-			var mapper = Mapper.CreateMap<BookDTO, Book>();
-			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
-			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
-
-			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
+			var result = Mapper.Map<Book[]>(books);
 
 			return result;
 		}
@@ -54,10 +50,6 @@ namespace ltbdb.DomainServices
 		{
 			var book = this.BookEntity.Get(id);
 
-			var mapper = Mapper.CreateMap<BookDTO, Book>();
-			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
-			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
-
 			var result = Mapper.Map<Book>(book);
 
 			return result;
@@ -80,9 +72,7 @@ namespace ltbdb.DomainServices
 		{
 			var categories = this.CategoryEntity.GetAll();
 			
-			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
-
-			var result = Mapper.Map<IEnumerable<CategoryDTO>, Category[]>(categories);
+			var result = Mapper.Map<Category[]>(categories);
 
 			return result;
 		}
@@ -106,8 +96,6 @@ namespace ltbdb.DomainServices
 		{
 			var category = this.CategoryEntity.Get(id);
 
-			var mapper = Mapper.CreateMap<CategoryDTO, Category>();
-
 			var result = Mapper.Map<Category>(category);
 
 			return result;
@@ -121,9 +109,7 @@ namespace ltbdb.DomainServices
 		{
 			var tags = this.TagEntity.GetAll();
 
-			var mapper = Mapper.CreateMap<TagDTO, Tag>();
-
-			var result = Mapper.Map<IEnumerable<TagDTO>, Tag[]>(tags);
+			var result = Mapper.Map<Tag[]>(tags);
 
 			return result;
 		}
@@ -136,8 +122,6 @@ namespace ltbdb.DomainServices
 		public Tag GetTag(int id)
 		{
 			var tag = this.TagEntity.Get(id);
-
-			var mapper = Mapper.CreateMap<TagDTO, Tag>();
 
 			var result = Mapper.Map<Tag>(tag);
 
@@ -156,11 +140,7 @@ namespace ltbdb.DomainServices
 
 			var books = this.BookEntity.GetByTerm(eterm);
 
-			var mapper = Mapper.CreateMap<BookDTO, Book>();
-			mapper.ForMember(d => d.Created, map => map.MapFrom(s => s.Added));
-			mapper.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
-
-			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
+			var result = Mapper.Map<Book[]>(books);
 
 			return result;
 		}

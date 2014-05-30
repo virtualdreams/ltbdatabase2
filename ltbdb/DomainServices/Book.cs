@@ -24,9 +24,7 @@ namespace ltbdb.DomainServices
 		{
 			var tags = this.TagEntity.GetByBook(this.Id);
 
-			var mapper = Mapper.CreateMap<TagDTO, Tag>();
-
-			var result = Mapper.Map<IEnumerable<TagDTO>, Tag[]>(tags);
+			var result = Mapper.Map<Tag[]>(tags);
 
 			return result;
 		}
@@ -39,9 +37,7 @@ namespace ltbdb.DomainServices
 		{
 			var stories = this.StoryEntity.GetByBook(this.Id);
 
-			var mapper = Mapper.CreateMap<StoryDTO, Story>();
-
-			var result = Mapper.Map<IEnumerable<StoryDTO>, Story[]>(stories);
+			var result = Mapper.Map<Story[]>(stories);
 
 			return result;
 		}

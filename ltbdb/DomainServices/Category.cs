@@ -21,9 +21,7 @@ namespace ltbdb.DomainServices
 		{
 			var books = this.BookEntity.GetByCategory(this.Id);
 
-			var mapper = Mapper.CreateMap<BookDTO, Book>();
-
-			var result = Mapper.Map<IEnumerable<BookDTO>, Book[]>(books);
+			var result = Mapper.Map<Book[]>(books);
 
 			return result;
 		}

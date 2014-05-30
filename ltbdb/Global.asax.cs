@@ -1,5 +1,8 @@
-﻿using Castle.Windsor;
+﻿using AutoMapper;
+using Castle.Windsor;
 using Castle.Windsor.Installer;
+using ltbdb.DomainServices;
+using ltbdb.DomainServices.DTO;
 using ltbdb.Windsor;
 using System;
 using System.Collections.Generic;
@@ -24,6 +27,7 @@ namespace ltbdb
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
 			MvcApplication.BootstrapWindsor();
+			MvcApplication.BootstrapAutoMapper();
 		}
 
 		private static IWindsorContainer container;
@@ -38,6 +42,19 @@ namespace ltbdb
 
 			var controllerFactory = new WindsorControllerFactory(container.Kernel);
 			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+		}
+
+		private static void BootstrapAutoMapper()
+		{
+			Mapper.CreateMap<BookDTO, Book>()
+				.ForMember(d => d.Created, map => map.MapFrom(s => s.Added))
+				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
+
+			Mapper.CreateMap<CategoryDTO, Category>();
+
+			Mapper.CreateMap<TagDTO, Tag>();
+			
+			Mapper.CreateMap<StoryDTO, Story>();
 		}
 	}
 }
