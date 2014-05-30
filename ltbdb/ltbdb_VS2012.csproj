@@ -226,6 +226,7 @@
     <Content Include="Views\Book\View.cshtml" />
     <Content Include="Views\Book\Edit.cshtml" />
     <Content Include="Views\Shared\_PartialTags.cshtml" />
+    <Content Include="Views\Shared\_PartialCategories.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

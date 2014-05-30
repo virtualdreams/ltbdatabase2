@@ -5,6 +5,7 @@ using ltbdb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -55,6 +56,16 @@ namespace ltbdb.Controllers
 			var tags = Mapper.Map<TagModel[]>(_tags);
 			
 			return View("_PartialTags", tags);
+		}
+
+		[ChildActionOnly]
+		public ActionResult Categories()
+		{
+			var _categories = new Store().GetCategories();
+
+			var categories = Mapper.Map<CategoryModel[]>(_categories);
+
+			return View("_PartialCategories", categories);
 		}
 
 		private void Test()
