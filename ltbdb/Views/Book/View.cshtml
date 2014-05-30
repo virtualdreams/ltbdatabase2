@@ -1,11 +1,11 @@
-﻿@model ltbdb.Models.BookDetailModel
+﻿@model ltbdb.Models.BookViewDetailModel
 
 @{
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Nr. @Model.Number - @Model.Name</h2>
+<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
 <ul class="story-list">
 	<li>Vorgeschichte</li>
 	<li>Der Kolumbusfalter</li>
@@ -33,9 +33,9 @@
 <h2>Details</h2>
 <dl class="details">
 	<dt>Nr.</dt>
-	<dd>@Model.Number</dd>
+	<dd>@Model.Book.Number</dd>
 	<dt>Kategorie</dt>
-	<dd><a href="#">@Model.Category</a></dd>
+	<dd><a href="#">@Model.Book.Category</a></dd>
 	<dt>Hinzugefügt</dt>
-	<dd>Dienstag, 1. April 2014</dd>
+	<dd>@String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created)</dd>
 </dl>

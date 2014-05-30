@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
@@ -29,24 +30,11 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(int? id)
 		{
-			
-			//dboBook book = new dboBook { BookId = 211, Category = "xxx", CategoryId = 2, Name = "yyyy", Number = 231 };
-			//string[] c = new string[] { "xxxx", "yyy", "zzzz" };
-			
-			// mapping stuff
-			//var mapper = Mapper.CreateMap<dboBook, BookDetailModel>();
-			//mapper.ForMember(d => d.Id, map => map.MapFrom(s => s.BookId));
+			var result = new Store().GetBook(id ?? 0);
 
-			//var mapper2 = Mapper.CreateMap<string[], BookDetailModel>();
-			//mapper2.ForMember(d => d.Categories, map => map.MapFrom(s => s));
+			var book = Mapper.Map<BookModel>(result);
 
-			//Mapper.AssertConfigurationIsValid();
-
-			// mapping here
-			//BookDetailModel output = Mapper.Map<BookDetailModel>(book);
-			//Mapper.Map(c, output);
-
-			BookDetailModel view = new BookDetailModel { Name = "Der Kolumbusfalter", Id = 1, Number = 1, Category = "Lustiges Taschenbuch" };
+			var view = new BookViewDetailModel { Book = book };
 			
 			return View(view);
 		}

@@ -3,6 +3,7 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 using ltbdb.DomainServices;
 using ltbdb.DomainServices.DTO;
+using ltbdb.Models;
 using ltbdb.Windsor;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,8 @@ namespace ltbdb
 
 		private static void BootstrapAutoMapper()
 		{
+			// Repository -> Domain
+
 			Mapper.CreateMap<BookDTO, Book>()
 				.ForMember(d => d.Created, map => map.MapFrom(s => s.Added))
 				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }));
@@ -55,6 +58,11 @@ namespace ltbdb
 			Mapper.CreateMap<TagDTO, Tag>();
 			
 			Mapper.CreateMap<StoryDTO, Story>();
+
+			//Domain -> View
+
+			Mapper.CreateMap<Book, BookModel>()
+				.ForMember(s => s.Category, map => map.MapFrom(d => d.Category.Name));				
 		}
 	}
 }

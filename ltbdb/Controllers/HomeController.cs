@@ -40,17 +40,15 @@ namespace ltbdb.Controllers
         {
 			var result = new Store().GetRecentlyAdded();
 
-			Mapper.CreateMap<Book, BookModel>();
-			
 			var books = Mapper.Map<BookModel[]>(result);
 
 			var view = new BookViewModel { Books = books };
-			return View(view);
-			
-			
-			//BookViewModel view = new BookViewModel();
-			//view.Books = new BookModel[] { };
 
+			return View(view);
+        }
+
+		private void Test()
+		{
 			//Store store = new Store();
 			//var recent = store.GetRecentlyAdded();
 			//var book1 = store.GetBook(20);
@@ -68,14 +66,6 @@ namespace ltbdb.Controllers
 			//var stories = store.GetBook(1).GetStories();
 
 			//var search = store.Search("onkel");
-			
-			
-
-			////string c = castle.Hello();
-			////log.Info(c);
-			
-			
-			//return View(view);
-        }
+		}
     }
 }
