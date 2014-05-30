@@ -62,7 +62,14 @@ namespace ltbdb
 			//Domain -> View
 
 			Mapper.CreateMap<Book, BookModel>()
-				.ForMember(s => s.Category, map => map.MapFrom(d => d.Category.Name));				
+				.ForMember(s => s.Category, map => map.MapFrom(d => d.Category.Id))
+				.ForMember(s => s.CategoryName, map => map.MapFrom(d => d.Category.Name));
+
+			Mapper.CreateMap<Tag, TagModel>();
+
+			Mapper.CreateMap<Category, CategoryModel>();
+
+			Mapper.CreateMap<Story, StoryModel>();
 		}
 	}
 }

@@ -30,11 +30,15 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(int? id)
 		{
-			var result = new Store().GetBook(id ?? 0);
+			var _book = new Store().GetBook(id ?? 0);
+			var _stories = _book.GetStories();
+			var _tags = _book.GetTags();
 
-			var book = Mapper.Map<BookModel>(result);
+			var book = Mapper.Map<BookModel>(_book);
+			var tags = Mapper.Map<TagModel[]>(_tags);
+			var stories = Mapper.Map<StoryModel[]>(_stories);
 
-			var view = new BookViewDetailModel { Book = book };
+			var view = new BookViewDetailModel { Book = book, Tags = tags, Stories = stories };
 			
 			return View(view);
 		}
