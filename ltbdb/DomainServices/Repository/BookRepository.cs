@@ -16,7 +16,16 @@ namespace ltbdb.DomainServices.Repository
 
 		public override BookDTO Add(BookDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("addBook");
+			query.SetInt("category", item.Category);
+			query.SetInt("number", item.Number);
+			query.SetString("name", item.Name);
+
+			var result = this.Context.Insert(query);
+
+			item.Id = this.GetLastInsertId();
+			
+			return item;
 		}
 
 		public override BookDTO Get(object id)

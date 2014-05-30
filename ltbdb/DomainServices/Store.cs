@@ -172,14 +172,31 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book AddBook(Book book)
 		{
-			if (book == null)
-				throw new ArgumentNullException("book");
+			//if (book == null)
+			//	throw new ArgumentNullException("book");
 
-			if (book.Category == null)
-				throw new ArgumentNullException("category");
+			//if (book.Category == null)
+			//	throw new Exception("Category must set to valid value.");
 
-			
-			
+			//var mapper = Mapper.CreateMap<Book, BookDTO>();
+			//mapper.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id));
+			//mapper.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Filter(@"%\^#").Escape().Trim()));
+
+			//var result = Mapper.Map<BookDTO>(book);
+
+			//try
+			//{
+			//	this.SqlContext.BeginTransaction();
+			//	var ret = this.BookEntity.Add(result);
+			//	this.SqlContext.CommitTransaction();
+
+			//	return this.GetBook(ret.Id);
+			//}
+			//catch (Exception)
+			//{
+			//	this.SqlContext.RollbackTransaction();
+			//	throw;
+			//}
 			throw new NotImplementedException();
 		}
 

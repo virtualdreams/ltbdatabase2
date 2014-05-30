@@ -1,4 +1,5 @@
-﻿using Castle.Core.Logging;
+﻿using AutoMapper;
+using Castle.Core.Logging;
 using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
@@ -37,34 +38,44 @@ namespace ltbdb.Controllers
 		[HttpGet]
         public ActionResult Index()
         {
-			BookViewModel view = new BookViewModel();
-			view.Books = new BookModel[] { };
+			var result = new Store().GetRecentlyAdded();
 
-			Store store = new Store();
-			var recent = store.GetRecentlyAdded();
-			var book1 = store.GetBook(20);
-			var book2 = store.GetBook(300);
-			var book3 = store.GetBook(900);
-
-			var tags = store.GetTags();
-			var tag = store.GetTag(1);
-
-			var books = tag.GetBooks();
-
-			var tags1 = book1.GetTags();
-			var tags2 = book2.GetTags();
-
-			var stories = store.GetBook(1).GetStories();
-
-			var search = store.Search("onkel");
+			Mapper.CreateMap<Book, BookModel>();
 			
-			
+			var books = Mapper.Map<BookModel[]>(result);
 
-			//string c = castle.Hello();
-			//log.Info(c);
-			
-			
+			var view = new BookViewModel { Books = books };
 			return View(view);
+			
+			
+			//BookViewModel view = new BookViewModel();
+			//view.Books = new BookModel[] { };
+
+			//Store store = new Store();
+			//var recent = store.GetRecentlyAdded();
+			//var book1 = store.GetBook(20);
+			//var book2 = store.GetBook(300);
+			//var book3 = store.GetBook(900);
+
+			//var tags = store.GetTags();
+			//var tag = store.GetTag(1);
+
+			//var books = tag.GetBooks();
+
+			//var tags1 = book1.GetTags();
+			//var tags2 = book2.GetTags();
+
+			//var stories = store.GetBook(1).GetStories();
+
+			//var search = store.Search("onkel");
+			
+			
+
+			////string c = castle.Hello();
+			////log.Info(c);
+			
+			
+			//return View(view);
         }
     }
 }
