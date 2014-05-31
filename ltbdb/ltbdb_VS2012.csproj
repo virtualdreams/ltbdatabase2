@@ -144,6 +144,7 @@
     </Compile>
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
+    <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />
     <Compile Include="DomainServices\DatabaseContext.cs" />
@@ -254,7 +255,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_UpdateFileVersion="True" BuildVersion_IncrementBeforeBuild="False" />
+      <UserProperties BuildVersion_IncrementBeforeBuild="False" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.Increment.None" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
