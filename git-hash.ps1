@@ -23,7 +23,7 @@ if(!(Get-Command git -TotalCount 1 -ErrorAction SilentlyContinue))
 	return
 }
 
-$revision = git describe --long --always
+$revision = git describe --long --always --dirty=-dev
 if($?) 
 {
 	(Get-Content $Path -Encoding UTF8) |
