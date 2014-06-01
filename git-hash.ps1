@@ -31,14 +31,16 @@ $revision = git describe --long --always --dirty=-dev
 
 if($?)
 {
-	$content = Get-Content $file
+	$content = Get-Content $file -Encoding UTF8
 	$replace = @()
 	foreach($line in $content) {
 		if($line -match $pattern) {
 			$value = [string]$matches[1]
 			if($value -ne $revision) {
 				$line = "[assembly: AssemblyInformationalVersion(""{0}"")]" -f $revision
-				Write-Host "successfully updated to: $revision"
+				
+				Write-Host ([string]::Format("Hash updated to: {0}", $revision))
+				
 				$update = $true
 			}
 		}

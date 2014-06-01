@@ -19,14 +19,21 @@ if(!(Test-Path $file))
 $pattern = "\[assembly: AssemblyFileVersion\(""(\d+)\.(\d+)\.(\d+)\.(\d+)\""\)\]"
 $update = $false
 
-$content = Get-Content $file
+$content = Get-Content $file -Encoding UTF8
 $replace = @()
 foreach($line in $content) {
 	if($line -match $pattern) {
-		$value = [int]$matches[3] # read the 3rd part from version string
-		$value = $value + 1
-		$line = "[assembly: AssemblyFileVersion(""{0}.{1}.{2}.{3}"")]" -f $matches[1], $matches[2], $value, $matches[4]
-		Write-Host "successfully updated to: $value"
+		$major = [int]$matches[1]
+		$minor = [int]$matches[2]
+		$build = [int]$matches[3]
+		$revision = [int]$matches[4]
+		
+		$build = $build + 1
+		
+		$line = "[assembly: AssemblyFileVersion(""{0}.{1}.{2}.{3}"")]" -f $major, $minor, $build, $revision
+		
+		Write-Host([string]::Format("Version number updated to ""{0}.{1}.{2}.{3}""", $major, $minor, $build, $revision))
+		
 		$update = $true
 	}
 	$replace += [Array]$line
