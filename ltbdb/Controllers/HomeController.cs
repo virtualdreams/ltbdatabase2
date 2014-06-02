@@ -48,6 +48,19 @@ namespace ltbdb.Controllers
 			return View(view);
         }
 
+		[ValidateInput(false)]
+		[HttpGet]
+		public ActionResult Search(string q)
+		{
+			var result = new Store().Search(q ?? "").Take(24);
+
+			var books = Mapper.Map<BookModel[]>(result);
+
+			var view = new BookViewSearchModel { Books = books, Query = q };
+
+			return View(view);
+		}
+
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{

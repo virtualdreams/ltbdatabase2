@@ -116,7 +116,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book[] Search(string term)
 		{
-			string eterm = term.Filter(@"%\^#").Escape().Trim();
+			string eterm = term.Filter(@"%\^#_").Escape().Trim();
 
 			var books = this.BookEntity.GetByTerm(eterm);
 
