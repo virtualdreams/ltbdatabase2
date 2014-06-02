@@ -26,7 +26,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<TagDTO>(query);
 
-			return result;
+			return result ?? new TagDTO { Id = 0, Name = "" };
 		}
 
 		public override IEnumerable<TagDTO> GetAll()

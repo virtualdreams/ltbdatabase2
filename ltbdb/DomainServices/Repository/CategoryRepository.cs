@@ -26,7 +26,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<CategoryDTO>(query);
 
-			return result;
+			return result ?? new CategoryDTO { Id = 0, Name = "" };
 		}
 
 		public override IEnumerable<CategoryDTO> GetAll()

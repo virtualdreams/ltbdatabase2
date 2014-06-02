@@ -6,7 +6,7 @@
 }
 
 <ul class="link-list">
-	<li><a href="@Url.Action("view", "category")">Alle</a></li>
+	<li><a href="@Url.Action("index", "category")">Alle</a></li>
 @foreach (CategoryModel category in Model)
 {
 	<li><a href="@Url.Action("view", "category", new { id = category.Id })">@category.Name</a></li>

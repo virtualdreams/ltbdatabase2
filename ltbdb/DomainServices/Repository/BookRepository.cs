@@ -35,7 +35,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<BookDTO>(query);
 
-			return result;
+			return result ?? new BookDTO { Id = 0, Category = 0, CategoryName = "", Name = "", Number = 0, Added = DateTime.MinValue };
 		}
 
 		public override IEnumerable<BookDTO> GetAll()

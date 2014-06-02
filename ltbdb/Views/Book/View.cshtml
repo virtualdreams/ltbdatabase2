@@ -2,7 +2,7 @@
 @using ltbdb.Models;
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = String.Format("Nr. {0} - {1}", Model.Book.Number, Model.Book.Name);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

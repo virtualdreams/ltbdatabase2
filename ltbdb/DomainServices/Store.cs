@@ -34,16 +34,6 @@ namespace ltbdb.DomainServices
 		/// <summary>
 		/// Get a specified book.
 		/// </summary>
-		/// <param name="book">Book object with filled Id</param>
-		/// <returns>Book</returns>
-		public Book GetBook(Book book)
-		{
-			return GetBook(book.Id);
-		}
-
-		/// <summary>
-		/// Get a specified book.
-		/// </summary>
 		/// <param name="id">Id of the book</param>
 		/// <returns>Book</returns>
 		public Book GetBook(int id)
@@ -75,16 +65,6 @@ namespace ltbdb.DomainServices
 			var result = Mapper.Map<Category[]>(categories);
 
 			return result;
-		}
-
-		/// <summary>
-		/// Get a specified category.
-		/// </summary>
-		/// <param name="category">Category object with filled id.</param>
-		/// <returns>Category</returns>
-		public Category GetCategory(Category category)
-		{
-			return GetCategory(category.Id);
 		}
 
 		/// <summary>
