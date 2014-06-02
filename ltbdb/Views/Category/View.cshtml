@@ -2,11 +2,11 @@
 @using ltbdb.Models
 
 @{
-    ViewBag.Title = Model.Category.Name;
+    ViewBag.Title = String.Format("Kategorie \"{0}\"", Model.Category.Name);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Kategorie: "@Model.Category.Name"</h2>
+<h2>Kategorie "@Model.Category.Name"</h2>
 <ul class="book">
 	@foreach (BookModel book in Model.Books) {
 		<li>
