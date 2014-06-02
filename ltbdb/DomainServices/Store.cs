@@ -118,6 +118,11 @@ namespace ltbdb.DomainServices
 		{
 			string eterm = term.Filter(@"%\^#_").Escape().Trim();
 
+			if (String.IsNullOrEmpty(eterm))
+			{
+				return new Book[] { };
+			}
+
 			var books = this.BookEntity.GetByTerm(eterm);
 
 			var result = Mapper.Map<Book[]>(books);
