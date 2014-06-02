@@ -53,11 +53,11 @@ namespace ltbdb.Controllers
 		public ActionResult Search(string q, int? ofs)
 		{
 			var _search = new Store().Search(q ?? "");
-			var _books = _search.Skip(ofs ?? 0).Take(16);
+			var _books = _search.Skip(ofs ?? 0).Take(12);
 
 			var books = Mapper.Map<BookModel[]>(_books);
 
-			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, 16, _search.Count()) };
+			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, 12, _search.Count()) };
 
 			return View(view);
 		}
