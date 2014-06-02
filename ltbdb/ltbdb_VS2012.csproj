@@ -146,6 +146,7 @@
     </Compile>
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
+    <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />

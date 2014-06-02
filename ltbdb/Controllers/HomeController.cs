@@ -50,13 +50,14 @@ namespace ltbdb.Controllers
 
 		[ValidateInput(false)]
 		[HttpGet]
-		public ActionResult Search(string q)
+		public ActionResult Search(string q, int? ofs)
 		{
-			var result = new Store().Search(q ?? "").Take(24);
+			var _search = new Store().Search(q ?? "");
+			var _books = _search.Skip(ofs ?? 0).Take(16);
 
-			var books = Mapper.Map<BookModel[]>(result);
+			var books = Mapper.Map<BookModel[]>(_books);
 
-			var view = new BookViewSearchModel { Books = books, Query = q };
+			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, 16, _search.Count()) };
 
 			return View(view);
 		}

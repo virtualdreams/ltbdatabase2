@@ -9,5 +9,6 @@ namespace ltbdb.Models
 	{
 		public BookModel[] Books { get; set; }
 		public string Query { get; set; }
+		public PageOffset PageOffset { get; set; }
 	}
 }

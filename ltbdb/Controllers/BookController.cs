@@ -9,15 +9,6 @@ using System.Web.Mvc;
 
 namespace ltbdb.Controllers
 {
-	//public class dboBook
-	//{
-	//	public int BookId { get; set; }
-	//	public int Number { get; set; }
-	//	public string Name { get; set; }
-	//	public string Category { get; set; }
-	//	public int CategoryId { get; set; }
-	//}
-
     public class BookController : Controller
     {
 		[HttpGet]

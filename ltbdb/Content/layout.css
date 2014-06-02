@@ -186,6 +186,7 @@ img {
 	font-size: 10pt;
 	text-align: center;
 	display: block;
+	min-height: 40px;
 }
 
 .book img {
@@ -360,4 +361,16 @@ img {
 
 .button-grey:hover {
 	background-image: linear-gradient(#eeeeee, #dddddd);
+}
+
+/* pager */
+.pager 
+{
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.pager > a {
+	color: #666666;
 }
