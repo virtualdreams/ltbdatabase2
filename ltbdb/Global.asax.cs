@@ -31,17 +31,17 @@ namespace ltbdb
 			MvcApplication.BootstrapAutoMapper();
 		}
 
-		private static IWindsorContainer container;
+		public static IWindsorContainer Container;
 		protected void Application_End()
 		{
-			container.Dispose();
+			Container.Dispose();
 		}
 
 		private static void BootstrapWindsor()
 		{
-			container = new WindsorContainer().Install(FromAssembly.This());
+			Container = new WindsorContainer().Install(FromAssembly.This());
 
-			var controllerFactory = new WindsorControllerFactory(container.Kernel);
+			var controllerFactory = new WindsorControllerFactory(Container.Kernel);
 			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 		}
 
