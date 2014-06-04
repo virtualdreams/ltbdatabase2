@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Castle.Core.Logging;
+using ltbdb.Core;
 using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
@@ -53,11 +54,11 @@ namespace ltbdb.Controllers
 		public ActionResult Search(string q, int? ofs)
 		{
 			var _search = new Store().Search(q ?? "");
-			var _books = _search.Skip(ofs ?? 0).Take(12);
+			var _books = _search.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_books);
 
-			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, 12, _search.Count()) };
+			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _search.Count()) };
 
 			return View(view);
 		}

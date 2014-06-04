@@ -8,6 +8,7 @@ using AutoMapper;
 using ltbdb.DomainServices.DTO;
 using System.Collections;
 using CS.Helper;
+using ltbdb.Core;
 
 namespace ltbdb.DomainServices
 {
@@ -51,7 +52,7 @@ namespace ltbdb.DomainServices
 		/// <returns>List of books</returns>
 		public Book[] GetRecentlyAdded()
 		{
-			return GetBooks().OrderByDescending(o => o.Created).Take(12).ToArray();
+			return GetBooks().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems).ToArray();
 		}
 
 		/// <summary>

@@ -144,7 +144,10 @@
     <Compile Include="Core\DbContextModule.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\GlobalConfig.cs" />
+    <Compile Include="Core\Helpers\ConfigFile.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
+    <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
@@ -229,6 +232,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\application.conf" />
     <None Include="Properties\PublishProfiles\Folder.pubxml" />
     <Content Include="Views\Book\View.cshtml" />
     <Content Include="Views\Book\Edit.cshtml" />
