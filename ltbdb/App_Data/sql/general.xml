@@ -45,21 +45,35 @@
 	<select id="getTags">
 		<![CDATA[
 		select
-			tagid as id,
-			name
+			t.tagid as id,
+			t.name,
+			count(t2b.tagid) as ref
 		from
-			ltbdb_tags
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
+		group by
+			t.tagid
 		]]>
 	</select>
 	<select id="getTag">
 		<![CDATA[
 		select
-			tagid as id,
-			name
+			t.tagid as id,
+			t.name,
+			count(t2b.tagid) as ref
 		from
-			ltbdb_tags
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
 		where
-			tagid = #id#
+			t.tagid = #id#
+		group by
+			t.tagid
 		]]>
 	</select>
 	<select id="getBook">
@@ -88,7 +102,8 @@
 		<![CDATA[
 		select
 			t.tagid as id,
-			t.name
+			t.name,
+			count(tt.tagid) as ref
 		from
 			ltbdb_tags t
 		left outer join
@@ -99,8 +114,14 @@
 			ltbdb_books b
 		on
 			b.bookid = t2b.bookid
+		inner join
+			ltbdb_tag2book tt
+		on
+			tt.tagid = t.tagid
 		where
 			b.bookid = #id#
+		group by
+			t.tagid
 		]]>
 	</select>
 	<select id="getBooksByTag">

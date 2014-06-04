@@ -10,7 +10,7 @@ namespace ltbdb.DomainServices.DTO
 	{
 		[SqlMapperAttributes(SqlMapperProperty.Required)]
 		public int Id { get; set; }
-
 		public string Name { get; set; }
+		public long Ref { get; set; }
 	}
 }

@@ -8,6 +8,6 @@
 <div class="tag-cloud">
 @foreach (TagModel tag in Model)
 {
-	<a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a>
+	<a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name (@tag.References)</a>
 }
 </div>

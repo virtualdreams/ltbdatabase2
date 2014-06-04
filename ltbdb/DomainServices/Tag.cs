@@ -12,6 +12,7 @@ namespace ltbdb.DomainServices
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public long References { get; set; }
 
 		/// <summary>
 		/// Get all books related to this tag.

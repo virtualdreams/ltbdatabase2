@@ -47,7 +47,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{
-			var _tags = new Store().GetTags();
+			var _tags = new Store().GetTags().Where(s => s.References != 0);
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 			

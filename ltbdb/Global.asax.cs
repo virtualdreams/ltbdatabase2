@@ -55,7 +55,8 @@ namespace ltbdb
 
 			Mapper.CreateMap<CategoryDTO, Category>();
 
-			Mapper.CreateMap<TagDTO, Tag>();
+			Mapper.CreateMap<TagDTO, Tag>()
+				.ForMember(d => d.References, map => map.MapFrom(s => s.Ref));
 			
 			Mapper.CreateMap<StoryDTO, Story>();
 
