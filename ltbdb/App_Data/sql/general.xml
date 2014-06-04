@@ -18,6 +18,8 @@
 			added
 		FROM 
 			ltbdb_books b
+		ORDER BY	
+			b.number asc
 		]]>
 	</select>
 	<select id="getCategories">
@@ -129,6 +131,8 @@
 			t.tagid = t2b.tagid
 		where
 			t.tagid = #id#
+		ORDER BY	
+			b.number asc
 		]]>
 	</select>
 	<select id="getBooksByCategory">
@@ -151,6 +155,8 @@
 			ltbdb_books b
 		where
 			b.catid = #id#
+		ORDER BY	
+			b.number asc
 		]]>
 	</select>
 	<select id="getStoriesByBook">

@@ -175,6 +175,7 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\StoryModel.cs" />
     <Compile Include="Models\TagModel.cs" />
+    <Compile Include="Models\ViewModels\BookViewAllModel.cs" />
     <Compile Include="Models\ViewModels\BookViewCategoryModel.cs" />
     <Compile Include="Models\ViewModels\BookViewDetailModel.cs" />
     <Compile Include="Models\ViewModels\BookViewModel.cs" />

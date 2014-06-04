@@ -20,3 +20,11 @@
 		</li>
 	 }
 </ul>
+<div class="pager">
+	@if(Model.PageOffset.HasPrevious) {
+		<a href="@Url.Action("view", "tag", new { id = Model.Tag.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<a href="@Url.Action("view", "tag", new { id = Model.Tag.Id, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+	}
+</div>

@@ -1,4 +1,4 @@
-﻿@model ltbdb.Models.BookViewModel
+﻿@model ltbdb.Models.BookViewAllModel
 @using ltbdb.Models
 
 @{
@@ -20,3 +20,11 @@
 		</li>
 	 }
 </ul>
+<div class="pager">
+	@if(Model.PageOffset.HasPrevious) {
+		<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+	}
+</div>

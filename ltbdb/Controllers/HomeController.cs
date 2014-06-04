@@ -33,12 +33,13 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Search(string q, int? ofs)
 		{
-			var _search = new Store().Search(q ?? "");
-			var _books = _search.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
+			var _books = new Store().Search(q ?? "");
+			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
-			var books = Mapper.Map<BookModel[]>(_books);
+			var books = Mapper.Map<BookModel[]>(_page);
+			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _search.Count()) };
+			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = pageOffset };
 
 			return View(view);
 		}
