@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ltbdb.Controllers
 {
+	[HandleError(View = "Error")]
     public class TagController : Controller
     {
 		public ILogger log { get; set; }

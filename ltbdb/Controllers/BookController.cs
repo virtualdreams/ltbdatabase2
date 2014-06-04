@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ltbdb.Controllers
 {
+	[HandleError(View = "Error")]
     public class BookController : Controller
     {
 		[HttpGet]
@@ -17,7 +18,6 @@ namespace ltbdb.Controllers
 			return View();
 		}
 
-		[HandleError(View="Error")]
 		[HttpGet]
 		public ActionResult View(int? id)
 		{

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ltbdb.Controllers
 {
+	[HandleError(View = "Error")]
     public class CategoryController : Controller
     {
 		public ILogger log { get; set; }
