@@ -222,4 +222,26 @@
 			b.number ASC
 		]]>
 	</select>
+	<select id="getSuggestionList">
+		<![CDATA[
+		(
+			SELECT DISTINCT 
+				name
+			FROM 
+				ltbdb_books 
+			WHERE 
+				name LIKE #term#
+		)
+		UNION DISTINCT
+		(
+			SELECT DISTINCT 
+				name
+			FROM 
+				ltbdb_stories 
+			WHERE 
+				name LIKE #term#
+		) 
+		ORDER BY name
+		]]>
+	</select>
 </sqlMap>

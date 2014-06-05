@@ -30,6 +30,12 @@
 				font-size: 8pt;
 				border-radius: 3px;
 			}
+			.ui-autocomplete 
+			{
+				max-height: 200px;
+				overflow-y: auto; 
+				overflow-x: hidden;
+			}
 		</style>
 	
 		<title>@ViewBag.Title</title>
@@ -49,8 +55,8 @@
 						<a href="#">Sitemap</a>
 					</div>
 					<div class="header-searchbox">
-						<form action="@Url.Action("search", "home")" method="get" enctype="multipart/form-data">
-							<input type="text" name="q" value="" placeholder="Suche..." />
+						<form action="@Url.Action("search", "home")" method="get">
+							<input id="q" type="text" name="q" value="" placeholder="Suche..." />
 						</form>
 					</div>
 				</div>

@@ -63,5 +63,18 @@ namespace ltbdb.Controllers
 
 			return View("_PartialCategories", categories);
 		}
+
+		[HttpGet]
+		public ActionResult AutoComplete(string term)
+		{
+			if (Request.IsAjaxRequest())
+			{
+
+				var suggestion = new Store().SuggestionList(term ?? "");
+				return new JsonResult { Data = suggestion, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+			}
+			return new EmptyResult();
+		}
     }
 }

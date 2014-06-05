@@ -49,6 +49,11 @@
             Must provide select scalar functionality
             </summary>
         </member>
+        <member name="M:SqlDataMapper.ISqlProvider.SelectScalarList``1(System.String)">
+            <summary>
+            Must provide select list functionality, implemented as scalar list.
+            </summary>
+        </member>
         <member name="M:SqlDataMapper.ISqlProvider.Insert(System.String)">
             <summary>
             Must provide insert functionality
@@ -357,7 +362,7 @@
             <summary>
             Executes a sql select statement that returns data to populate a number of result objects.
             </summary>
-            <typeparam name="T">The object type</typeparam>
+            <typeparam name="TDestination">The object type</typeparam>
             <param name="query">The query object</param>
             <returns>A list ob objects</returns>
         </member>
@@ -368,6 +373,14 @@
             <typeparam name="T">The object</typeparam>
             <param name="query">The query object</param>
             <returns>A single object</returns>
+        </member>
+        <member name="M:SqlDataMapper.SqlContext.QueryForScalarList``1(SqlDataMapper.ISqlQuery)">
+            <summary>
+            Executes a sql statement that returns a list of single values.
+            </summary>
+            <typeparam name="TDestination">The object</typeparam>
+            <param name="query">The query object</param>
+            <returns>A list of single objects</returns>
         </member>
         <member name="M:SqlDataMapper.SqlContext.Insert(SqlDataMapper.ISqlQuery)">
             <summary>
@@ -648,6 +661,11 @@
             Selects the first row and the first column in resultset.
             </summary>
         </member>
+        <member name="M:SqlDataMapper.SqlProvider.SelectScalarList``1(System.String)">
+            <summary>
+            Selects the first column and each row.
+            </summary>
+        </member>
         <member name="M:SqlDataMapper.SqlProvider.Insert(System.String)">
             <summary>
             Insert
@@ -897,19 +915,17 @@
         </member>
         <member name="M:SqlDataMapper.SqlQuery.GetValue(System.Object)">
             <summary>
-            Convert the the value to a sql type. Enumerable exclude strings will transformed to comma separated line.
-            This is for usage within a IN command
+            Convert the the value to a sql type. Enumerables, exclude strings and byte-arrays, will transformed to comma separated line.
             </summary>
             <param name="value">The value</param>
-            <returns>A sql compatible value if necessary</returns>
+            <returns>A sql compatible string</returns>
         </member>
         <member name="M:SqlDataMapper.SqlQuery.GetPrimitive(System.Object)">
             <summary>
-            Convert the the value to a sql type. This member function is for primtives.
-            This is also the default format handler.
+            Format the value to compatible sql string.
             </summary>
             <param name="value">The value</param>
-            <returns>A sql compatible value if necessary</returns>
+            <returns>A sql compatible string</returns>
         </member>
         <member name="P:SqlDataMapper.SqlQuery.Handler">
             <summary>

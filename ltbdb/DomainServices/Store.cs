@@ -113,8 +113,8 @@ namespace ltbdb.DomainServices
 		/// Search for books:
 		/// searchterm can be name or story
 		/// </summary>
-		/// <param name="term"></param>
-		/// <returns></returns>
+		/// <param name="term">The search term.</param>
+		/// <returns>List of books match the search term.</returns>
 		public Book[] Search(string term)
 		{
 			string eterm = term.Filter(@"%\^#_").Escape().Trim();
@@ -129,6 +129,25 @@ namespace ltbdb.DomainServices
 			var result = Mapper.Map<Book[]>(books);
 
 			return result;
+		}
+
+		/// <summary>
+		/// Get suggestion list.
+		/// searchterm can be book or story.
+		/// </summary>
+		/// <param name="term">The search term.</param>
+		/// <returns>List of suggestions</returns>
+		public string[] SuggestionList(string term)
+		{
+			string eterm = term.Filter(@"%\^#_").Escape().Trim();
+			if (String.IsNullOrEmpty(eterm))
+			{
+				return new string[] { };
+			}
+
+			var suggestion = this.BookEntity.GetSuggestionList(eterm);
+
+			return suggestion.ToArray();
 		}
 
 		/// <summary>

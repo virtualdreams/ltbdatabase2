@@ -89,6 +89,16 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
+		public IEnumerable<string> GetSuggestionList(string term)
+		{
+			SqlQuery query = this.Config.CreateQuery("getSuggestionList");
+			query.SetString("term", String.Format("%{0}%", term));
+
+			var result = this.Context.QueryForScalarList<string>(query);
+
+			return result;
+		}
+
 		#endregion
 	}
 }

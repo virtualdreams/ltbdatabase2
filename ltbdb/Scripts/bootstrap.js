@@ -23,4 +23,15 @@ $(function() {
 	$(document).on('mouseover', '.message-hidden-field', function() {
 		$(this).tooltip();
 	});
+
+	$("#q").autocomplete({
+		source: '/autocomplete/',
+		minLength: 3,
+		select: function (event, ui) {
+			if (ui.item) {
+				$(event.target).val(ui.item.value);
+			}
+			$(event.target.form).submit();
+		}
+	});
 });
