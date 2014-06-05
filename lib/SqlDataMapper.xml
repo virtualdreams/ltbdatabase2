@@ -780,9 +780,17 @@
             <summary>
             Set a single named parameter. The value can be every type.
             </summary>
-            <param name="name"></param>
-            <param name="value"></param>
-            <returns></returns>
+            <param name="name">The named parameter</param>
+            <param name="value">The value</param>
+            <returns>The instance</returns>
+        </member>
+        <member name="M:SqlDataMapper.SqlQuery.SetEntity``1(System.String,``0)">
+            <summary>
+            Set a single named parameter. The value can be every type.
+            </summary>
+            <param name="name">The named parameter</param>
+            <param name="value">The value</param>
+            <returns>The instance</returns>
         </member>
         <member name="M:SqlDataMapper.SqlQuery.SetString(System.String,System.String)">
             <summary>
@@ -847,6 +855,14 @@
             <param name="name">The named parameter</param>
             <param name="value">The value</param>
             <returns>This instance</returns>
+        </member>
+        <member name="M:SqlDataMapper.SqlQuery.SetGuid(System.String,System.Guid)">
+            <summary>
+            Set a single named parameter. The value must a Guid
+            </summary>
+            <param name="name">The named parameter</param>
+            <param name="value">The value</param>
+            <returns>The instance</returns>
         </member>
         <member name="M:SqlDataMapper.SqlQuery.SetBinary(System.String,System.Byte[])">
             <summary>
