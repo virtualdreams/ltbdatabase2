@@ -289,8 +289,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>powershell "$(SolutionDir)build.ps1" -file "$(ProjectDir)Properties\AssemblyInfo.cs"
-powershell "$(SolutionDir)git-hash.ps1" -file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>powershell -file "$(SolutionDir)git-hash.ps1" -file "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
