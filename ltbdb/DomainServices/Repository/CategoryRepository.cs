@@ -38,12 +38,12 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
-		public override void Update(CategoryDTO item)
+		public override CategoryDTO Update(CategoryDTO item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override void Delete(CategoryDTO item)
+		public override bool Delete(CategoryDTO item)
 		{
 			throw new NotImplementedException();
 		}

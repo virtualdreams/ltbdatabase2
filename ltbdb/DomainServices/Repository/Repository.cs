@@ -17,8 +17,8 @@ namespace ltbdb.DomainServices.Repository
 		T Add(T item);
 		T Get(object id);
 		IEnumerable<T> GetAll();
-		void Update(T item);
-		void Delete(T item);
+		T Update(T item);
+		bool Delete(T item);
 	}
 
 	public abstract class Repository<T> : IRepository<T> where T : class, new()
@@ -35,8 +35,8 @@ namespace ltbdb.DomainServices.Repository
 		abstract public T Add(T item);
 		abstract public T Get(object id);
 		abstract public IEnumerable<T> GetAll();
-		abstract public void Update(T item);
-		abstract public void Delete(T item);
+		abstract public T Update(T item);
+		abstract public bool Delete(T item);
 
 		public int GetLastInsertId()
 		{

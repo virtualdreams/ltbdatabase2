@@ -29,12 +29,12 @@ namespace ltbdb.DomainServices.Repository
 			throw new NotImplementedException();
 		}
 
-		public override void Update(StoryDTO item)
+		public override StoryDTO Update(StoryDTO item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override void Delete(StoryDTO item)
+		public override bool Delete(StoryDTO item)
 		{
 			throw new NotImplementedException();
 		}

@@ -47,12 +47,12 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
-		public override void Update(BookDTO item)
+		public override BookDTO Update(BookDTO item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public override void Delete(BookDTO item)
+		public override bool Delete(BookDTO item)
 		{
 			throw new NotImplementedException();
 		}
