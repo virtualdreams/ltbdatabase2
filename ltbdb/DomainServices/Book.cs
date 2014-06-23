@@ -16,6 +16,11 @@ namespace ltbdb.DomainServices
 		public Category Category { get; set; }
 		public DateTime Created { get; set; }
 
+		static public Book Default()
+		{
+			return new Book { Id = 0, Number = 0, Name = "", Category = Category.Default(), Created = DateTime.MinValue };
+		}
+
 		/// <summary>
 		/// Get all tags related to this book.
 		/// </summary>

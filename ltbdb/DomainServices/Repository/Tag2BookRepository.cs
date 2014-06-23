@@ -14,6 +14,11 @@ namespace ltbdb.DomainServices.Repository
 		{
 		}
 
+		static public Tag2BookDTO Default()
+		{
+			return new Tag2BookDTO { Id = 0, BookId = 0, TagId = 0 };
+		}
+
 		public override Tag2BookDTO Add(Tag2BookDTO item)
 		{
 			throw new NotImplementedException();

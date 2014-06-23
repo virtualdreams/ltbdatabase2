@@ -14,6 +14,11 @@ namespace ltbdb.DomainServices.Repository
 		{
 		}
 
+		static public CategoryDTO Default()
+		{
+			return new CategoryDTO { Id = 0, Name = "" };
+		}
+
 		public override CategoryDTO Add(CategoryDTO item)
 		{
 			throw new NotImplementedException();
@@ -26,7 +31,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<CategoryDTO>(query);
 
-			return result ?? new CategoryDTO { Id = 0, Name = "" };
+			return result ?? Default();
 		}
 
 		public override IEnumerable<CategoryDTO> GetAll()

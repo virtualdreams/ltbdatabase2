@@ -14,6 +14,11 @@ namespace ltbdb.DomainServices.Repository
 		{
 		}
 
+		static public TagDTO Default()
+		{
+			return new TagDTO { Id = 0, Name = "" };
+		}
+
 		public override TagDTO Add(TagDTO item)
 		{
 			throw new NotImplementedException();
@@ -26,7 +31,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<TagDTO>(query);
 
-			return result ?? new TagDTO { Id = 0, Name = "" };
+			return result ?? Default();
 		}
 
 		public override IEnumerable<TagDTO> GetAll()

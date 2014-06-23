@@ -14,6 +14,11 @@ namespace ltbdb.DomainServices.Repository
 		{
 		}
 
+		static public StoryDTO Default()
+		{
+			return new StoryDTO { Id = 0, BookId = 0, Name = "" };
+		}
+
 		public override StoryDTO Add(StoryDTO item)
 		{
 			throw new NotImplementedException();

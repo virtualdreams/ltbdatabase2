@@ -14,6 +14,15 @@ namespace ltbdb.DomainServices.Repository
 		{
 		}
 
+		/// <summary>
+		/// Represents a default object.
+		/// </summary>
+		/// <returns></returns>
+		static public BookDTO Default()
+		{
+			return new BookDTO { Id = 0, Category = 0, CategoryName = "", Name = "", Number = 0, Added = DateTime.MinValue };
+		}
+
 		public override BookDTO Add(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addBook");
@@ -35,7 +44,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<BookDTO>(query);
 
-			return result ?? new BookDTO { Id = 0, Category = 0, CategoryName = "", Name = "", Number = 0, Added = DateTime.MinValue };
+			return result ?? Default();
 		}
 
 		public override IEnumerable<BookDTO> GetAll()

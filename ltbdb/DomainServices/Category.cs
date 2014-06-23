@@ -13,6 +13,11 @@ namespace ltbdb.DomainServices
 		public int Id { get; set; }
 		public string Name { get; set; }
 
+		static public Category Default()
+		{
+			return new Category { Id = 0, Name = "" };
+		}
+
 		/// <summary>
 		/// Get all books related ti this category.
 		/// </summary>
