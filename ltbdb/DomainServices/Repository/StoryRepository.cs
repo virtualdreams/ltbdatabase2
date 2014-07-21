@@ -16,7 +16,7 @@ namespace ltbdb.DomainServices.Repository
 
 		static public StoryDTO Default()
 		{
-			return new StoryDTO { Id = 0, BookId = 0, Name = "" };
+			return new StoryDTO { Id = 0, BookId = 0, Stories = "" };
 		}
 
 		public override StoryDTO Add(StoryDTO item)
@@ -46,12 +46,12 @@ namespace ltbdb.DomainServices.Repository
 
 		#region Additional
 
-		public IEnumerable<StoryDTO> GetByBook(object id)
+		public StoryDTO GetByBook(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getStoriesByBook");
 			query.SetEntity("id", id);
 
-			var result = this.Context.QueryForList<StoryDTO>(query);
+			var result = this.Context.QueryForObject<StoryDTO>(query);
 
 			return result;
 		}

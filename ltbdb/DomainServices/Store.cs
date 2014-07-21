@@ -40,10 +40,12 @@ namespace ltbdb.DomainServices
 		public Book GetBook(int id)
 		{
 			var book = this.BookEntity.Get(id);
+			var stories = this.StoryEntity.GetByBook(id);
 
-			var result = Mapper.Map<Book>(book);
+			var _book = Mapper.Map<Book>(book);
+			var result = Mapper.Map<StoryDTO, Book>(stories, _book);
 
-			return result;
+			return _book;
 		}
 
 		/// <summary>

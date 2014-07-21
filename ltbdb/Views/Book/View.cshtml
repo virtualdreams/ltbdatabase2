@@ -8,9 +8,9 @@
 
 <h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
 <ul class="story-list">
-@foreach (StoryModel story in Model.Stories)
+@foreach (string story in Model.Book.Stories)
 {
-	<li>@story.Name</li>
+	<li>@story</li>
 }
 </ul>
 

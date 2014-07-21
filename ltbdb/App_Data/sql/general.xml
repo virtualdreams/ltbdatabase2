@@ -184,8 +184,8 @@
 		<![CDATA[
 		select
 			s.storyid as id,
-			s.name,
-			s.bookid
+			s.bookid,
+			s.stories
 		from
 			ltbdb_stories s
 		where

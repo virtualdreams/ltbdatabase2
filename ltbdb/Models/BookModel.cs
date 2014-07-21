@@ -13,5 +13,21 @@ namespace ltbdb.Models
 		public int Category { get; set; }
 		public string CategoryName { get; set; }
 		public DateTime Created { get; set; }
+		
+		private string[] _stories = new string[] {};
+		public string[] Stories
+		{
+			get
+			{
+				return _stories;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_stories = value;
+				}
+			}
+		}
 	}
 }

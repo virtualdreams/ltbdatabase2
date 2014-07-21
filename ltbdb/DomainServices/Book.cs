@@ -15,10 +15,26 @@ namespace ltbdb.DomainServices
 		public string Name { get; set; }
 		public Category Category { get; set; }
 		public DateTime Created { get; set; }
+		
+		private string[] _stories = new string[] {};
+		public string[] Stories
+		{
+			get
+			{
+				return _stories;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_stories = value;
+				}
+			}
+		}
 
 		static public Book Default()
 		{
-			return new Book { Id = 0, Number = 0, Name = "", Category = Category.Default(), Created = DateTime.MinValue };
+			return new Book { Id = 0, Number = 0, Name = "", Category = Category.Default(), Created = DateTime.MinValue, Stories = new string[] { } };
 		}
 
 		/// <summary>
@@ -30,19 +46,6 @@ namespace ltbdb.DomainServices
 			var tags = this.TagEntity.GetByBook(this.Id);
 
 			var result = Mapper.Map<Tag[]>(tags);
-
-			return result;
-		}
-
-		/// <summary>
-		/// Get all stories related to this book
-		/// </summary>
-		/// <returns></returns>
-		public Story[] GetStories()
-		{
-			var stories = this.StoryEntity.GetByBook(this.Id);
-
-			var result = Mapper.Map<Story[]>(stories);
 
 			return result;
 		}

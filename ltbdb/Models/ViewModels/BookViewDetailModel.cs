@@ -9,6 +9,5 @@ namespace ltbdb.Models
 	{
 		public BookModel Book { get; set; }
 		public TagModel[] Tags { get; set; }
-		public StoryModel[] Stories { get; set; }
 	}
 }
