@@ -215,7 +215,7 @@
 			b.name LIKE #term#
 			OR
 			(
-				s.name LIKE #term# 
+				s.stories LIKE #term# 
 				AND b.bookid = s.bookid
 			)
 		ORDER BY 
@@ -224,23 +224,12 @@
 	</select>
 	<select id="getSuggestionList">
 		<![CDATA[
-		(
-			SELECT DISTINCT 
-				name
-			FROM 
-				ltbdb_books 
-			WHERE 
-				name LIKE #term#
-		)
-		UNION DISTINCT
-		(
-			SELECT DISTINCT 
-				name
-			FROM 
-				ltbdb_stories 
-			WHERE 
-				name LIKE #term#
-		) 
+		SELECT DISTINCT 
+			name
+		FROM 
+			ltbdb_books 
+		WHERE 
+			name LIKE #term#
 		ORDER BY name
 		]]>
 	</select>
