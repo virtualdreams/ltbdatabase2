@@ -5,9 +5,10 @@
    Layout = null;
 }
 
-<div class="tag-cloud">
+@*<div class="tag-cloud">*@
 @foreach (TagModel tag in Model)
 {
-	<a class="tt" href="@Url.Action("view", "tag", new { id = tag.Id })" title="Refs: @tag.References">@tag.Name</a>
+	<li><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></li>
+	@*<a class="tt" href="@Url.Action("view", "tag", new { id = tag.Id })" title="Refs: @tag.References">@tag.Name</a>*@
 }
-</div>
+@*</div>*@

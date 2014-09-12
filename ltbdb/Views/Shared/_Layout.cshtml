@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width" />
 		
 		<link type="text/css" href="@Url.Content("~/Content/layout.css")" rel="stylesheet" media="screen" />
+		<link type="text/css" href="@Url.Content("~/Content/navigation.css")" rel="stylesheet" media="screen" />
 		<link type="text/css" href="@Url.Content("~/Content/smoothness/jquery-ui-1.10.4.custom.min.css")" rel="stylesheet" media="print, screen" />
 
 		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
@@ -60,6 +61,23 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="nav">
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="@Url.Action("index", "category")">Kategorien</a>
+						<ul>
+							@{Html.RenderAction("categories", "home"); }
+						</ul>  
+					</li>
+					<li><a href="#">Tags</a>
+						<ul>
+							@{Html.RenderAction("tags", "home"); }
+						</ul>
+					</li>
+				</ul>
+			</div>
+
 			<div class="content">
 				@RenderBody()
 			</div>

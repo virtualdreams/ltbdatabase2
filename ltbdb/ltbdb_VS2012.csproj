@@ -197,6 +197,7 @@
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\layout.css" />
     <Content Include="Content\logo.png" />
+    <Content Include="Content\navigation.css" />
     <Content Include="Content\no-image.png" />
     <Content Include="Content\smoothness\images\animated-overlay.gif" />
     <Content Include="Content\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
