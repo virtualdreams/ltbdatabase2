@@ -1,0 +1,30 @@
+﻿@model ltbdb.Models.BookViewTagModel
+@using ltbdb.Models
+
+@{
+	ViewBag.Title = String.Format("Inhalte getaggt mit \"{0}\"", Model.Tag.Name);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Inhalte getaggt mit "@Model.Tag.Name"</h2>
+<ul class="book">
+	@foreach (BookModel book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id })">
+				<div class="book-number">Nr. @book.Number</div>
+				<div>
+					<img src="@Url.Content("~/Content/no-image.png")" />
+				</div>
+				<span>@book.Name</span>
+			</a>
+		</li>
+	 }
+</ul>
+<div class="pager">
+	@if(Model.PageOffset.HasPrevious) {
+		<a href="@Url.Action("view", "tag", new { id = Model.Tag.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<a href="@Url.Action("view", "tag", new { id = Model.Tag.Id, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+	}
+</div>

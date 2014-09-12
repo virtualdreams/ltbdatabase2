@@ -1,0 +1,30 @@
+﻿@model ltbdb.Models.BookViewCategoryModel
+@using ltbdb.Models
+
+@{
+    ViewBag.Title = String.Format("Kategorie \"{0}\"", Model.Category.Name);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kategorie "@Model.Category.Name"</h2>
+<ul class="book">
+	@foreach (BookModel book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id })">
+				<div class="book-number">Nr. @book.Number</div>
+				<div>
+					<img src="@Url.Content("~/Content/no-image.png")" />
+				</div>
+				<span>@book.Name</span>
+			</a>
+		</li>
+	 }
+</ul>
+<div class="pager">
+	@if(Model.PageOffset.HasPrevious) {
+		<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+	}
+</div>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link type="text/css" href="@Url.Content("~/Content/layout.css")" rel="stylesheet" media="screen" />
+		<link type="text/css" href="@Url.Content("~/Content/smoothness/jquery-ui-1.10.4.custom.min.css")" rel="stylesheet" media="print, screen" />
+
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.10.4.custom.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+
+		<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+		<style type="text/css">
+			.ui-widget
+			{
+				font-size: 11pt;
+			}
+			.ui-tooltip
+			{
+				background: #000000;
+				border: 0 none;
+				color: #ffffff;
+				opacity: 0.8;
+				padding: 10px;
+				font-size: 8pt;
+				border-radius: 3px;
+			}
+			.ui-autocomplete 
+			{
+				max-height: 200px;
+				overflow-y: auto; 
+				overflow-x: hidden;
+			}
+		</style>
+	
+		<title>@ViewBag.Title</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<div class="header-left">
+					<h1 class="header-logo">
+						<a href="/">Lustiges Taschenbuch Datenbank</a>
+					</h1>
+				</div>
+				<div class="header-right">
+					<div class="header-links">
+						<a href="#">Log in</a>
+						<a href="#">Impressum</a>
+						<a href="#">Sitemap</a>
+					</div>
+					<div class="header-searchbox">
+						<form action="@Url.Action("search", "home")" method="get">
+							<input id="q" type="text" name="q" value="" placeholder="Suche..." />
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<div class="content-left">
+					@RenderBody()
+				</div>
+				<div class="content-right">
+					<h2>Reihe</h2>
+					@{Html.RenderAction("categories", "home"); }
+					<h2>Tags</h2>
+					@{Html.RenderAction("tags", "home"); }
+				</div>
+			</div>
+			<div class="footer">
+				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version git:@ltbdb.Core.VersionInfo.ProductVersion</div>
+			</div>
+		</div>
+	</body>
+</html>

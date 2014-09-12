@@ -1,0 +1,22 @@
+﻿@model ltbdb.Models.BookViewModel
+@using ltbdb.Models
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Die letzten...</h2>
+<ul class="book">
+	@foreach (BookModel book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id })">
+				<div class="book-number">Nr. @book.Number</div>
+				<div>
+					<img src="@Url.Content("~/Content/no-image.png")" />
+				</div>
+				<span>@book.Name</span>
+			</a>
+		</li>
+	 }
+</ul>

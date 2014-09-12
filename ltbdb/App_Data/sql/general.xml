@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlMap>
+	<select id="getBooks">
+		<![CDATA[
+		SELECT 
+			bookid as id,
+			number,
+			name,
+			catid as category,
+			(
+				select
+					c.name
+				from
+					ltbdb_categories c
+				where
+					b.catid = c.catid
+			) as categoryname,
+			added
+		FROM 
+			ltbdb_books b
+		ORDER BY	
+			b.number asc
+		]]>
+	</select>
+	<select id="getCategories">
+		<![CDATA[
+		select
+			catid as id,
+			name
+		from
+			ltbdb_categories
+		]]>
+	</select>
+	<select id="getCategory">
+		<![CDATA[
+		select
+			catid as id,
+			name
+		from
+			ltbdb_categories
+		where
+			catid = #id#
+		]]>
+	</select>
+	<select id="getTags">
+		<![CDATA[
+		select
+			t.tagid as id,
+			t.name,
+			count(t2b.tagid) as ref
+		from
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
+		group by
+			t.tagid
+		]]>
+	</select>
+	<select id="getTag">
+		<![CDATA[
+		select
+			t.tagid as id,
+			t.name,
+			count(t2b.tagid) as ref
+		from
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
+		where
+			t.tagid = #id#
+		group by
+			t.tagid
+		]]>
+	</select>
+	<select id="getBook">
+		<![CDATA[
+		SELECT 
+			bookid as id,
+			number,
+			name,
+			catid as category,
+			(
+				select
+					c.name
+				from
+					ltbdb_categories c
+				where
+					b.catid = c.catid
+			) as categoryname,
+			added
+		FROM 
+			ltbdb_books b
+		where
+			bookid = #id#
+		]]>
+	</select>
+	<select id="getTagsByBook">
+		<![CDATA[
+		select
+			t.tagid as id,
+			t.name,
+			count(tt.tagid) as ref
+		from
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
+		left outer join
+			ltbdb_books b
+		on
+			b.bookid = t2b.bookid
+		inner join
+			ltbdb_tag2book tt
+		on
+			tt.tagid = t.tagid
+		where
+			b.bookid = #id#
+		group by
+			t.tagid
+		]]>
+	</select>
+	<select id="getBooksByTag">
+		<![CDATA[
+		select
+			b.bookid as id,
+			b.number,
+			b.name,
+			b.catid as category,
+			(
+				select
+					c.name
+				from
+					ltbdb_categories c
+				where
+					b.catid = c.catid
+			) as categoryname,
+			b.added
+		from
+			ltbdb_books b
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			b.bookid = t2b.bookid
+		left outer join
+			ltbdb_tags t
+		on
+			t.tagid = t2b.tagid
+		where
+			t.tagid = #id#
+		ORDER BY	
+			b.number asc
+		]]>
+	</select>
+	<select id="getBooksByCategory">
+		<![CDATA[
+		select
+			b.bookid as id,
+			b.number,
+			b.name,
+			b.catid as category,
+			(
+				select
+					c.name
+				from
+					ltbdb_categories c
+				where
+					b.catid = c.catid
+			) as categoryname,
+			b.added
+		from
+			ltbdb_books b
+		where
+			b.catid = #id#
+		ORDER BY	
+			b.number asc
+		]]>
+	</select>
+	<select id="getStoriesByBook">
+		<![CDATA[
+		select
+			s.storyid as id,
+			s.bookid,
+			s.stories
+		from
+			ltbdb_stories s
+		where
+			s.bookid = #id#
+		]]>
+	</select>
+	<select id="getBookByTerm">
+		<![CDATA[
+		SELECT distinct
+			b.bookid as id, 
+			b.number,
+			b.name, 
+			b.catid as category,
+			(
+				select 
+					c.name 
+				from 
+					ltbdb_categories c 
+				where 
+					c.catid = b.catid
+			) as categoryname,
+			b.added
+		FROM 
+			ltbdb_books b, 
+			ltbdb_stories s 
+		WHERE 
+			b.name LIKE #term#
+			OR
+			(
+				s.stories LIKE #term# 
+				AND b.bookid = s.bookid
+			)
+		ORDER BY 
+			b.number ASC
+		]]>
+	</select>
+	<select id="getSuggestionList">
+		<![CDATA[
+		SELECT DISTINCT 
+			name
+		FROM 
+			ltbdb_books 
+		WHERE 
+			name LIKE #term#
+		ORDER BY name
+		]]>
+	</select>
+</sqlMap>

@@ -1,0 +1,133 @@
+﻿@model ltbdb.Models.BookModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="@Url.Action("save", "book")" method="post" enctype="multipart/form-data">
+	<h2>Buch</h2>
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="number">Nummer</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="number" name="number" value="" placeholder="Nummer..." />
+		</div>
+	</div>	
+
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="title">Titel</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="title" name="title" value="" placeholder="Titel..." />
+		</div>
+	</div>
+		
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="category">Kategorie</label>
+		</div>
+		<div class="form-element-field">
+			<select id="category" name="categoryid">
+				<option value="1">Störung</option>
+				<option value="2">Bereichsausfall</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-element">	
+		<div class="form-element-field">
+			<label for="tags">Tags</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="tags" name="tags" value="" placeholder="Tags" />
+		</div>
+		<div class="form-element-field tag-container" id="tag-container">
+			<div class="tag" title="Klicken zum löschen">
+				<span>Donald</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Tick Trick und Track</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Geldspeicher</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Historisch</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Neuauflage</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Phantomias</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Neffen</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Münzen</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Tick Trick und Track</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Geldspeicher</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Historisch</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Tick Trick und Track</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Geldspeicher</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+			<div class="tag" title="Klicken zum löschen">
+				<span>Historisch</span>
+				<input type="hidden" name="receivers" value="Donald" />
+			</div>
+		</div>
+	</div>	
+
+	<h2>Inhalt</h2>
+	<div class="form-element">
+		<div class="form-element-field story">
+			<input type="text" name="story" placeholder="Geschichte..." /> <input class="button-green" type="button" value="Einfügen" /> <input class="button-red" type="button" value="Entfernen" /> 
+		</div>															   
+		<div class="form-element-field story">							   
+			<input type="text" name="story" placeholder="Geschichte..." /> <input class="button-green" type="button" value="Einfügen" /> <input class="button-red" type="button" value="Entfernen" /> 
+		</div>															   
+		<div class="form-element-field story">							   
+			<input type="text" name="story" placeholder="Geschichte..." /> <input class="button-green" type="button" value="Einfügen" /> <input class="button-red" type="button" value="Entfernen" /> 
+		</div>															   
+		<div class="form-element-field story">							   
+			<input type="text" name="story" placeholder="Geschichte..." /> <input class="button-green" type="button" value="Einfügen" /> <input class="button-red" type="button" value="Entfernen" /> 
+		</div>
+	</div>
+	<div class="form-element">
+		<input class="button-green" type="button" id="addStory" value="Inhalt hinzufügen" />
+	</div>
+
+	<h2>Bild</h2>
+
+	<div class="form-element">
+		<div class="form-element-button-bar">
+			<input class="button-green" type="submit" value="Speichern" />
+		</div>
+	</div>
+</form>

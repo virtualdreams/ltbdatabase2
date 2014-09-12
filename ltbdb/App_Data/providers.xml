@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<providers>
+	<provider 
+		id="mysql" 
+		assemblyName="MySql.Data" 
+		connectionClass="MySql.Data.MySqlClient.MySqlConnection" 
+	/>
+	<provider 
+		id="sqlite3" 
+		assemblyName="System.Data.SQLite" 
+		connectionClass="System.Data.SQLite.SQLiteConnection" 
+	/>
+</providers>

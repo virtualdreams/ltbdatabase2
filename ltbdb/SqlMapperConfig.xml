@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMapConfig>
+	<providers file="./App_Data/providers.xml" />
+	<database provider="mysql" connectionString="Server=localhost;Database=ltbdb2;Uid=root;Pwd=root;Pooling=true" />
+	<sqlMaps>
+		<sqlMap file="./App_Data/sql/general.xml" />
+	</sqlMaps>
+</sqlMapConfig>
