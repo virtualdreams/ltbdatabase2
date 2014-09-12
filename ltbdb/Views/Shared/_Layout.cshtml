@@ -52,7 +52,6 @@
 					<div class="header-links">
 						<a href="#">Log in</a>
 						<a href="#">Impressum</a>
-						<a href="#">Sitemap</a>
 					</div>
 					<div class="header-searchbox">
 						<form action="@Url.Action("search", "home")" method="get">
@@ -62,15 +61,7 @@
 				</div>
 			</div>
 			<div class="content">
-				<div class="content-left">
-					@RenderBody()
-				</div>
-				<div class="content-right">
-					<h2>Reihe</h2>
-					@{Html.RenderAction("categories", "home"); }
-					<h2>Tags</h2>
-					@{Html.RenderAction("tags", "home"); }
-				</div>
+				@RenderBody()
 			</div>
 			<div class="footer">
 				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version git:@ltbdb.Core.VersionInfo.ProductVersion</div>

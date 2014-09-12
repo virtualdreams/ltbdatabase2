@@ -114,19 +114,8 @@ img {
 .content {
 	margin: 0;
 	padding: 0;
+	width: 1200px;
 	
-}
-
-.content-left {
-	float: left;
-	width: 900px;
-	min-height: 200px;
-}
-
-.content-right {
-	float:right;
-	width: 300px;
-	min-height: 200px;
 }
 
 /* menu link list */
@@ -168,8 +157,8 @@ img {
 	list-style-type: none;
 	float: left;
 	/*border: 1px solid #6B7B95;*/
-	margin-left: 21px;
-	margin-right: 21px;
+	margin-left: 10px;
+	margin-right: 10px;
 	margin-bottom: 25px;
 	width: 180px;
 	position: relative;
