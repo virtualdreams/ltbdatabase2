@@ -16,7 +16,7 @@ if(!(Test-Path $file))
 }
 
 # set git exe as alias - TODO
-New-item alias:git -value 'C:\Program Files\Git\bin\git.exe' | Out-Null
+New-item alias:git -value 'C:\Program Files (x86)\Git\bin\git.exe' | Out-Null
 
 if(!(Get-Command git -TotalCount 1 -ErrorAction SilentlyContinue))
 {
