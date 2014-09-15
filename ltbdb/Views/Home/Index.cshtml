@@ -8,15 +8,15 @@
 
 <h2>Zuletzt hinzugefügt...</h2>
 <ul class="book">
-	@foreach (BookModel book in Model.Books) {
-		<li>
-			<a href="@Url.Action("view", "book", new { id = @book.Id })">
-				<div class="book-number">Nr. @book.Number</div>
-				<div>
-					<img src="@Url.Content("~/Content/no-image.png")" />
-				</div>
-				<span>@book.Name</span>
-			</a>
-		</li>
-	 }
+@foreach (BookModel book in Model.Books) {
+	<li>
+		<a href="@Url.Action("view", "book", new { id = @book.Id })">
+			<div class="book-number">Nr. @book.Number</div>
+			<div>
+				<img src="@Url.Content("~/Content/no-image.png")" />
+			</div>
+			<span>@book.Name</span>
+		</a>
+	</li>
+	}
 </ul>

@@ -131,19 +131,6 @@ img {
 	margin-bottom: 5px;
 }
 
-/* tag cloud */
-.tag-cloud {
-	overflow: hidden;
-	padding-left: 10px;
-	padding-top: 10px;
-}
-
-.tag-cloud a {
-	display: inline-block;
-	padding-right: 5px;
-	padding-bottom: 5px;
-}
-
 /* book list */
 .book {
 	padding: 0;
@@ -197,6 +184,7 @@ img {
 
 .tag-container {
 	margin-left: 10px;
+	padding-bottom: 20px;
 }
 
 .tag {
@@ -224,31 +212,6 @@ img {
 
 .tag > span {
 	color: #6B7B95;
-}
-
-.details {
-	margin: 0;
-	padding: 0;
-	padding-left: 10px;
-	overflow: hidden;
-}
-
-.details dt
-{
-	display: block;
-	float: left;
-	margin: 0;
-	width: 25%;
-	font-weight: bold;
-}
-
-.details dd
-{
-	clear: right;
-	display: block;
-	float: left;
-	margin: 0 0 10px;
-	width: 75%;
 }
 
 /* book create/edit */
