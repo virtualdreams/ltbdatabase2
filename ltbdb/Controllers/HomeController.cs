@@ -65,7 +65,7 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult AutoComplete(string term)
+		public ActionResult AcSearch(string term)
 		{
 			if (Request.IsAjaxRequest())
 			{

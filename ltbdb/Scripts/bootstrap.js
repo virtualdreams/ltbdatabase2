@@ -25,7 +25,7 @@ $(function() {
 	});
 
 	$("#q").autocomplete({
-		source: '/autocomplete/',
+		source: '/ac-search',
 		minLength: 3,
 		select: function (event, ui) {
 			if (ui.item) {

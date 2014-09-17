@@ -20,9 +20,10 @@ namespace ltbdb
 			);
 
 			routes.MapRoute(
-				name: "Autocomplete",
-				url: "autocomplete/",
-				defaults: new { controller = "home", action = "autocomplete" }
+				name: "AutocompleteSearch",
+				url: "ac-search/",
+				defaults: new { controller = "home", action = "AcSearch" }
+			);
 			);
 
 			routes.MapRoute(
