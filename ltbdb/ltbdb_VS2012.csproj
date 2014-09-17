@@ -195,6 +195,7 @@
     <Content Include="App_Data\providers.xml" />
     <Content Include="App_Data\sql\general.xml" />
     <Content Include="Content\glass_light.png" />
+    <Content Include="Content\jBox.css" />
     <Content Include="Content\layout.css" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\navigation.css" />
@@ -216,6 +217,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="SqlMapperConfig.xml" />
@@ -260,6 +262,7 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Tag\View.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Shared\_PartialAddTag.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

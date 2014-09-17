@@ -30,5 +30,11 @@ namespace ltbdb.Controllers
 
 			return View(view);
         }
+
+		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+		public ActionResult AddTag()
+		{
+			return View("_PartialAddTag");
+		}
     }
 }

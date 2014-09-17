@@ -1,0 +1,17 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="tag-form">
+	<div>
+		 @Html.ValidationMessage("bonus")
+	</div>
+	<form method="post" action="#" id="tag-form">
+		<div>
+			<input type="text" name="bonus" id="bonus" value="" placeholder="Tag" />
+		</div>
+		<div style="padding-top: 10px;">
+			<input type="submit" value="Hinzufügen" />
+		</div>
+	</form>
+</div>

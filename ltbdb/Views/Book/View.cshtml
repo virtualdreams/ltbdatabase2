@@ -11,18 +11,25 @@
 		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created)
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
-	@if(Model.Book.Stories.Count() > 0) {
-	<ul class="story-list">
-	@foreach (string story in Model.Book.Stories)
-	{
-		<li>@story</li>
-	}
-	</ul>
-	} else {
-	<span class="story-list">
-		Keine Inhalte angegeben. 
-	</span>
-	}
+	<div class="details">
+		<div style="float: left;">
+			@if(Model.Book.Stories.Count() > 0) {
+			<ul class="story-list">
+			@foreach (string story in Model.Book.Stories)
+			{
+				<li>@story</li>
+			}
+			</ul>
+			} else {
+			<span class="story-list">
+				Keine Inhalte angegeben. 
+			</span>
+			}
+		</div>
+		<div style="float: right;">
+			<img src="~/Content/no-image.png" />
+		</div>
+	</div>
 
 	<h2>Tags</h2>
 	<div class="tag-container">
@@ -30,5 +37,13 @@
 	{
 		<div class="tag"><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></div>
 	}
+		<div style="display: inline-block; cursor: pointer" id="tag">[+]</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(function () {
+		$('#tag').click(function() {
+			jbox_tag.open();
+		});
+	});
+</script>
