@@ -32,9 +32,19 @@ namespace ltbdb.Controllers
         }
 
 		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		public ActionResult AddTag()
+		[HttpGet]
+		public ActionResult Add(int? id)
 		{
-			return View("_PartialAddTag");
+			var view = new AddTagModel { Id = id ?? 0, Tag = "" };
+
+			return View("_PartialAddTag", view);
+		}
+
+		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+		[HttpPost]
+		public ActionResult Add(AddTagModel model)
+		{
+			return new EmptyResult();
 		}
     }
 }

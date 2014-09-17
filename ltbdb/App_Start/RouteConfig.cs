@@ -32,12 +32,6 @@ namespace ltbdb
 			);
 
 			routes.MapRoute(
-				name: "AddTag",
-				url: "addtag",
-				defaults: new { controller = "tag", action = "addtag" }
-			);
-
-			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "home", action = "index", id = UrlParameter.Optional }

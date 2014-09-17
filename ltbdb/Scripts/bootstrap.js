@@ -46,19 +46,41 @@ $(function() {
 		}
 	});
 
+	/* TEST */
 	jbox_tag = new jBox('Modal', {
-		ajax: {
-			url: '/addtag',
-			reload: true,
-			type: 'GET'
-		},
 		position: {
 			x: 'left',
 			y: 'top'
 		},
 		offset: {
 			y: 25
-		},
-		target: $('#tag')
+		}
+	});
+
+	$('.addtag').click(function (e) {
+		e.preventDefault();
+		jbox_tag.open({
+			target: $(this)
+		}).ajax({
+			url: this.href,
+			reload: true,
+			type: 'GET'
+		});
+	});
+
+	$(document).on('submit', '#tag-form', function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: this.action,
+			type: 'POST',
+			data: $('#tag-form').serialize(),
+			success: function (data) {
+				if (data === "")
+					jbox_tag.close();
+				else
+					$('.jBox-content').html(data);
+			},
+			cache: false
+		});
 	});
 });

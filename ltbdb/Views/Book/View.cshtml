@@ -37,13 +37,6 @@
 	{
 		<div class="tag"><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></div>
 	}
-		<div style="display: inline-block; cursor: pointer" id="tag">[+]</div>
+		<div style="display: inline-block; cursor: pointer"><a class="addtag" href="@Url.Action("add", "tag", new { id = Model.Book.Id })">[+]</a></div>
 	</div>
 </div>
-<script type="text/javascript">
-	$(function () {
-		$('#tag').click(function() {
-			jbox_tag.open();
-		});
-	});
-</script>
