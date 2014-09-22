@@ -74,11 +74,21 @@ $(function() {
 			url: this.action,
 			type: 'POST',
 			data: $('#tag-form').serialize(),
-			success: function (data) {
-				if (data === "")
+			success: function(response, status, xhr) {
+				var ct = xhr.getResponseHeader("content-type") || "";
+				if (ct.indexOf('html') > -1) {
+					//html
+					$('.jBox-content').html(response);
+				}
+				if (ct.indexOf('json') > -1) {
+					var x = '<div class="tag"><a href="#">{0}</a></div>';
+
+					$.each(response, function () {
+						$(x.replace(/\{0\}/g, this)).insertBefore('#tag-add');
+					});
+
 					jbox_tag.close();
-				else
-					$('.jBox-content').html(data);
+				}
 			},
 			cache: false
 		});

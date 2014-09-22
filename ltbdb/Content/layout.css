@@ -192,7 +192,15 @@ img {
 	padding-bottom: 20px;
 }
 
+.tag-container:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
 .tag {
+	margin-right: 5px;
+    margin-bottom: 5px;
 	padding-left: 10px;
     padding-right: 10px;
     padding-top: 3px;
@@ -200,19 +208,26 @@ img {
     line-height: 24px;
 	color: #333333;
 	font-size: 10pt;
-    display: inline-block;
+    /*display: inline-block;*/
     cursor: pointer;
-    margin-right: 5px;
-    margin-bottom: 5px;
 	border: 1px solid #dddddd;
 	background-color: #eeeeee;
 	background-image: linear-gradient(#fcfcfc, #eeeeee);
+	float: left;
 }
 
 .tag:hover
 {
     background-color: #dddddd;
 	background-image: linear-gradient(#eeeeee, #dddddd);
+}
+
+.tag-add {
+	float: left;
+	cursor: pointer;
+	padding-top: 3px;
+	font-size: 10pt;
+	line-height: 24px;
 }
 
 .tag > span {
@@ -400,4 +415,8 @@ img {
 
 .pager > a {
 	color: #666666;
+}
+
+.field-validation-error {
+	color: #e43d3d;
 }

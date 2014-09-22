@@ -35,8 +35,12 @@
 	<div class="tag-container">
 	@foreach (TagModel tag in Model.Tags)
 	{
-		<div class="tag"><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></div>
+		<div class="tag">
+			<a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a>
+		</div>
 	}
-		<div style="display: inline-block; cursor: pointer"><a class="addtag" href="@Url.Action("add", "tag", new { id = Model.Book.Id })">[+]</a></div>
+		<div class="tag-add" id="tag-add">
+			<a class="addtag" href="@Url.Action("add", "tag", new { id = Model.Book.Id })">[+]</a>
+		</div>
 	</div>
 </div>

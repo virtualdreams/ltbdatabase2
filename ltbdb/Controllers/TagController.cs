@@ -44,7 +44,15 @@ namespace ltbdb.Controllers
 		[HttpPost]
 		public ActionResult Add(AddTagModel model)
 		{
-			return new EmptyResult();
+			if (!ModelState.IsValid)
+			{
+				return View("_PartialAddTag", model);
+			}
+
+			var _tags = model.Tag.Split(',').Select(s => s.Trim()).ToArray();
+
+
+			return new JsonResult { Data = _tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
     }
 }
