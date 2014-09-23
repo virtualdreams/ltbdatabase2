@@ -81,10 +81,11 @@ $(function() {
 					$('.jBox-content').html(response);
 				}
 				if (ct.indexOf('json') > -1) {
-					var x = '<div class="tag"><a href="#">{0}</a></div>';
+					var template = '<div class="tag"><a href="/tag/view/{1}">{0}</a></div>';
 
 					$.each(response, function () {
-						$(x.replace(/\{0\}/g, this)).insertBefore('#tag-add');
+						var t = template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id);
+						$(t).insertBefore('#tag-add');
 					});
 
 					jbox_tag.close();

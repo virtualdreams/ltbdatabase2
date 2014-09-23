@@ -49,10 +49,11 @@ namespace ltbdb.Controllers
 				return View("_PartialAddTag", model);
 			}
 
-			var _tags = model.Tag.Split(',').Select(s => s.Trim()).ToArray();
+			var _tags = new Store().GetBook(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
 
+			var tags = Mapper.Map<TagModel[]>(_tags);
 
-			return new JsonResult { Data = _tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
     }
 }

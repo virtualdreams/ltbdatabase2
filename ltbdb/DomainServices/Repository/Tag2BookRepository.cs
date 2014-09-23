@@ -21,12 +21,35 @@ namespace ltbdb.DomainServices.Repository
 
 		public override Tag2BookDTO Add(Tag2BookDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("addTag2Book");
+			query.SetInt("tagid", item.TagId);
+			query.SetInt("bookid", item.BookId);
+			int id = 0;
+
+			try
+			{
+				this.Context.BeginTransaction();
+				var result = this.Context.Insert(query);
+				id = this.GetLastInsertId();
+				this.Context.CommitTransaction();
+			}
+			catch (Exception)
+			{
+				this.Context.RollbackTransaction();
+				throw;
+			}
+
+			return Get(id);
 		}
 
 		public override Tag2BookDTO Get(object id)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("getTag2Book");
+			query.SetEntity("id", id);
+
+			var result = this.Context.QueryForObject<Tag2BookDTO>(query);
+
+			return result;
 		}
 
 		public override IEnumerable<Tag2BookDTO> GetAll()

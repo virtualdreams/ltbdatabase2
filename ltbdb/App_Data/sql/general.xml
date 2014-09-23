@@ -58,7 +58,7 @@
 			t.tagid
 		]]>
 	</select>
-	<select id="getTag">
+	<select id="getTagById">
 		<![CDATA[
 		select
 			t.tagid as id,
@@ -76,26 +76,22 @@
 			t.tagid
 		]]>
 	</select>
-	<select id="getBook">
+	<select id="getTagByName">
 		<![CDATA[
-		SELECT 
-			bookid as id,
-			number,
-			name,
-			catid as category,
-			(
-				select
-					c.name
-				from
-					ltbdb_categories c
-				where
-					b.catid = c.catid
-			) as categoryname,
-			added
-		FROM 
-			ltbdb_books b
+		select
+			t.tagid as id,
+			t.name,
+			count(t2b.tagid) as ref
+		from
+			ltbdb_tags t
+		left outer join
+			ltbdb_tag2book t2b
+		on
+			t2b.tagid = t.tagid
 		where
-			bookid = #id#
+			t.name = #name#
+		group by
+			t.tagid
 		]]>
 	</select>
 	<select id="getTagsByBook">
@@ -122,6 +118,74 @@
 			b.bookid = #id#
 		group by
 			t.tagid
+		]]>
+	</select>
+	<insert id="addTag">
+		<![CDATA[
+		insert into
+			ltbdb_tags
+		(
+			name
+		)
+		values
+		(
+			#name#
+		)
+		]]>
+	</insert>
+	
+	<!-- tag 2 book links -->
+	
+	<select id="getTag2Book">
+		<![CDATA[
+		select
+			tag2book as id,
+			tagid,
+			bookid
+		from
+			ltbdb_tag2book
+		where
+			tag2book = #id#
+		]]>
+	</select>
+	<insert id="addTag2Book">
+		<![CDATA[
+		insert into
+			ltbdb_tag2book
+		(
+			tagid,
+			bookid
+		)
+		values
+		(
+			#tagid#,
+			#bookid#
+		)
+		]]>
+	</insert>
+	
+	<!-- books -->
+	
+	<select id="getBook">
+		<![CDATA[
+		SELECT 
+			bookid as id,
+			number,
+			name,
+			catid as category,
+			(
+				select
+					c.name
+				from
+					ltbdb_categories c
+				where
+					b.catid = c.catid
+			) as categoryname,
+			added
+		FROM 
+			ltbdb_books b
+		where
+			bookid = #id#
 		]]>
 	</select>
 	<select id="getBooksByTag">
@@ -180,6 +244,9 @@
 			b.number asc
 		]]>
 	</select>
+	
+	<!-- stories -->
+	
 	<select id="getStoriesByBook">
 		<![CDATA[
 		select
@@ -192,6 +259,9 @@
 			s.bookid = #id#
 		]]>
 	</select>
+	
+	<!-- search -->
+	
 	<select id="getBookByTerm">
 		<![CDATA[
 		SELECT distinct
@@ -231,6 +301,11 @@
 		WHERE 
 			name LIKE #term#
 		ORDER BY name
+		]]>
+	</select>
+	<select id="getLastInsertId">
+		<![CDATA[
+		select last_insert_id()
 		]]>
 	</select>
 </sqlMap>
