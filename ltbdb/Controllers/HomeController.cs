@@ -20,9 +20,9 @@ namespace ltbdb.Controllers
 		[HttpGet]
         public ActionResult Index()
         {
-			var result = new Store().GetRecentlyAdded();
+			var _books = Book.GetRecentlyAdded();
 
-			var books = Mapper.Map<BookModel[]>(result);
+			var books = Mapper.Map<BookModel[]>(_books);
 
 			var view = new BookViewModel { Books = books };
 
@@ -33,7 +33,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Search(string q, int? ofs)
 		{
-			var _books = new Store().Search(q ?? "");
+			var _books = Book.Search(q ?? "");
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -47,7 +47,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{
-			var _tags = new Store().GetTags().Where(s => s.References != 0);
+			var _tags = Tag.GetTags().Where(s => s.References != 0);
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 			
@@ -57,7 +57,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Categories()
 		{
-			var _categories = new Store().GetCategories();
+			var _categories = Category.GetCategories();
 
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 
@@ -70,8 +70,8 @@ namespace ltbdb.Controllers
 			if (Request.IsAjaxRequest())
 			{
 
-				var suggestion = new Store().SuggestionList(term ?? "");
-				return new JsonResult { Data = suggestion, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+				var suggestions = Book.SuggestionList(term ?? "");
+				return new JsonResult { Data = suggestions, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
 			}
 			return new EmptyResult();

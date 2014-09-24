@@ -21,7 +21,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(int? id)
 		{
-			var _book = new Store().GetBook(id ?? 0);
+			var _book = Book.GetBook(id ?? 0);
 			var _tags = _book.GetTags();
 
 			var book = Mapper.Map<BookModel>(_book);

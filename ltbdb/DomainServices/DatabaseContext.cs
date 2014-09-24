@@ -10,16 +10,16 @@ namespace ltbdb.DomainServices
 {
 	public class DatabaseContext
 	{
-		protected ILogger Log { get; set; }
+		public ILogger Log { get; set; }
 
-		protected SqlConfig SqlConfig { get; private set; }
-		protected SqlContext SqlContext { get; private set; }
+		public SqlConfig SqlConfig { get; private set; }
+		public SqlContext SqlContext { get; private set; }
 
-		protected BookRepository BookEntity { get; private set; }
-		protected CategoryRepository CategoryEntity { get; private set; }
-		protected TagRepository TagEntity { get; private set; }
-		protected Tag2BookRepository Tag2BookEntity { get; private set; }
-		protected StoryRepository StoryEntity { get; private set; }
+		public BookRepository BookEntity { get; private set; }
+		public CategoryRepository CategoryEntity { get; private set; }
+		public TagRepository TagEntity { get; private set; }
+		public Tag2BookRepository Tag2BookEntity { get; private set; }
+		public StoryRepository StoryEntity { get; private set; }
 
 		public DatabaseContext()
 		{

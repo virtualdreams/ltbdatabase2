@@ -168,7 +168,6 @@
     <Compile Include="DomainServices\DTO\CategoryDTO.cs" />
     <Compile Include="DomainServices\DTO\StoryDTO.cs" />
     <Compile Include="DomainServices\DTO\TagDTO.cs" />
-    <Compile Include="DomainServices\Store.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

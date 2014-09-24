@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CS.Helper;
+using ltbdb.Core;
 
 namespace ltbdb.DomainServices
 {
@@ -44,8 +45,8 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Tag[] GetTags()
 		{
-			if (this.Id == 0)
-				throw new Exception("Book id not set.");
+			//if (this.Id == 0)
+			//	throw new Exception("Invalid book id.");
 
 			var tags = this.TagEntity.GetByBook(this.Id);
 
@@ -55,30 +56,23 @@ namespace ltbdb.DomainServices
 		}
 
 		/// <summary>
-		/// Add a tag to book.
+		/// Link a tag to the book. Return null if the link already exists.
 		/// </summary>
-		/// <param name="tag"></param>
-		/// <returns></returns>
+		/// <param name="tag">The tag name.</param>
+		/// <returns>The tag.</returns>
 		public Tag AddTag(string name)
 		{
-			if(this.Id == 0)
-				throw new Exception("Book id not set.");
-			
-			// look if the tag exists otherwise create them
-			var tag = this.TagEntity.GetByName(name.Filter(@"%\^#_").Escape().Trim());
-			if (tag == null)
-			{
-				tag = this.TagEntity.Add(new TagDTO { Name = name.Filter(@"%\^#_").Escape().Trim() });
-			}
+			//if(this.Id == 0)
+			//	throw new Exception("Invalid book id.");
+
+			var tag = Tag.CreateTag(name);
 
 			// test if a link already exists
 			var tags = GetTags();
-			var c = tags.Where(s => s.Id == tag.Id);
-			if (c.Count() == 0)
+			if (tags.Where(s => s.Id == tag.Id).Count() == 0)
 			{
 				// link the tag to the book
 				var link = this.Tag2BookEntity.Add(new Tag2BookDTO { BookId = this.Id, TagId = tag.Id });
-
 				return Mapper.Map<Tag>(tag);
 			}
 
@@ -104,5 +98,90 @@ namespace ltbdb.DomainServices
 			}
 			return tags.ToArray();
 		}
+
+		#region Static methods
+
+		/// <summary>
+		/// Get all available books from database.
+		/// </summary>
+		/// <returns>A list of books.</returns>
+		static public Book[] GetBooks()
+		{
+			DatabaseContext ctx = new DatabaseContext();
+			
+			var books = ctx.BookEntity.GetAll();
+
+			return Mapper.Map<Book[]>(books);
+		}
+
+		/// <summary>
+		/// Get a specified book by id.
+		/// </summary>
+		/// <param name="id">The book id.</param>
+		/// <returns>The book.</returns>
+		static public Book GetBook(int id)
+		{
+			DatabaseContext ctx = new DatabaseContext();
+			
+			var book = ctx.BookEntity.Get(id);
+			var stories = ctx.StoryEntity.GetByBook(id);
+
+			var _book = Mapper.Map<Book>(book);
+			var result = Mapper.Map<StoryDTO, Book>(stories, _book);
+
+			return _book;
+		}
+
+		/// <summary>
+		/// Get the recently added books.
+		/// </summary>
+		/// <returns>A list of books.</returns>
+		static public Book[] GetRecentlyAdded()
+		{
+			return Book.GetBooks().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems).ToArray();
+		}
+
+		/// <summary>
+		/// Search for books or stories.
+		/// </summary>
+		/// <param name="term">The search term.</param>
+		/// <returns>A list of books.</returns>
+		static public Book[] Search(string term)
+		{
+			DatabaseContext ctx = new DatabaseContext();
+			
+			string eterm = term.Filter(@"%\^#_").Escape().Trim();
+
+			if (String.IsNullOrEmpty(eterm))
+			{
+				return new Book[] { };
+			}
+
+			var books = ctx.BookEntity.GetByTerm(eterm);
+
+			return Mapper.Map<Book[]>(books);
+		}
+
+		/// <summary>
+		/// Get a suggestion list. The term can be book or story.
+		/// </summary>
+		/// <param name="term">The search term.</param>
+		/// <returns>A list of suggestions.</returns>
+		static public string[] SuggestionList(string term)
+		{
+			DatabaseContext ctx = new DatabaseContext();
+			
+			string eterm = term.Filter(@"%\^#_").Escape().Trim();
+			if (String.IsNullOrEmpty(eterm))
+			{
+				return new string[] { };
+			}
+
+			var suggestion = ctx.BookEntity.GetSuggestionList(eterm);
+
+			return suggestion.ToArray();
+		}
+
+		#endregion
 	}
 }

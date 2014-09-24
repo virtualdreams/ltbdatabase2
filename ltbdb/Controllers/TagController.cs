@@ -18,7 +18,7 @@ namespace ltbdb.Controllers
 
         public ActionResult View(int? id, int? ofs)
         {
-			var _tag = new Store().GetTag(id ?? 0);
+			var _tag = Tag.GetTag(id ?? 0);
 			var _books = _tag.GetBooks();
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
@@ -49,7 +49,9 @@ namespace ltbdb.Controllers
 				return View("_PartialAddTag", model);
 			}
 
-			var _tags = new Store().GetBook(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
+			// TODO - make this stuff better
+
+			var _tags = Book.GetBook(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
