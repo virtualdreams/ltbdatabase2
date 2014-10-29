@@ -4,10 +4,22 @@
     ViewBag.Title = "Fehler";
 }
 
-<h2>Fehler</h2>
-
-Fehler bei der Verarbeitung Ihrer Anforderung.
-
-<code>
-@Model.Exception
-</code>
+<h2>Das hat leider nicht geklappt.</h2>
+<div style="margin-bottom: 10px;">
+	<div>
+		Es ist ein unerwarteter Fehler aufgetreten.
+	</div>
+	<div style="margin-top: 20px; margin-bottom: 20px; font-size: 9pt; cursor: pointer;" id="exception_display">
+		Technische Details
+	</div>
+	<code id="exception_details" style="display: none; margin-top: 10px;">
+		@Model.Exception
+	</code>
+</div>
+<script type="text/javascript">
+	$(function () {
+		$('#exception_display').click(function() {
+			$('#exception_details').toggle();
+		});
+	});
+</script>
