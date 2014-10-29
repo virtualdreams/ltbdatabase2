@@ -81,14 +81,38 @@ $(function() {
 					$('.jBox-content').html(response);
 				}
 				if (ct.indexOf('json') > -1) {
-					var template = '<div class="tag"><a href="/tag/view/{1}">{0}</a></div>';
+					var template = '<div class="tag" style="position: relative;">\
+						<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen.">&nbsp;</a>\
+						<a href="/tag/view/{1}" title="Referenzen: {3}">{0}</a>\
+						</div>';
 
-					$.each(response, function () {
-						var t = template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id);
+					$.each(response.tags, function () {
+						var t = template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id).replace(/\{2\}/g, response.bookid).replace(/\{3\}/g, this.References);
 						$(t).insertBefore('#tag-add');
 					});
 
 					jbox_tag.close();
+				}
+			},
+			cache: false
+		});
+	});
+
+	$(document).on('click', '.tag-remove', function (e) {
+		e.preventDefault();
+
+		var p = $(this).parent();
+
+		$.ajax({
+			url: this.href,
+			type: 'POST',
+			success: function (response, status, xhr) {
+				var ct = xhr.getResponseHeader("content-type") || "";
+				if (ct.indexOf('json') > -1) {
+					if (response.Success)
+						$(p).remove();
+					else
+						alert("Can't remove tag.")
 				}
 			},
 			cache: false

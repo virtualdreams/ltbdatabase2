@@ -222,7 +222,7 @@ img {
 }
 
 /* remove tag */
-.remove {
+.tag-remove {
 	display: none;
 	position: absolute;
 	top: -8px;
@@ -236,12 +236,12 @@ img {
 	box-shadow: 0 0 10px #df3e3e;
 }
 
-.remove:hover {
+.tag-remove:hover {
 	background-color: #b33630;
 	box-shadow: 0 0 10px #b33630;
 }
 
-.tag:hover .remove {
+.tag:hover .tag-remove {
 	display: block;
 }
 

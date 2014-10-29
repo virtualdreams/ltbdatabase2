@@ -68,7 +68,10 @@ namespace ltbdb.DomainServices.Repository
 
 		public override bool Delete(Tag2BookDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("deleteTag2Book");
+			query.SetEntities<Tag2BookDTO>(item);
+
+			return this.Context.Delete(query) > 0; 
 		}
 	}
 }

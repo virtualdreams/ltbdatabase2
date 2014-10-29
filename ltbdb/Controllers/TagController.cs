@@ -66,7 +66,17 @@ namespace ltbdb.Controllers
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
-			return new JsonResult { Data = tags, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			return new JsonResult { Data = new { tags = tags, bookid = model.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+		}
+
+		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+		[HttpPost]
+		public ActionResult Unlink(int? id, int? bookid)
+		{
+			if (!Request.IsAjaxRequest())
+				return new EmptyResult();
+
+			return new JsonResult { Data = new { Success = Book.GetBook(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
     }
 }

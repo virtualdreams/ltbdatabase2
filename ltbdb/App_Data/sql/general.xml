@@ -163,6 +163,15 @@
 		)
 		]]>
 	</insert>
+	<delete id="deleteTag2Book">
+		<![CDATA[
+		delete from
+			ltbdb_tag2book
+		where
+			tagid = #TagId#
+			and bookid = #BookId#
+		]]>
+	</delete>
 	
 	<!-- books -->
 	

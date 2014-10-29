@@ -100,6 +100,17 @@ namespace ltbdb.DomainServices
 			return tags.ToArray();
 		}
 
+		/// <summary>
+		/// Unlink a tag from book.
+		/// </summary>
+		/// <param name="id">The tag id.</param>
+		/// <returns>True on success.</returns>
+		public bool Unlink(int id)
+		{
+			var _tag = Tag.GetTag(id);
+			return this.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
+		}
+
 		#region Static methods
 
 		/// <summary>
