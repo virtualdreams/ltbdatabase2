@@ -44,15 +44,17 @@
 		<div class="form-element-field">
 			<label>Inhalt</label>
 		</div>
-		@foreach (var story in Model.Book.Stories)
-		{
-		<div class="form-element-field story">
-			<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green" type="button" value="Einfügen" /> <input class="button-red" type="button" value="Entfernen" />
-		</div>
-		}														  
+		<div id="story-container">
+			@foreach (var story in Model.Book.Stories)
+			{
+			<div class="form-element-field story">
+				<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />
+			</div>
+			}
+		</div>													  
 	</div>
 	<div class="form-element">
-		<input class="button-green" type="button" id="addStory" value="Inhalt hinzufügen" />
+		<input class="button-green" type="button" id="story-add" value="Inhalt hinzufügen" />
 	</div>
 
 	<div class="form-element">

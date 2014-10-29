@@ -118,4 +118,23 @@ $(function() {
 			cache: false
 		});
 	});
+
+	var story_container = $('#story-container');
+	var story_template = '<div class="form-element-field story">\
+			<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />\
+		</div>';
+
+	$(document).on('click', '#story-add', function (e) {
+		$(story_template).appendTo(story_container);
+	});
+
+	$(document).on('click', '.story-ins', function (e) {
+		var p = $(this).parent();
+		$(story_template).insertBefore(p);
+	});
+
+	$(document).on('click', '.story-rem', function (e) {
+		var p = $(this).parent();
+		p.remove();
+	});
 });
