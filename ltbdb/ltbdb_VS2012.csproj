@@ -150,6 +150,7 @@
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
     <Compile Include="Models\AddTagModel.cs" />
+    <Compile Include="Models\Container\BookEditContainer.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />

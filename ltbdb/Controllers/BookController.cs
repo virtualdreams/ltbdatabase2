@@ -35,13 +35,47 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Create()
 		{
-			return View("Edit");
+			var _book = new Book();
+			var _categories = Category.GetCategories();
+
+			var book = Mapper.Map<BookModel>(_book);
+			book.Number = null;
+			var categories = Mapper.Map<CategoryModel[]>(_categories);
+
+			var view = new BookEditContainer { Book = book, Categories = categories };
+			
+			return View("Edit", view);
 		}
 
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
-			return View();
+			var _book = Book.GetBook(id ?? 0);
+			var _categories = Category.GetCategories();
+
+			var book = Mapper.Map<BookModel>(_book);
+			var categories = Mapper.Map<CategoryModel[]>(_categories);
+
+			var view = new BookEditContainer { Book = book, Categories = categories };
+
+			return View("Edit", view);
+		}
+
+		[HttpPost]
+		public ActionResult Edit(BookModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				var _categories = Category.GetCategories();
+
+				var categories = Mapper.Map<CategoryModel[]>(_categories);
+
+				var view = new BookEditContainer { Book = model, Categories = categories };
+
+				return View("Edit", view);
+			}
+
+			return RedirectToAction("index", "home");
 		}
     }
 }

@@ -8,7 +8,7 @@
 
 <div style="position: relative;">
 	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
-		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created)
+		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a>
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
 	<div class="details">
