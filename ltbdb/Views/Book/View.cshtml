@@ -35,7 +35,8 @@
 	<div class="tag-container">
 	@foreach (TagModel tag in Model.Tags)
 	{
-		<div class="tag">
+		<div class="tag" style="position: relative;">
+			<a class="remove" href="#" title="Tag entfernen.">&nbsp;</a>
 			<a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a>
 		</div>
 	}
