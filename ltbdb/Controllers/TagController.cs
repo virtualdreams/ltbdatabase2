@@ -16,6 +16,17 @@ namespace ltbdb.Controllers
     {
 		public ILogger log { get; set; }
 
+		public ActionResult Index()
+		{
+			var _tags = Tag.GetTags().Where(s => s.References != 0).OrderBy(o => o.Name);
+
+			var tags = Mapper.Map<TagModel[]>(_tags);
+
+			var view = new TagViewModel { Tags = tags };
+
+			return View(view);
+		}
+
         public ActionResult View(int? id, int? ofs)
         {
 			var _tag = Tag.GetTag(id ?? 0);

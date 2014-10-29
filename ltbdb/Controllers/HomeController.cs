@@ -47,7 +47,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{
-			var _tags = Tag.GetTags().Where(s => s.References != 0);
+			var _tags = Tag.GetTags().Where(s => s.References != 0).OrderByDescending(o => o.References).Take(5);
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 			
