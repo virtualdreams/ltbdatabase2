@@ -65,7 +65,8 @@ namespace ltbdb.DomainServices
 			//if(this.Id == 0)
 			//	throw new Exception("Invalid book id.");
 
-			var tag = Tag.CreateTag(name);
+			// create the tag
+			var tag = Tag.Create(name);
 
 			// test if a link already exists
 			var tags = GetTags();
@@ -81,7 +82,7 @@ namespace ltbdb.DomainServices
 
 		/// <summary>
 		/// Add a list of tags and link them to the book. If the link already exists, the return set
-		/// doesn't contain the new tag.
+		/// doesn't contain the added tag.
 		/// </summary>
 		/// <param name="name"></param>
 		/// <returns></returns>

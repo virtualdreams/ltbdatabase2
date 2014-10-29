@@ -67,7 +67,7 @@ namespace ltbdb.DomainServices
 		/// </summary>
 		/// <param name="name">The tag name.</param>
 		/// <returns>The tag.</returns>
-		static public Tag CreateTag(string name)
+		static public Tag Create(string name)
 		{
 			DatabaseContext ctx = new DatabaseContext();
 
