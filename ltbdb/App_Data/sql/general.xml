@@ -168,8 +168,8 @@
 		delete from
 			ltbdb_tag2book
 		where
-			tagid = #TagId#
-			and bookid = #BookId#
+			tagid = #tagid#
+			and bookid = #bookid#
 		]]>
 	</delete>
 	

@@ -8,7 +8,7 @@ namespace ltbdb.DomainServices.DTO
 {
 	public class StoryDTO
 	{
-		[SqlMapperAttributes(SqlMapperProperty.Required)]
+		[SqlMapperIn(Flag=SqlMapperFlags.Required)]
 		public int Id { get; set; }
 		public int BookId { get; set; }
 		public string Stories { get; set; }
