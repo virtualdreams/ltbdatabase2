@@ -68,6 +68,11 @@ $(function() {
 		});
 	});
 
+	var tag_template = '<div class="tag" style="position: relative;">\
+							<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen.">&nbsp;</a>\
+							<a href="/tag/view/{1}" title="Referenzen: {3}">{0}</a>\
+						</div>';
+
 	$(document).on('submit', '#tag-form', function(e) {
 		e.preventDefault();
 		$.ajax({
@@ -81,13 +86,8 @@ $(function() {
 					$('.jBox-content').html(response);
 				}
 				if (ct.indexOf('json') > -1) {
-					var template = '<div class="tag" style="position: relative;">\
-						<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen.">&nbsp;</a>\
-						<a href="/tag/view/{1}" title="Referenzen: {3}">{0}</a>\
-						</div>';
-
 					$.each(response.tags, function () {
-						var t = template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id).replace(/\{2\}/g, response.bookid).replace(/\{3\}/g, this.References);
+						var t = tag_template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id).replace(/\{2\}/g, response.bookid).replace(/\{3\}/g, this.References);
 						$(t).insertBefore('#tag-add');
 					});
 
@@ -120,9 +120,9 @@ $(function() {
 	});
 
 	var story_container = $('#story-container');
-	var story_template = '<div class="form-element-field story">\
-			<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />\
-		</div>';
+	var story_template =	'<div class="form-element-field story">\
+								<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />\
+							</div>';
 
 	$(document).on('click', '#story-add', function (e) {
 		$(story_template).appendTo(story_container);
