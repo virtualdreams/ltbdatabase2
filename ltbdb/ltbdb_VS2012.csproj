@@ -159,23 +159,19 @@
     <Compile Include="DomainServices\DatabaseContext.cs" />
     <Compile Include="DomainServices\DTO\Tag2BookDTO.cs" />
     <Compile Include="DomainServices\Repository\CategoryRepository.cs" />
-    <Compile Include="DomainServices\Repository\StoryRepository.cs" />
     <Compile Include="DomainServices\Repository\Tag2BookRepository.cs" />
     <Compile Include="DomainServices\Repository\TagRepository.cs" />
     <Compile Include="DomainServices\Tag.cs" />
-    <Compile Include="DomainServices\Story.cs" />
     <Compile Include="DomainServices\Repository\BookRepository.cs" />
     <Compile Include="DomainServices\Repository\Repository.cs" />
     <Compile Include="DomainServices\DTO\BookDTO.cs" />
     <Compile Include="DomainServices\DTO\CategoryDTO.cs" />
-    <Compile Include="DomainServices\DTO\StoryDTO.cs" />
     <Compile Include="DomainServices\DTO\TagDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\StoryModel.cs" />
     <Compile Include="Models\TagModel.cs" />
     <Compile Include="Models\ViewModels\TagViewModel.cs" />
     <Compile Include="Models\ViewModels\BookViewAllModel.cs" />

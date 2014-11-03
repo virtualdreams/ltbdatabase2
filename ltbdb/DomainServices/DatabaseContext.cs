@@ -19,7 +19,6 @@ namespace ltbdb.DomainServices
 		public CategoryRepository CategoryEntity { get; private set; }
 		public TagRepository TagEntity { get; private set; }
 		public Tag2BookRepository Tag2BookEntity { get; private set; }
-		public StoryRepository StoryEntity { get; private set; }
 
 		public DatabaseContext()
 		{
@@ -32,7 +31,6 @@ namespace ltbdb.DomainServices
 			CategoryEntity = new CategoryRepository(this.SqlConfig, this.SqlContext);
 			TagEntity = new TagRepository(this.SqlConfig, this.SqlContext);
 			Tag2BookEntity = new Tag2BookRepository(this.SqlConfig, this.SqlContext);
-			StoryEntity = new StoryRepository(this.SqlConfig, this.SqlContext);
 		}
 	}
 }

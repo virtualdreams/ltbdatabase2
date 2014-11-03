@@ -6,6 +6,7 @@
 			bookid as id,
 			number,
 			name,
+			stories,
 			catid as category,
 			(
 				select
@@ -181,6 +182,7 @@
 			bookid as id,
 			number,
 			name,
+			stories,
 			catid as category,
 			(
 				select
@@ -203,6 +205,7 @@
 			b.bookid as id,
 			b.number,
 			b.name,
+			b.stories,
 			b.catid as category,
 			(
 				select
@@ -235,6 +238,7 @@
 			b.bookid as id,
 			b.number,
 			b.name,
+			b.stories,
 			b.catid as category,
 			(
 				select
@@ -254,21 +258,6 @@
 		]]>
 	</select>
 	
-	<!-- stories -->
-	
-	<select id="getStoriesByBook">
-		<![CDATA[
-		select
-			s.storyid as id,
-			s.bookid,
-			s.stories
-		from
-			stories s
-		where
-			s.bookid = #id#
-		]]>
-	</select>
-	
 	<!-- search -->
 	
 	<select id="getBookByTerm">
@@ -277,6 +266,7 @@
 			b.bookid as id, 
 			b.number,
 			b.name, 
+			b.stories,
 			b.catid as category,
 			(
 				select 
@@ -288,15 +278,9 @@
 			) as categoryname,
 			b.added
 		FROM 
-			books b, 
-			stories s 
+			books b
 		WHERE 
 			b.name LIKE #term#
-			OR
-			(
-				s.stories LIKE #term# 
-				AND b.bookid = s.bookid
-			)
 		ORDER BY 
 			b.number ASC
 		]]>

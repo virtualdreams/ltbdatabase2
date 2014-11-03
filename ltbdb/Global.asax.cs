@@ -56,28 +56,17 @@ namespace ltbdb
 			Mapper.Configuration.AddGlobalIgnore("CategoryEntity");
 			Mapper.Configuration.AddGlobalIgnore("TagEntity");
 			Mapper.Configuration.AddGlobalIgnore("Tag2BookEntity");
-			Mapper.Configuration.AddGlobalIgnore("StoryEntity");
 
 			// Repository -> Domain
 			Mapper.CreateMap<BookDTO, Book>()
 				.ForMember(d => d.Created, map => map.MapFrom(s => s.Added))
 				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = s.CategoryName }))
-				.ForMember(d => d.Stories, map => map.Ignore());
-
-			Mapper.CreateMap<StoryDTO, Book>()
-				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(v => v.Trim()).ToArray()))
-				.ForMember(d => d.Id, map => map.Ignore())
-				.ForMember(d => d.Name, map => map.Ignore())
-				.ForMember(d => d.Number, map => map.Ignore())
-				.ForMember(d => d.Category, map => map.Ignore())
-				.ForMember(d => d.Created, map => map.Ignore());
+				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(v => v.Trim()).ToArray()));
 
 			Mapper.CreateMap<CategoryDTO, Category>();
 
 			Mapper.CreateMap<TagDTO, Tag>()
 				.ForMember(d => d.References, map => map.MapFrom(s => s.Ref));
-
-			Mapper.CreateMap<StoryDTO, Story>();
 
 			//Domain -> View
 			Mapper.CreateMap<Book, BookModel>()

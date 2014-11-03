@@ -136,10 +136,8 @@ namespace ltbdb.DomainServices
 			DatabaseContext ctx = new DatabaseContext();
 			
 			var book = ctx.BookEntity.Get(id);
-			var stories = ctx.StoryEntity.GetByBook(id);
 
 			var _book = Mapper.Map<Book>(book);
-			var result = Mapper.Map<StoryDTO, Book>(stories, _book);
 
 			return _book;
 		}
