@@ -11,13 +11,13 @@
 				select
 					c.name
 				from
-					ltbdb_categories c
+					categories c
 				where
 					b.catid = c.catid
 			) as categoryname,
 			added
 		FROM 
-			ltbdb_books b
+			books b
 		ORDER BY	
 			b.number asc
 		]]>
@@ -28,7 +28,7 @@
 			catid as id,
 			name
 		from
-			ltbdb_categories
+			categories
 		]]>
 	</select>
 	<select id="getCategory">
@@ -37,7 +37,7 @@
 			catid as id,
 			name
 		from
-			ltbdb_categories
+			categories
 		where
 			catid = #id#
 		]]>
@@ -49,9 +49,9 @@
 			t.name,
 			count(t2b.tagid) as ref
 		from
-			ltbdb_tags t
+			tags t
 		left outer join
-			ltbdb_tag2book t2b
+			tag2book t2b
 		on
 			t2b.tagid = t.tagid
 		group by
@@ -65,9 +65,9 @@
 			t.name,
 			count(t2b.tagid) as ref
 		from
-			ltbdb_tags t
+			tags t
 		left outer join
-			ltbdb_tag2book t2b
+			tag2book t2b
 		on
 			t2b.tagid = t.tagid
 		where
@@ -83,9 +83,9 @@
 			t.name,
 			count(t2b.tagid) as ref
 		from
-			ltbdb_tags t
+			tags t
 		left outer join
-			ltbdb_tag2book t2b
+			tag2book t2b
 		on
 			t2b.tagid = t.tagid
 		where
@@ -101,17 +101,17 @@
 			t.name,
 			count(tt.tagid) as ref
 		from
-			ltbdb_tags t
+			tags t
 		left outer join
-			ltbdb_tag2book t2b
+			tag2book t2b
 		on
 			t2b.tagid = t.tagid
 		left outer join
-			ltbdb_books b
+			books b
 		on
 			b.bookid = t2b.bookid
 		inner join
-			ltbdb_tag2book tt
+			tag2book tt
 		on
 			tt.tagid = t.tagid
 		where
@@ -123,7 +123,7 @@
 	<insert id="addTag">
 		<![CDATA[
 		insert into
-			ltbdb_tags
+			tags
 		(
 			name
 		)
@@ -143,7 +143,7 @@
 			tagid,
 			bookid
 		from
-			ltbdb_tag2book
+			tag2book
 		where
 			tag2book = #id#
 		]]>
@@ -151,7 +151,7 @@
 	<insert id="addTag2Book">
 		<![CDATA[
 		insert into
-			ltbdb_tag2book
+			tag2book
 		(
 			tagid,
 			bookid
@@ -166,7 +166,7 @@
 	<delete id="deleteTag2Book">
 		<![CDATA[
 		delete from
-			ltbdb_tag2book
+			tag2book
 		where
 			tagid = #tagid#
 			and bookid = #bookid#
@@ -186,13 +186,13 @@
 				select
 					c.name
 				from
-					ltbdb_categories c
+					categories c
 				where
 					b.catid = c.catid
 			) as categoryname,
 			added
 		FROM 
-			ltbdb_books b
+			books b
 		where
 			bookid = #id#
 		]]>
@@ -208,19 +208,19 @@
 				select
 					c.name
 				from
-					ltbdb_categories c
+					categories c
 				where
 					b.catid = c.catid
 			) as categoryname,
 			b.added
 		from
-			ltbdb_books b
+			books b
 		left outer join
-			ltbdb_tag2book t2b
+			tag2book t2b
 		on
 			b.bookid = t2b.bookid
 		left outer join
-			ltbdb_tags t
+			tags t
 		on
 			t.tagid = t2b.tagid
 		where
@@ -240,13 +240,13 @@
 				select
 					c.name
 				from
-					ltbdb_categories c
+					categories c
 				where
 					b.catid = c.catid
 			) as categoryname,
 			b.added
 		from
-			ltbdb_books b
+			books b
 		where
 			b.catid = #id#
 		ORDER BY	
@@ -263,7 +263,7 @@
 			s.bookid,
 			s.stories
 		from
-			ltbdb_stories s
+			stories s
 		where
 			s.bookid = #id#
 		]]>
@@ -282,14 +282,14 @@
 				select 
 					c.name 
 				from 
-					ltbdb_categories c 
+					categories c 
 				where 
 					c.catid = b.catid
 			) as categoryname,
 			b.added
 		FROM 
-			ltbdb_books b, 
-			ltbdb_stories s 
+			books b, 
+			stories s 
 		WHERE 
 			b.name LIKE #term#
 			OR
@@ -306,7 +306,7 @@
 		SELECT DISTINCT 
 			name
 		FROM 
-			ltbdb_books 
+			books 
 		WHERE 
 			name LIKE #term#
 		ORDER BY name
