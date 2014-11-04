@@ -18,7 +18,7 @@ namespace ltbdb.Controllers
 
 		public ActionResult Index()
 		{
-			var _tags = Tag.GetTags().Where(s => s.References != 0).OrderBy(o => o.Name);
+			var _tags = Tag.Get().Where(s => s.References != 0).OrderBy(o => o.Name);
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
@@ -29,7 +29,7 @@ namespace ltbdb.Controllers
 
         public ActionResult View(int? id, int? ofs)
         {
-			var _tag = Tag.GetTag(id ?? 0);
+			var _tag = Tag.Get(id ?? 0);
 			var _books = _tag.GetBooks();
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
@@ -62,7 +62,7 @@ namespace ltbdb.Controllers
 
 			// TODO Add tags -> make this stuff better
 
-			var _tags = Book.GetBook(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
+			var _tags = Book.Get(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
@@ -76,7 +76,7 @@ namespace ltbdb.Controllers
 			if (!Request.IsAjaxRequest())
 				return new EmptyResult();
 
-			return new JsonResult { Data = new { Success = Book.GetBook(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			return new JsonResult { Data = new { Success = Book.Get(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
     }
 }

@@ -23,6 +23,43 @@
 			b.number asc
 		]]>
 	</select>
+
+	<insert id="addBook">
+		<![CDATA[
+		insert into
+			books
+		(
+			number,
+			name,
+			stories,
+			catid,
+			added
+		)
+		values
+		(
+			#number#,
+			#name#,
+			#stories#,
+			#category#,
+			NOW()
+		)
+		]]>
+	</insert>
+
+	<update id="updateBook">
+		<![CDATA[
+		update
+			books
+		set
+			number = #number#,
+			name = #name#,
+			stories = #stories#,
+			catid = #category#
+		where
+			bookid = #id#
+		]]>
+	</update>
+	
 	<select id="getCategories">
 		<![CDATA[
 		select
@@ -43,6 +80,31 @@
 			catid = #id#
 		]]>
 	</select>
+
+	<insert id="addCategory">
+		<![CDATA[
+		insert into
+			categories
+		(
+			name
+		)
+		values
+		(
+			#name#
+		)
+		]]>
+	</insert>
+	<update id="updateCategory">
+		<![CDATA[
+		update 
+			categories
+		set
+			name = #name#
+		where
+			catid = #id#
+		]]>
+	</update>
+	
 	<select id="getTags">
 		<![CDATA[
 		select

@@ -39,7 +39,7 @@ namespace ltbdb.DomainServices
 		/// Get all available tags.
 		/// </summary>
 		/// <returns>A list of tags</returns>
-		static public Tag[] GetTags()
+		static public Tag[] Get()
 		{
 			DatabaseContext ctx = new DatabaseContext();
 			
@@ -53,7 +53,7 @@ namespace ltbdb.DomainServices
 		/// </summary>
 		/// <param name="id">The tag id.</param>
 		/// <returns>The tag.</returns>
-		static public Tag GetTag(int id)
+		static public Tag Get(int id)
 		{
 			DatabaseContext ctx = new DatabaseContext();
 			

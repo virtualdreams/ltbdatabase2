@@ -107,7 +107,7 @@ namespace ltbdb.DomainServices
 		/// <returns>True on success.</returns>
 		public bool Unlink(int id)
 		{
-			var _tag = Tag.GetTag(id);
+			var _tag = Tag.Get(id);
 			return this.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
 		}
 
@@ -117,7 +117,7 @@ namespace ltbdb.DomainServices
 		/// Get all available books from database.
 		/// </summary>
 		/// <returns>A list of books.</returns>
-		static public Book[] GetBooks()
+		static public Book[] Get()
 		{
 			DatabaseContext ctx = new DatabaseContext();
 			
@@ -131,7 +131,7 @@ namespace ltbdb.DomainServices
 		/// </summary>
 		/// <param name="id">The book id.</param>
 		/// <returns>The book.</returns>
-		static public Book GetBook(int id)
+		static public Book Get(int id)
 		{
 			DatabaseContext ctx = new DatabaseContext();
 			
@@ -143,12 +143,64 @@ namespace ltbdb.DomainServices
 		}
 
 		/// <summary>
+		/// Add a new book to database.
+		/// </summary>
+		/// <param name="model">The new book.</param>
+		/// <returns>The new book.</returns>
+		static public Book Add(Book model)
+		{
+			DatabaseContext ctx = new DatabaseContext();
+
+			var @in = Mapper.Map<BookDTO>(model);
+
+			var result = ctx.BookEntity.Add(@in);
+
+			var @out = Mapper.Map<Book>(result);
+			
+			return @out;
+		}
+
+		/// <summary>
+		/// Update a existing book.
+		/// </summary>
+		/// <param name="model">The book.</param>
+		/// <returns>The book.</returns>
+		static public Book Update(Book model)
+		{
+			DatabaseContext ctx = new DatabaseContext();
+
+			var @in = Mapper.Map<BookDTO>(model);
+
+			var result = ctx.BookEntity.Update(@in);
+
+			var @out = Mapper.Map<Book>(result);
+
+			return @out;
+		}
+
+		/// <summary>
+		/// Add or update a book.
+		/// </summary>
+		/// <param name="model">The book.</param>
+		/// <returns>The book.</returns>
+		static public Book Set(Book model)
+		{
+			var r = Book.Get(model.Id);
+			model.Id = r.Id;
+
+			if (r.Id == 0)
+				return Book.Add(model);
+			else
+				return Book.Update(model);
+		}
+
+		/// <summary>
 		/// Get the recently added books.
 		/// </summary>
 		/// <returns>A list of books.</returns>
 		static public Book[] GetRecentlyAdded()
 		{
-			return Book.GetBooks().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems).ToArray();
+			return Book.Get().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems).ToArray();
 		}
 
 		/// <summary>

@@ -5,6 +5,7 @@ using ltbdb.DomainServices;
 using ltbdb.DomainServices.DTO;
 using ltbdb.Models;
 using ltbdb.Windsor;
+using CS.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,23 @@ namespace ltbdb
 			Mapper.CreateMap<Tag, TagModel>();
 
 			Mapper.CreateMap<Category, CategoryModel>();
+
+			//View -> Domain
+			Mapper.CreateMap<BookModel, Book>()
+				.ForMember(s => s.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = "" }));
+
+			Mapper.CreateMap<CategoryModel, Category>();
+
+			//Domain -> Repository
+			Mapper.CreateMap<Book, BookDTO>()
+				.ForMember(d => d.Stories, map => map.MapFrom(s => string.Join("|", s.Stories.Select(v => v.Trim().Escape()).Where(v => !String.IsNullOrEmpty(v)))))
+				.ForMember(d => d.Added, map => map.Ignore())
+				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
+				.ForMember(d => d.CategoryName, map => map.Ignore())
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Escape()));
+
+			Mapper.CreateMap<Category, CategoryDTO>()
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Escape()));
 
 			Mapper.AssertConfigurationIsValid();
 		}

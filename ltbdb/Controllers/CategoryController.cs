@@ -19,7 +19,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
         public ActionResult Index(int? ofs)
         {
-			var _books = Book.GetBooks();
+			var _books = Book.Get();
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -33,7 +33,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(int? id, int? ofs)
 		{
-			var _category = Category.GetCategory(id ?? 0);
+			var _category = Category.Get(id ?? 0);
 			var _books = _category.GetBooks();
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
@@ -61,7 +61,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
-			var _category = Category.GetCategory(id ?? 0);
+			var _category = Category.Get(id ?? 0);
 
 			var category = Mapper.Map<CategoryModel>(_category);
 
@@ -81,6 +81,8 @@ namespace ltbdb.Controllers
 			}
 
 			//TODO Save the category.
+			var category = Mapper.Map<Category>(model);
+			Category.Set(category);
 
 			return RedirectToAction("index", "home");
 		}

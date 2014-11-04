@@ -16,7 +16,13 @@ namespace CS.Helper
 		static public string Escape(this string str)
 		{
 			if (!String.IsNullOrEmpty(str))
-				return str.Replace("\\", "\\\\").Replace("'", "\\'").Replace("\"", "\\\"");
+				return str
+					.Replace("\\", "\\\\")
+					.Replace("'", "\\'")
+					.Replace("\"", "\\\"");
+					//.Replace("%", "\\%")
+					//.Replace("_", "\\_");
+
 			return str;
 		}
 

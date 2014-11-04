@@ -47,7 +47,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{
-			var _tags = Tag.GetTags().Where(s => s.References != 0).OrderByDescending(o => o.References).Take(5);
+			var _tags = Tag.Get().Where(s => s.References != 0).OrderByDescending(o => o.References).Take(5);
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 			
@@ -57,7 +57,7 @@ namespace ltbdb.Controllers
 		[ChildActionOnly]
 		public ActionResult Categories()
 		{
-			var _categories = Category.GetCategories();
+			var _categories = Category.Get().Where(s => Category.Get(s.Id).GetBooks().Count() > 0);
 
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 

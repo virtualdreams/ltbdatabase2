@@ -21,7 +21,21 @@ namespace ltbdb.DomainServices.Repository
 
 		public override CategoryDTO Add(CategoryDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("addCategory");
+			query.SetEntities<CategoryDTO>(item);
+			int id = 0;
+
+			try
+			{
+				this.Context.Insert(query);
+				id = this.GetLastInsertId();
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return Get(id);
 		}
 
 		public override CategoryDTO Get(object id)
@@ -45,7 +59,19 @@ namespace ltbdb.DomainServices.Repository
 
 		public override CategoryDTO Update(CategoryDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("updateCategory");
+			query.SetEntities<CategoryDTO>(item);
+
+			try
+			{
+				this.Context.Update(query);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return Get(item.Id);
 		}
 
 		public override bool Delete(CategoryDTO item)

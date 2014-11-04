@@ -21,7 +21,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(int? id)
 		{
-			var _book = Book.GetBook(id ?? 0);
+			var _book = Book.Get(id ?? 0);
 			var _tags = _book.GetTags();
 
 			var book = Mapper.Map<BookModel>(_book);
@@ -36,7 +36,7 @@ namespace ltbdb.Controllers
 		public ActionResult Create()
 		{
 			var _book = new Book();
-			var _categories = Category.GetCategories();
+			var _categories = Category.Get();
 
 			var book = Mapper.Map<BookModel>(_book);
 			book.Number = null;
@@ -50,8 +50,8 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
-			var _book = Book.GetBook(id ?? 0);
-			var _categories = Category.GetCategories();
+			var _book = Book.Get(id ?? 0);
+			var _categories = Category.Get();
 
 			var book = Mapper.Map<BookModel>(_book);
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
@@ -66,7 +66,7 @@ namespace ltbdb.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-				var _categories = Category.GetCategories();
+				var _categories = Category.Get();
 
 				var categories = Mapper.Map<CategoryModel[]>(_categories);
 
@@ -76,6 +76,8 @@ namespace ltbdb.Controllers
 			}
 
 			//TODO Save the book.
+			var book = Mapper.Map<Book>(model);
+			Book.Set(book);
 
 			return RedirectToAction("index", "home");
 		}

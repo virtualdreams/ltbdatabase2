@@ -26,15 +26,20 @@ namespace ltbdb.DomainServices.Repository
 		public override BookDTO Add(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addBook");
-			query.SetInt("category", item.Category);
-			query.SetInt("number", item.Number);
-			query.SetString("name", item.Name);
+			query.SetEntities<BookDTO>(item);
+			int id = 0;
 
-			var result = this.Context.Insert(query);
+			try
+			{
+				this.Context.Insert(query);
+				id = this.GetLastInsertId();
+			}
+			catch(Exception)
+			{
+				throw;
+			}
 
-			item.Id = this.GetLastInsertId();
-			
-			return item;
+			return Get(id);
 		}
 
 		public override BookDTO Get(object id)
@@ -58,7 +63,19 @@ namespace ltbdb.DomainServices.Repository
 
 		public override BookDTO Update(BookDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("updateBook");
+			query.SetEntities<BookDTO>(item);
+
+			try
+			{
+				this.Context.Update(query);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return Get(item.Id);
 		}
 
 		public override bool Delete(BookDTO item)
