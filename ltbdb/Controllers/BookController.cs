@@ -44,7 +44,7 @@ namespace ltbdb.Controllers
 
 			var view = new BookEditContainer { Book = book, Categories = categories };
 			
-			return View("Edit", view);
+			return View("edit", view);
 		}
 
 		[HttpGet]
@@ -58,7 +58,7 @@ namespace ltbdb.Controllers
 
 			var view = new BookEditContainer { Book = book, Categories = categories };
 
-			return View("Edit", view);
+			return View("edit", view);
 		}
 
 		[HttpPost]
@@ -72,8 +72,10 @@ namespace ltbdb.Controllers
 
 				var view = new BookEditContainer { Book = model, Categories = categories };
 
-				return View("Edit", view);
+				return View("edit", view);
 			}
+
+			//TODO Save the book.
 
 			return RedirectToAction("index", "home");
 		}

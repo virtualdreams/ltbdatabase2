@@ -151,6 +151,7 @@
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
     <Compile Include="Models\AddTagModel.cs" />
+    <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Shared\_PartialAddTag.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

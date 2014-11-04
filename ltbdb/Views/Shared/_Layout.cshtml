@@ -79,7 +79,11 @@
 							@{Html.RenderAction("tags", "home"); }
 						</ul>
 					</li>
-					<li><a href="@Url.Action("create", "book")">Neues Buch</a></li>
+					<li><a href="@Url.Action("create", "book")">Neues Buch</a>
+						<ul>
+							<li><a href="@Url.Action("create", "category")">Neue Kategorie</a></li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 

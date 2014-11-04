@@ -6,25 +6,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Kategorie "@Model.Category.Name"</h2>
-<ul class="book">
-	@foreach (BookModel book in Model.Books) {
-		<li>
-			<a href="@Url.Action("view", "book", new { id = @book.Id })">
-				<div class="book-number">Nr. @book.Number</div>
-				<div>
-					<img src="@Url.Content("~/Content/no-image.png")" />
-				</div>
-				<span>@book.Name</span>
-			</a>
-		</li>
-	 }
-</ul>
-<div class="pager">
-	@if(Model.PageOffset.HasPrevious) {
-		<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
-	}
-	@if(Model.PageOffset.HasNext) {
-		<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
-	}
+<div style="position: relative;">
+	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
+		<a href="@Url.Action("edit", "category", new { id = Model.Category.Id } )">Bearbeiten</a>
+	</div>
+	<h2>Kategorie "@Model.Category.Name"</h2>
+	<ul class="book">
+		@foreach (BookModel book in Model.Books) {
+			<li>
+				<a href="@Url.Action("view", "book", new { id = @book.Id })">
+					<div class="book-number">Nr. @book.Number</div>
+					<div>
+						<img src="@Url.Content("~/Content/no-image.png")" />
+					</div>
+					<span>@book.Name</span>
+				</a>
+			</li>
+		 }
+	</ul>
+	<div class="pager">
+		@if(Model.PageOffset.HasPrevious) {
+			<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+		}
+		@if(Model.PageOffset.HasNext) {
+			<a href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+		}
+	</div>
 </div>

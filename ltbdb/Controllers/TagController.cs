@@ -60,7 +60,7 @@ namespace ltbdb.Controllers
 				return View("_PartialAddTag", model);
 			}
 
-			// TODO - make this stuff better
+			// TODO Add tags -> make this stuff better
 
 			var _tags = Book.GetBook(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
 
