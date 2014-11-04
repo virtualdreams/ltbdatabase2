@@ -334,7 +334,7 @@ img {
 	padding-bottom: 20px;
 }
 
-.form-element input[type=text], select {
+.form-element input[type=text], input[type=password], select {
 	border: 1px solid #cccccc;
 	border-radius: 3px;
 	background-color: #fafafa;

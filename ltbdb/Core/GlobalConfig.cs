@@ -29,6 +29,8 @@ namespace ltbdb.Core
 
 		public int ItemsPerPage { get; private set; }
 		public int RecentItems { get; private set; }
+		public string Username { get; private set; }
+		public string Password { get; private set; }
 
 		#endregion
 		
@@ -40,18 +42,20 @@ namespace ltbdb.Core
 			ConfigFile cf = new ConfigFile(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
 			
 			int temp = 0;
-			if(Int32.TryParse(cf.GetValue("items_per_page", "12"), out temp))
+			if(Int32.TryParse(cf.GetValue("items_per_page", "18"), out temp))
 			{
 				this.ItemsPerPage = temp;
 				Log.InfoFormat("Set items per page to {0}", this.ItemsPerPage);
 			}
 
-			if (Int32.TryParse(cf.GetValue("recent_items", "12"), out temp))
+			if (Int32.TryParse(cf.GetValue("recent_items", "18"), out temp))
 			{
 				this.RecentItems = temp;
 				Log.InfoFormat("Set recently added items to {0}", this.RecentItems);
 			}
-			
+
+			this.Username = cf.GetValue("username", "");
+			this.Password = cf.GetValue("password", "");
 			
 			Log.InfoFormat("Load configuration finished");
 		}

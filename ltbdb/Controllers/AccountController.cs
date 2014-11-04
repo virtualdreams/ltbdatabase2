@@ -1,0 +1,70 @@
+﻿using ltbdb.Core;
+using ltbdb.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
+
+namespace ltbdb.Controllers
+{
+    public class AccountController : Controller
+    {
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+		[HttpGet]
+		public ActionResult Login()
+		{
+			var login = new LoginModel();
+
+			return View(login);
+		}
+
+		[HttpPost]
+		public ActionResult Login(LoginModel model, string returnUrl)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View("login", model);
+			}
+
+			// check login credentials
+			if (GlobalConfig.Get().Password.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
+			{
+				FormsAuthentication.SetAuthCookie(model.Username, false);
+			}
+			else
+			{
+				ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
+				return View("login", model);
+			}
+
+			// return to target page.
+			if (Url.IsLocalUrl(returnUrl))
+			{
+				return Redirect(returnUrl);
+			}
+			else
+			{
+				return RedirectToAction("index", "home");
+			}
+		}
+
+		[HttpGet]
+		public ActionResult Logout()
+		{
+			return View();
+		}
+
+		[ChildActionOnly]
+		public ActionResult Status()
+		{
+			return View();
+		}
+    }
+}

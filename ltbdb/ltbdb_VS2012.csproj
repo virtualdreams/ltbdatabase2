@@ -138,6 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />
@@ -265,6 +267,7 @@
     <Content Include="Views\Shared\_PartialAddTag.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
