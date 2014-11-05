@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Castle.Core.Logging;
 using ltbdb.Core;
+using ltbdb.Core.Filter;
 using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
@@ -51,6 +52,7 @@ namespace ltbdb.Controllers
 			return View("_PartialAddTag", view);
 		}
 
+		[AjaxAuthorize]
 		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
 		[HttpPost]
 		public ActionResult Add(AddTagModel model)
@@ -69,6 +71,7 @@ namespace ltbdb.Controllers
 			return new JsonResult { Data = new { tags = tags, bookid = model.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
 
+		[AjaxAuthorize]
 		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
 		[HttpPost]
 		public ActionResult Unlink(int? id, int? bookid)

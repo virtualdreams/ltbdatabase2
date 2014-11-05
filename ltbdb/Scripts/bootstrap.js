@@ -79,6 +79,11 @@ $(function() {
 			url: this.action,
 			type: 'POST',
 			data: $('#tag-form').serialize(),
+			statusCode: {
+				403: function () {
+					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+				}
+			},
 			success: function(response, status, xhr) {
 				var ct = xhr.getResponseHeader("content-type") || "";
 				if (ct.indexOf('html') > -1) {
@@ -106,6 +111,11 @@ $(function() {
 		$.ajax({
 			url: this.href,
 			type: 'POST',
+			statusCode: {
+				403: function () {
+					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+				}
+			},
 			success: function (response, status, xhr) {
 				var ct = xhr.getResponseHeader("content-type") || "";
 				if (ct.indexOf('json') > -1) {
