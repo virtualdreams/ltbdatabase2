@@ -8,7 +8,10 @@ using System.Web;
 
 namespace ltbdb.DomainServices
 {
-	public class DatabaseContext
+	/// <summary>
+	/// Access the database. Provide entities for each table.
+	/// </summary>
+	public class Database
 	{
 		public ILogger Log { get; set; }
 
@@ -20,10 +23,11 @@ namespace ltbdb.DomainServices
 		public TagRepository TagEntity { get; private set; }
 		public Tag2BookRepository Tag2BookEntity { get; private set; }
 
-		public DatabaseContext()
+		public Database()
 		{
 			this.Log = MvcApplication.Container.Resolve<ILogger>();
 			
+			// get config and context from request
 			this.SqlConfig = HttpContext.Current.Items["config"] as SqlConfig;
 			this.SqlContext = HttpContext.Current.Items["context"] as SqlContext;
 

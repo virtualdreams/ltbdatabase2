@@ -9,7 +9,7 @@ using System.Web;
 
 namespace ltbdb.DomainServices
 {
-	public class Tag: DatabaseContext
+	public class Tag
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -26,7 +26,9 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book[] GetBooks()
 		{
-			var books = this.BookEntity.GetByTag(this.Id);
+			Database db = new Database();
+
+			var books = db.BookEntity.GetByTag(this.Id);
 
 			var result = Mapper.Map<Book[]>(books);
 
@@ -41,9 +43,9 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of tags</returns>
 		static public Tag[] Get()
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
-			var tags = ctx.TagEntity.GetAll();
+			var tags = db.TagEntity.GetAll();
 
 			return Mapper.Map<Tag[]>(tags);
 		}
@@ -55,9 +57,9 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Get(int id)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
-			var tag = ctx.TagEntity.Get(id);
+			var tag = db.TagEntity.Get(id);
 
 			return Mapper.Map<Tag>(tag);
 		}
@@ -69,13 +71,13 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Create(string name)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
 			// look if the tag exists otherwise create them
-			var tag = ctx.TagEntity.GetByName(name.Filter(@"%\^#_").Escape().Trim());
+			var tag = db.TagEntity.GetByName(name.Filter(@"%\^#_").Escape().Trim());
 			if (tag == null)
 			{
-				tag = ctx.TagEntity.Add(new TagDTO { Name = name.Filter(@"%\^#_").Escape().Trim() });
+				tag = db.TagEntity.Add(new TagDTO { Name = name.Filter(@"%\^#_").Escape().Trim() });
 			}
 
 			return Mapper.Map<Tag>(tag);

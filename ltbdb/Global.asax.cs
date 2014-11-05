@@ -50,14 +50,6 @@ namespace ltbdb
 		{
 			Mapper.Configuration.AllowNullDestinationValues = false;
 
-			Mapper.Configuration.AddGlobalIgnore("Log");
-			Mapper.Configuration.AddGlobalIgnore("SqlConfig");
-			Mapper.Configuration.AddGlobalIgnore("SqlContext");
-			Mapper.Configuration.AddGlobalIgnore("BookEntity");
-			Mapper.Configuration.AddGlobalIgnore("CategoryEntity");
-			Mapper.Configuration.AddGlobalIgnore("TagEntity");
-			Mapper.Configuration.AddGlobalIgnore("Tag2BookEntity");
-
 			// Repository -> Domain
 			Mapper.CreateMap<BookDTO, Book>()
 				.ForMember(d => d.Created, map => map.MapFrom(s => s.Added))

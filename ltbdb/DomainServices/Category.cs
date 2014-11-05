@@ -8,7 +8,7 @@ using System.Web;
 
 namespace ltbdb.DomainServices
 {
-	public class Category: DatabaseContext
+	public class Category
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -24,7 +24,9 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		public Book[] GetBooks()
 		{
-			var books = this.BookEntity.GetByCategory(this.Id);
+			Database db = new Database();
+
+			var books = db.BookEntity.GetByCategory(this.Id);
 
 			var result = Mapper.Map<Book[]>(books);
 
@@ -39,9 +41,9 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of categories.</returns>
 		static public Category[] Get()
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
-			var categories = ctx.CategoryEntity.GetAll();
+			var categories = db.CategoryEntity.GetAll();
 
 			return Mapper.Map<Category[]>(categories);
 		}
@@ -53,9 +55,9 @@ namespace ltbdb.DomainServices
 		/// <returns>The category.</returns>
 		static public Category Get(int id)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
-			var category = ctx.CategoryEntity.Get(id);
+			var category = db.CategoryEntity.Get(id);
 
 			return Mapper.Map<Category>(category);
 		}
@@ -67,11 +69,11 @@ namespace ltbdb.DomainServices
 		/// <returns>The new category</returns>
 		static public Category Add(Category model)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
 			var @in = Mapper.Map<CategoryDTO>(model);
 
-			var result = ctx.CategoryEntity.Add(@in);
+			var result = db.CategoryEntity.Add(@in);
 
 			var @out = Mapper.Map<Category>(result);
 
@@ -85,11 +87,11 @@ namespace ltbdb.DomainServices
 		/// <returns>The category.</returns>
 		static public Category Update(Category model)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
 			var @in = Mapper.Map<CategoryDTO>(model);
 
-			var result = ctx.CategoryEntity.Update(@in);
+			var result = db.CategoryEntity.Update(@in);
 
 			var @out = Mapper.Map<Category>(result);
 

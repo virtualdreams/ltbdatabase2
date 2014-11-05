@@ -10,7 +10,7 @@ using ltbdb.Core;
 
 namespace ltbdb.DomainServices
 {
-	public class Book: DatabaseContext
+	public class Book
 	{
 		public int Id { get; set; }
 		public int Number { get; set; }
@@ -45,10 +45,9 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Tag[] GetTags()
 		{
-			//if (this.Id == 0)
-			//	throw new Exception("Invalid book id.");
+			Database db = new Database();
 
-			var tags = this.TagEntity.GetByBook(this.Id);
+			var tags = db.TagEntity.GetByBook(this.Id);
 
 			var result = Mapper.Map<Tag[]>(tags);
 
@@ -62,8 +61,9 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		public Tag AddTag(string name)
 		{
-			//if(this.Id == 0)
-			//	throw new Exception("Invalid book id.");
+			Database db = new Database();
+			
+			// TODO validate the book before link tags
 
 			// create the tag
 			var tag = Tag.Create(name);
@@ -73,7 +73,7 @@ namespace ltbdb.DomainServices
 			if (tags.Where(s => s.Id == tag.Id).Count() == 0)
 			{
 				// link the tag to the book
-				var link = this.Tag2BookEntity.Add(new Tag2BookDTO { BookId = this.Id, TagId = tag.Id });
+				var link = db.Tag2BookEntity.Add(new Tag2BookDTO { BookId = this.Id, TagId = tag.Id });
 				return Mapper.Map<Tag>(tag);
 			}
 
@@ -107,8 +107,10 @@ namespace ltbdb.DomainServices
 		/// <returns>True on success.</returns>
 		public bool Unlink(int id)
 		{
+			Database db = new Database();
+
 			var _tag = Tag.Get(id);
-			return this.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
+			return db.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
 		}
 
 		#region Static methods
@@ -119,9 +121,9 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		static public Book[] Get()
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
-			var books = ctx.BookEntity.GetAll();
+			var books = db.BookEntity.GetAll();
 
 			return Mapper.Map<Book[]>(books);
 		}
@@ -133,9 +135,9 @@ namespace ltbdb.DomainServices
 		/// <returns>The book.</returns>
 		static public Book Get(int id)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
-			var book = ctx.BookEntity.Get(id);
+			var book = db.BookEntity.Get(id);
 
 			var _book = Mapper.Map<Book>(book);
 
@@ -149,11 +151,11 @@ namespace ltbdb.DomainServices
 		/// <returns>The new book.</returns>
 		static public Book Add(Book model)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
 			var @in = Mapper.Map<BookDTO>(model);
 
-			var result = ctx.BookEntity.Add(@in);
+			var result = db.BookEntity.Add(@in);
 
 			var @out = Mapper.Map<Book>(result);
 			
@@ -167,11 +169,11 @@ namespace ltbdb.DomainServices
 		/// <returns>The book.</returns>
 		static public Book Update(Book model)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 
 			var @in = Mapper.Map<BookDTO>(model);
 
-			var result = ctx.BookEntity.Update(@in);
+			var result = db.BookEntity.Update(@in);
 
 			var @out = Mapper.Map<Book>(result);
 
@@ -210,7 +212,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		static public Book[] Search(string term)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
 			string eterm = term.Filter(@"%\^#_").Escape().Trim();
 
@@ -219,7 +221,7 @@ namespace ltbdb.DomainServices
 				return new Book[] { };
 			}
 
-			var books = ctx.BookEntity.GetByTerm(eterm);
+			var books = db.BookEntity.GetByTerm(eterm);
 
 			return Mapper.Map<Book[]>(books);
 		}
@@ -231,7 +233,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of suggestions.</returns>
 		static public string[] SuggestionList(string term)
 		{
-			DatabaseContext ctx = new DatabaseContext();
+			Database db = new Database();
 			
 			string eterm = term.Filter(@"%\^#_").Escape().Trim();
 			if (String.IsNullOrEmpty(eterm))
@@ -239,7 +241,7 @@ namespace ltbdb.DomainServices
 				return new string[] { };
 			}
 
-			var suggestion = ctx.BookEntity.GetSuggestionList(eterm);
+			var suggestion = db.BookEntity.GetSuggestionList(eterm);
 
 			return suggestion.ToArray();
 		}

@@ -159,7 +159,7 @@
     <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />
-    <Compile Include="DomainServices\DatabaseContext.cs" />
+    <Compile Include="DomainServices\Database\Database.cs" />
     <Compile Include="DomainServices\DTO\Tag2BookDTO.cs" />
     <Compile Include="DomainServices\Repository\CategoryRepository.cs" />
     <Compile Include="DomainServices\Repository\Tag2BookRepository.cs" />
