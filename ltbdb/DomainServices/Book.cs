@@ -196,6 +196,13 @@ namespace ltbdb.DomainServices
 				return Book.Update(model);
 		}
 
+		static public bool Delete(int id)
+		{
+			Database db = new Database();
+
+			return db.BookEntity.Delete(new BookDTO { Id = id });
+		}
+
 		/// <summary>
 		/// Get the recently added books.
 		/// </summary>

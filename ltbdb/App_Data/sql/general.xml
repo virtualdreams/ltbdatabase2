@@ -59,6 +59,14 @@
 			bookid = #id#
 		]]>
 	</update>
+	<delete id="deleteBook">
+		<![CDATA[
+		delete from
+			books
+		where
+			bookid = #id#
+		]]>
+	</delete>
 	
 	<select id="getCategories">
 		<![CDATA[

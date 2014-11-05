@@ -80,7 +80,10 @@ namespace ltbdb.DomainServices.Repository
 
 		public override bool Delete(BookDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("deleteBook");
+			query.SetEntities<BookDTO>(item);
+
+			return this.Context.Delete(query) > 0;
 		}
 
 		#region Additional

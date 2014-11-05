@@ -8,7 +8,7 @@
 
 <div style="position: relative;">
 	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
-		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a>
+		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
 	<div class="details">
@@ -44,4 +44,53 @@
 			<a class="addtag" href="@Url.Action("add", "tag", new { id = Model.Book.Id })">[+]</a>
 		</div>
 	</div>
+</div>
+<script type="text/javascript">
+	$(function () {
+		$('#delete').click(function (e) {
+			e.preventDefault();
+
+			var link = $(this);
+
+			$('#delete-msg-box').dialog({
+				modal: true,
+				resizable: false,
+				draggable: false,
+				width: 550,
+				buttons: {
+					Löschen: function () {
+						var dlg = $(this);
+						$.ajax({
+							type: "POST",
+							url: link.attr('href'),
+							success: function (data) {
+								if (data.success == false) {
+									$('#error').text('Buch konnte nicht gel&ouml;scht werden');
+								} else {
+									$('#error').text('');
+									dlg.dialog('close');
+									location.href('/');
+								}
+							}
+						})
+					},
+					Abbrechen: function () {
+						$('#error').text('');
+						$(this).dialog('close');
+					}
+				},
+				overlay: {
+					opacity: 0.3,
+					background: "black"
+				}
+			});
+		});
+	});
+</script>
+<div id="delete-msg-box" title="Buch löschen" style="display: none;">
+	<p>
+		Soll dieses Buch wirklich gelöscht werden?
+	</p>
+	<p id="error" style="color: #ff0000;">
+	</p>
 </div>

@@ -81,5 +81,16 @@ namespace ltbdb.Controllers
 
 			return RedirectToAction("index", "home");
 		}
+
+		[HttpPost]
+		public ActionResult Delete(int? id)
+		{
+			if (!Request.IsAjaxRequest())
+				return new EmptyResult();
+
+			var b = Book.Delete(id ?? 0);
+			
+			return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+		}
     }
 }
