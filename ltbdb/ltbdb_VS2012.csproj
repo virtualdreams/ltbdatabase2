@@ -146,6 +146,7 @@
     <Compile Include="Core\DbContextModule.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Core\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\ConfigFile.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />

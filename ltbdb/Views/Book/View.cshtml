@@ -63,13 +63,18 @@
 						$.ajax({
 							type: "POST",
 							url: link.attr('href'),
+							statusCode: {
+								403: function () {
+									location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+								}
+							},
 							success: function (data) {
 								if (data.success == false) {
 									$('#error').text('Buch konnte nicht gel&ouml;scht werden');
 								} else {
 									$('#error').text('');
 									dlg.dialog('close');
-									location.href('/');
+									location.href = '/';
 								}
 							}
 						})

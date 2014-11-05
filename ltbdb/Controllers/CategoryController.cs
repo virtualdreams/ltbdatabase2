@@ -46,6 +46,7 @@ namespace ltbdb.Controllers
 			return View(view);
 		}
 
+		[Authorize]
 		[HttpGet]
 		public ActionResult Create()
 		{
@@ -58,6 +59,7 @@ namespace ltbdb.Controllers
 			return View("edit", view);
 		}
 
+		[Authorize]
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
@@ -70,6 +72,7 @@ namespace ltbdb.Controllers
 			return View(view);
 		}
 
+		[Authorize]
 		[HttpPost]
 		public ActionResult Edit(CategoryModel model)
 		{

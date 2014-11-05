@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ltbdb.Core.Filter;
 using ltbdb.DomainServices;
 using ltbdb.Models;
 using System;
@@ -32,6 +33,7 @@ namespace ltbdb.Controllers
 			return View(view);
 		}
 
+		[Authorize]
 		[HttpGet]
 		public ActionResult Create()
 		{
@@ -47,6 +49,7 @@ namespace ltbdb.Controllers
 			return View("edit", view);
 		}
 
+		[Authorize]
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
@@ -61,6 +64,7 @@ namespace ltbdb.Controllers
 			return View("edit", view);
 		}
 
+		[Authorize]
 		[HttpPost]
 		public ActionResult Edit(BookModel model)
 		{
@@ -82,6 +86,7 @@ namespace ltbdb.Controllers
 			return RedirectToAction("index", "home");
 		}
 
+		[AjaxAuthorize]
 		[HttpPost]
 		public ActionResult Delete(int? id)
 		{
