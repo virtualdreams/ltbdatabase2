@@ -54,10 +54,10 @@
 					</div>
 				</a>
 				<div class="header-right">
-					@*<div class="header-links">
-						<a href="#">Log in</a>
-						<a href="#">Impressum</a>
-					</div>*@
+					<div class="header-links">
+						@*<a href="#">Impressum</a>*@
+						@{Html.RenderAction("status", "account"); }
+					</div>
 					<div class="header-searchbox">
 						<form action="@Url.Action("search", "home")" method="get">
 							<input id="q" type="text" name="q" value="" placeholder="Suche..." />

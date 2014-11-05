@@ -58,13 +58,15 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Logout()
 		{
-			return View();
+			FormsAuthentication.SignOut();
+
+			return RedirectToAction("index", "home");
 		}
 
 		[ChildActionOnly]
 		public ActionResult Status()
 		{
-			return View();
+			return View("_PartialLogin");
 		}
     }
 }

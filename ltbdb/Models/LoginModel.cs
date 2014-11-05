@@ -8,7 +8,7 @@ namespace ltbdb.Models
 {
 	public class LoginModel
 	{
-		[Required(ErrorMessage="Bitte gib einen Benutzername ein.")]
+		[Required(ErrorMessage="Bitte gib einen Benutzernamen ein.")]
 		public string Username { get; set; }
 
 		[Required(ErrorMessage="Bitte gib ein Passwort ein.")]

@@ -1,0 +1,9 @@
+﻿@{
+   Layout = null;
+}
+
+@if(!Request.IsAuthenticated) {
+	<a href="@Url.Action("login", "account")">Anmelden</a>
+} else {
+	<a href="@Url.Action("logout", "account")">Abmelden</a>
+}
