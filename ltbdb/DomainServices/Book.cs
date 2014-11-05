@@ -101,7 +101,7 @@ namespace ltbdb.DomainServices
 		}
 
 		/// <summary>
-		/// Unlink a tag from book.
+		/// Unlink a tag this book.
 		/// </summary>
 		/// <param name="id">The tag id.</param>
 		/// <returns>True on success.</returns>
@@ -110,6 +110,7 @@ namespace ltbdb.DomainServices
 			Database db = new Database();
 
 			var _tag = Tag.Get(id);
+			
 			return db.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
 		}
 
