@@ -241,7 +241,31 @@ img {
 	box-shadow: 0 0 10px #b33630;
 }
 
+/* tag edit */
+.tag-edit {
+	display: none;
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	text-align: center;
+	z-index: 100;
+	background-color: #df3e3e;
+	box-shadow: 0 0 10px #df3e3e;
+}
+
+.tag-edit:hover {
+	background-color: #b33630;
+	box-shadow: 0 0 10px #b33630;
+}
+
 .tag:hover .tag-remove {
+	display: block;
+}
+
+.tag:hover .tag-edit {
 	display: block;
 }
 
