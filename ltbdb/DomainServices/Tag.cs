@@ -69,6 +69,7 @@ namespace ltbdb.DomainServices
 		/// </summary>
 		/// <param name="name">The tag name.</param>
 		/// <returns>The tag.</returns>
+		[Obsolete("Replace or check with Add", false)]
 		static public Tag Create(string name)
 		{
 			Database db = new Database();
@@ -81,6 +82,58 @@ namespace ltbdb.DomainServices
 			}
 
 			return Mapper.Map<Tag>(tag);
+		}
+
+		/// <summary>
+		/// Add a new tag to database.
+		/// </summary>
+		/// <param name="model">The new tag.</param>
+		/// <returns>The new tag.</returns>
+		static public Tag Add(Tag model)
+		{
+			Database db = new Database();
+
+			var @in = Mapper.Map<TagDTO>(model);
+
+			var result = db.TagEntity.Add(@in);
+
+			var @out = Mapper.Map<Tag>(result);
+
+			return @out;
+		}
+
+		/// <summary>
+		/// Update a tag.
+		/// </summary>
+		/// <param name="model">The tag.</param>
+		/// <returns>The tag.</returns>
+		static public Tag Update(Tag model)
+		{
+			Database db = new Database();
+
+			var @in = Mapper.Map<TagDTO>(model);
+
+			var result = db.TagEntity.Update(@in);
+
+			var @out = Mapper.Map<Tag>(result);
+
+			return @out;
+		}
+
+		/// <summary>
+		/// Add o update a tag.
+		/// </summary>
+		/// <param name="model">The tag.</param>
+		/// <returns>The tag.</returns>
+		static public Tag Set(Tag model)
+		{
+			var r = Tag.Get(model.Id);
+			model.Id = r.Id;
+
+			if (r.Id == 0)
+				return Tag.Add(model);
+			else
+				return Tag.Update(model);
 		}
 
 		#endregion

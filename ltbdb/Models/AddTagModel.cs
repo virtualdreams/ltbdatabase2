@@ -10,7 +10,7 @@ namespace ltbdb.Models
 	{
 		public int Id { get; set; }
 		
-		[Required(ErrorMessage="Kein Tag angegeben")]
+		[Required(ErrorMessage="Bitte gib einen Namen ein.")]
 		public string Tag { get; set; }
 	}
 }

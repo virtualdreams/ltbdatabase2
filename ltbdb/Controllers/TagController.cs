@@ -23,7 +23,7 @@ namespace ltbdb.Controllers
 
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
-			var view = new TagViewModel { Tags = tags };
+			var view = new TagViewContainer { Tags = tags };
 
 			return View(view);
 		}
@@ -80,6 +80,36 @@ namespace ltbdb.Controllers
 				return new EmptyResult();
 
 			return new JsonResult { Data = new { Success = Book.Get(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+		}
+
+		[Authorize]
+		[HttpGet]
+		public ActionResult Edit(int? id)
+		{
+			var _tag = Tag.Get(id ?? 0);
+
+			var tag = Mapper.Map<TagModel>(_tag);
+
+			var view = new TagEditContainer { Tag = tag };
+
+			return View("edit", view);
+		}
+
+		[Authorize]
+		[HttpPost]
+		public ActionResult Edit(TagModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				var view = new TagEditContainer { Tag = model };
+
+				return View("edit", view);
+			}
+
+			var tag = Mapper.Map<Tag>(model);
+			Tag.Set(tag);
+
+			return RedirectToAction("index", "home");
 		}
     }
 }

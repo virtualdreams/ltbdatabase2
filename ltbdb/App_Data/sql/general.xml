@@ -204,6 +204,16 @@
 		)
 		]]>
 	</insert>
+	<update id="updateTag">
+		<![CDATA[
+		update
+			tags
+		set
+			name = #name#
+		where
+			tagid = #id#
+		]]>
+	</update>
 	
 	<!-- tag 2 book links -->
 	

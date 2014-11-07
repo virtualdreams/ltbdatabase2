@@ -1,0 +1,27 @@
+﻿@model ltbdb.Models.TagEditContainer
+@using ltbdb.Models
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="@Url.Action("edit", "tag")" method="post" enctype="multipart/form-data">
+	<h2>Tag</h2>
+
+	<div class="form-element">
+		<div class="form-element-field">
+			<label for="name">Name</label>
+		</div>
+		<div class="form-element-field">
+			<input type="text" id="name" name="name" value="@Model.Tag.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
+		</div>
+	</div>
+
+	<div class="form-element">
+		<div class="form-element-button-bar">
+			<input class="button-green" type="submit" value="Speichern" />
+			<input class="button-red" type="button" value="Abbrechen" />
+		</div>
+	</div>
+</form>

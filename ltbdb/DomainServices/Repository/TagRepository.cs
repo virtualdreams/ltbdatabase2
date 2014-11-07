@@ -22,19 +22,16 @@ namespace ltbdb.DomainServices.Repository
 		public override TagDTO Add(TagDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addTag");
-			query.SetString("name", item.Name);
+			query.SetEntities<TagDTO>(item);
 			int id = 0;
 
 			try
 			{
-				this.Context.BeginTransaction();
-				var result = this.Context.Insert(query);
+				this.Context.Insert(query);
 				id = this.GetLastInsertId();
-				this.Context.CommitTransaction();
 			}
 			catch (Exception)
 			{
-				this.Context.RollbackTransaction();
 				throw;
 			}
 
@@ -62,7 +59,19 @@ namespace ltbdb.DomainServices.Repository
 
 		public override TagDTO Update(TagDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("updateTag");
+			query.SetEntities<TagDTO>(item);
+
+			try
+			{
+				this.Context.Update(query);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return Get(item.Id);
 		}
 
 		public override bool Delete(TagDTO item)

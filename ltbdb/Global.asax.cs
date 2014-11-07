@@ -76,16 +76,22 @@ namespace ltbdb
 
 			Mapper.CreateMap<CategoryModel, Category>();
 
+			Mapper.CreateMap<TagModel, Tag>();
+
 			//Domain -> Repository
 			Mapper.CreateMap<Book, BookDTO>()
 				.ForMember(d => d.Stories, map => map.MapFrom(s => string.Join("|", s.Stories.Select(v => v.Trim().Escape()).Where(v => !String.IsNullOrEmpty(v)))))
 				.ForMember(d => d.Added, map => map.Ignore())
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
 				.ForMember(d => d.CategoryName, map => map.Ignore())
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Escape()));
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Trim().Escape()));
 
 			Mapper.CreateMap<Category, CategoryDTO>()
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Escape()));
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Trim().Escape()));
+
+			Mapper.CreateMap<Tag, TagDTO>()
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Trim().Escape()))
+				.ForMember(d => d.Ref, map => map.Ignore());
 
 			Mapper.AssertConfigurationIsValid();
 		}
