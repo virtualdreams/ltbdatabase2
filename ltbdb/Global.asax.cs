@@ -63,8 +63,9 @@ namespace ltbdb
 
 			//Domain -> View
 			Mapper.CreateMap<Book, BookModel>()
-				.ForMember(s => s.Category, map => map.MapFrom(d => d.Category.Id))
-				.ForMember(s => s.CategoryName, map => map.MapFrom(d => d.Category.Name));
+				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
+				.ForMember(d => d.CategoryName, map => map.MapFrom(s => s.Category.Name))
+				.ForMember(d => d.Image, map => map.Ignore());
 
 			Mapper.CreateMap<Tag, TagModel>();
 
@@ -72,7 +73,8 @@ namespace ltbdb
 
 			//View -> Domain
 			Mapper.CreateMap<BookModel, Book>()
-				.ForMember(s => s.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = "" }));
+				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = "" }))
+				.ForSourceMember(s => s.Image, map => map.Ignore());
 
 			Mapper.CreateMap<CategoryModel, Category>();
 
