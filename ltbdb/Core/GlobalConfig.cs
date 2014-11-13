@@ -31,6 +31,7 @@ namespace ltbdb.Core
 		public int RecentItems { get; private set; }
 		public string Username { get; private set; }
 		public string Password { get; private set; }
+		public string Storage { get; private set; }
 
 		#endregion
 		
@@ -53,6 +54,8 @@ namespace ltbdb.Core
 				this.RecentItems = temp;
 				Log.InfoFormat("Set recently added items to {0}", this.RecentItems);
 			}
+
+			this.Storage = cf.GetValue("storage", "");
 
 			this.Username = cf.GetValue("username", "");
 			this.Password = cf.GetValue("password", "");

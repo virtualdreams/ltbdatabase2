@@ -28,5 +28,9 @@ namespace ltbdb.DomainServices.DTO
 		public int Category { get; set; }
 		public string CategoryName { get; set; }
 		public DateTime Added { get; set; }
+
+		[SqlMapperIn(Alias="image")]
+		[SqlMapperOut(Alias="image")]
+		public string Filename { get; set; }
 	}
 }

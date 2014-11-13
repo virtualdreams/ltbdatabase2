@@ -128,6 +128,23 @@ namespace ltbdb.DomainServices.Repository
 			return result;
 		}
 
+		public BookDTO UpdateImage(BookDTO item)
+		{
+			SqlQuery query = this.Config.CreateQuery("updateBookImage");
+			query.SetEntities<BookDTO>(item);
+
+			try
+			{
+				this.Context.Update(query);
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+
+			return Get(item.Id);
+		}
+
 		#endregion
 	}
 }

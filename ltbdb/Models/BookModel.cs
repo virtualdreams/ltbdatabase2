@@ -38,5 +38,9 @@ namespace ltbdb.Models
 				}
 			}
 		}
+
+		public string Filename { get; set; }
+
+		public HttpPostedFileBase Image { get; set; } 
 	}
 }

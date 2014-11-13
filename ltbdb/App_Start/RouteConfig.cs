@@ -12,6 +12,7 @@ namespace ltbdb
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+			routes.IgnoreRoute("images/{*pathInfo}");
 
 			routes.MapRoute(
 				name: "Search",

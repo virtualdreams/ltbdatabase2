@@ -16,7 +16,8 @@
 				where
 					b.catid = c.catid
 			) as categoryname,
-			added
+			added,
+			image
 		FROM 
 			books b
 		ORDER BY	
@@ -67,6 +68,17 @@
 			bookid = #id#
 		]]>
 	</delete>
+
+	<update id="updateBookImage">
+		<![CDATA[
+		update
+			books
+		set
+			image = #image#
+		where
+			bookid = #id#
+		]]>
+	</update>
 	
 	<select id="getCategories">
 		<![CDATA[
@@ -272,7 +284,8 @@
 				where
 					b.catid = c.catid
 			) as categoryname,
-			added
+			added,
+			image
 		FROM 
 			books b
 		where
@@ -295,7 +308,8 @@
 				where
 					b.catid = c.catid
 			) as categoryname,
-			b.added
+			b.added,
+			b.image
 		from
 			books b
 		left outer join
@@ -328,7 +342,8 @@
 				where
 					b.catid = c.catid
 			) as categoryname,
-			b.added
+			b.added,
+			b.image
 		from
 			books b
 		where
@@ -356,7 +371,8 @@
 				where 
 					c.catid = b.catid
 			) as categoryname,
-			b.added
+			b.added,
+			b.image
 		FROM 
 			books b
 		WHERE 

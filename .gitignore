@@ -107,3 +107,4 @@ Backup*/
 UpgradeLog*.XML
 deploy
 /ltbdb/Logs
+/ltbdb/Images

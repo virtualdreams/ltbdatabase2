@@ -152,6 +152,7 @@
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />
+    <Compile Include="Core\ImageStore.cs" />
     <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />

@@ -8,59 +8,103 @@
 
 <form action="@Url.Action("edit", "book")" method="post" enctype="multipart/form-data">
 	<h2>Buch</h2>
-	<div class="form-element">
-		<div class="form-element-field">
-			<label for="number">Nummer</label>
-		</div>
-		<div class="form-element-field">
-			<input type="text" id="number" name="number" value="@Model.Book.Number" placeholder="Nummer der Ausgabe" /> @Html.ValidationMessage("number")
-		</div>
-	</div>	
+	<div class="details">
+		<div style="float: left;">
+			<div class="form-element">
+				<div class="form-element-field">
+					<label for="number">Nummer</label>
+				</div>
+				<div class="form-element-field">
+					<input type="text" id="number" name="number" value="@Model.Book.Number" placeholder="Nummer der Ausgabe" /> @Html.ValidationMessage("number")
+				</div>
+			</div>	
 
-	<div class="form-element">
-		<div class="form-element-field">
-			<label for="name">Titel</label>
-		</div>
-		<div class="form-element-field">
-			<input type="text" id="name" name="name" value="@Model.Book.Name" placeholder="Titel der Ausgabe" /> @Html.ValidationMessage("name")
-		</div>
-	</div>
-		
-	<div class="form-element">
-		<div class="form-element-field">
-			<label for="category">Kategorie</label>
-		</div>
-		<div class="form-element-field">
-			<select name="category">
-				@foreach (var category in Model.Categories)
-				{
-					<option value="@category.Id" @(Model.Book.Category == category.Id ? "selected=\"selected\"" : "")>@category.Name</option>
-				}
-			</select> @Html.ValidationMessage("category")
-		</div>
-	</div>
-
-	<div class="form-element">
-		<div class="form-element-field">
-			<label>Inhalt</label>
-		</div>
-		<div id="story-container">
-			@foreach (var story in Model.Book.Stories)
-			{
-			<div class="form-element-field story">
-				<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />
+			<div class="form-element">
+				<div class="form-element-field">
+					<label for="name">Titel</label>
+				</div>
+				<div class="form-element-field">
+					<input type="text" id="name" name="name" value="@Model.Book.Name" placeholder="Titel der Ausgabe" /> @Html.ValidationMessage("name")
+				</div>
 			</div>
-			}
-		</div>													  
-	</div>
-	<div class="form-element">
-		<input class="button-green" type="button" id="story-add" value="Inhalt hinzufügen" />
-	</div>
+		
+			<div class="form-element">
+				<div class="form-element-field">
+					<label for="category">Kategorie</label>
+				</div>
+				<div class="form-element-field">
+					<select name="category">
+						@foreach (var category in Model.Categories)
+						{
+							<option value="@category.Id" @(Model.Book.Category == category.Id ? "selected=\"selected\"" : "")>@category.Name</option>
+						}
+					</select> @Html.ValidationMessage("category")
+				</div>
+			</div>
 
-	<div class="form-element">
-		<div class="form-element-button-bar">
-			<input class="button-green" type="submit" value="Speichern" />
-			<input class="button-red" type="button" value="Abbrechen" />
+			<div class="form-element">
+				<div class="form-element-field">
+					<label>Inhalt</label>
+				</div>
+				<div id="story-container">
+					@foreach (var story in Model.Book.Stories)
+					{
+					<div class="form-element-field story">
+						<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />
+					</div>
+					}
+				</div>													  
+			</div>
+			<div class="form-element">
+				<input class="button-green" type="button" id="story-add" value="Inhalt hinzufügen" />
+				<input type="hidden" name="filename" value="@Model.Book.Filename" />
+			</div>
+
+			<div class="form-element">
+				<div class="form-element-button-bar">
+					<input class="button-green" type="submit" value="Speichern" />
+					<input class="button-red" type="button" value="Abbrechen" />
+				</div>
+			</div>
+		</div>
+		<div style="float: right;">
+			<input style="display: none;" name="image" type="file" id="image-upload" />
+			<img id="image" src="@Model.Book.Filename" />
+			@*<br /><a href="#">Löschen</a> <a href="#">Zurücksetzen</a>*@
 		</div>
 	</div>
 </form>
+<script type="text/javascript">
+	$(function () {
+		$('#image').on('click', function () {
+			$('#image-upload').click();
+		});
+
+		$('#image-upload').change(function () {
+			if (typeof window.FileReader === 'undefined') {
+				alert("Dein Browser unterstützt diese Funktion nicht.")
+				return;
+			}
+
+			var files = $("#image-upload").get(0).files;
+			var reader = new FileReader();
+
+			if (!files[0].type.match('image')) {
+				resetFormElement($('#image-upload'));
+				alert("Dateityp nicht unterstützt.");
+				return;
+			}
+
+			reader.onload = function (e) {
+				$('#image').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(files[0]);
+		});
+
+		function resetFormElement(e) {
+			e.wrap('<form>').closest('form').get(0).reset();
+			e.unwrap();
+		}
+	});
+</script>

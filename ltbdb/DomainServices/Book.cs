@@ -17,6 +17,7 @@ namespace ltbdb.DomainServices
 		public string Name { get; set; }
 		public Category Category { get; set; }
 		public DateTime Created { get; set; }
+		public string Filename { get; set; }
 		
 		private string[] _stories = new string[] {};
 		public string[] Stories
@@ -114,6 +115,29 @@ namespace ltbdb.DomainServices
 			return db.Tag2BookEntity.Delete(new Tag2BookDTO { TagId = _tag.Id, BookId = this.Id });
 		}
 
+		/// <summary>
+		/// Set image to book.
+		/// </summary>
+		/// <param name="filename"></param>
+		/// <returns></returns>
+		public Book SetImage(string filename)
+		{
+			Database db = new Database();
+
+			var book = db.BookEntity.Get(this.Id);
+
+			if (ImageStore.Exists(book.Filename))
+			{
+				ImageStore.Remove(book.Filename);
+			}
+
+			book.Filename = filename;
+
+			var _book = Mapper.Map<BookDTO>(book);
+
+			return Mapper.Map<Book>(db.BookEntity.UpdateImage(_book));
+		}
+
 		#region Static methods
 
 		/// <summary>
@@ -200,6 +224,13 @@ namespace ltbdb.DomainServices
 		static public bool Delete(int id)
 		{
 			Database db = new Database();
+
+			var book = Get(id);
+
+			if(ImageStore.Exists(book.Filename))
+			{
+				ImageStore.Remove(book.Filename);
+			}
 
 			return db.BookEntity.Delete(new BookDTO { Id = id });
 		}

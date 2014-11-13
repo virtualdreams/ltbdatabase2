@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ltbdb.Core;
 
 namespace ltbdb
 {
@@ -65,7 +66,8 @@ namespace ltbdb
 			Mapper.CreateMap<Book, BookModel>()
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
 				.ForMember(d => d.CategoryName, map => map.MapFrom(s => s.Category.Name))
-				.ForMember(d => d.Image, map => map.Ignore());
+				.ForMember(d => d.Image, map => map.Ignore())
+				.ForMember(d => d.Filename, map => map.MapFrom(s => ImageStore.Exists(s.Filename) ? String.Format("/images/{0}", s.Filename) : "/content/no-image.png" ));
 
 			Mapper.CreateMap<Tag, TagModel>();
 

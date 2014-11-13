@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Drawing;
+using CS.Helper;
+using ltbdb.Core;
 
 namespace ltbdb.Controllers
 {
@@ -79,11 +82,24 @@ namespace ltbdb.Controllers
 				return View("edit", view);
 			}
 
-			//TODO Save the book.
 			var book = Mapper.Map<Book>(model);
-			Book.Set(book);
+			var _book = Book.Set(book);
 
-			return RedirectToAction("index", "home");
+			//TODO image.
+			if (model.Image != null)
+			{
+				var filename = ImageStore.Save(model.Image.InputStream);
+				if (!String.IsNullOrEmpty(filename))
+				{
+					_book.SetImage(filename);
+				}
+				else
+				{
+					ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
+				}
+			}
+
+			return RedirectToAction("view", "book", new { id = book.Id });
 		}
 
 		[AjaxAuthorize]
