@@ -79,7 +79,7 @@ namespace ltbdb.Controllers
 			if (!Request.IsAjaxRequest())
 				return new EmptyResult();
 
-			return new JsonResult { Data = new { Success = Book.Get(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+			return new JsonResult { Data = new { success = Book.Get(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
 
 		[Authorize]

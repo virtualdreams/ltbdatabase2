@@ -119,7 +119,7 @@ $(function() {
 			success: function (response, status, xhr) {
 				var ct = xhr.getResponseHeader("content-type") || "";
 				if (ct.indexOf('json') > -1) {
-					if (response.Success)
+					if (response.success)
 						$(p).remove();
 					else
 						alert("Can't remove tag.")
