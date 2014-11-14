@@ -113,5 +113,17 @@ namespace ltbdb.Controllers
 			
 			return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
 		}
+
+		[AjaxAuthorize]
+		[HttpPost]
+		public ActionResult DeleteImage(int? id)
+		{
+			if (!Request.IsAjaxRequest())
+				return new EmptyResult();
+
+			var book = Book.Get(id ?? 0).SetImage(null);
+
+			return new JsonResult { Data = new { success = true }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+		}
     }
 }

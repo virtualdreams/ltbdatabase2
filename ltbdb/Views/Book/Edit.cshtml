@@ -70,7 +70,9 @@
 		<div style="float: right;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
 			<img id="image" src="@Model.Book.Filename" />
-			@*<br /><a href="#">Löschen</a> <a href="#">Zurücksetzen</a>*@
+			<div style="font-size: 8pt; color: #808080; text-align: center">
+				<a id="image-delete" href="@Url.Action("deleteimage", "book", new { id = Model.Book.Id })">Löschen</a> <a id="image-reset" href="#">Zurücksetzen</a>
+			</div>
 		</div>
 	</div>
 </form>
@@ -106,5 +108,35 @@
 			e.wrap('<form>').closest('form').get(0).reset();
 			e.unwrap();
 		}
+
+		$('#image-delete').click(function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: this.href,
+				type: 'POST',
+				statusCode: {
+					403: function () {
+						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+					}
+				},
+				success: function (response, status, xhr) {
+					var ct = xhr.getResponseHeader("content-type") || "";
+					if (ct.indexOf('json') > -1) {
+						if (response.success)
+							$('#image').attr('src', '/content/no-image.png');
+						else
+							alert("Fehler beim löschen des Bildes.");
+					}
+				},
+				cache: false
+			});
+		});
+
+		$('#image-reset').click(function (e) {
+			e.preventDefault();
+
+			resetFormElement($('#image-upload'));
+			$('#image').attr('src', '@Model.Book.Filename');
+		});
 	});
 </script>
