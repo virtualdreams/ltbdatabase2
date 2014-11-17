@@ -14,6 +14,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using ltbdb.Core;
+using ltbdb.Controllers;
 
 namespace ltbdb
 {
@@ -37,6 +38,42 @@ namespace ltbdb
 		protected void Application_End()
 		{
 			Container.Dispose();
+		}
+
+		protected void Application_Error(object sender, EventArgs e)
+		{
+			if (Context.IsCustomErrorEnabled)
+			{
+				ExceptionHandler(Server.GetLastError());
+			}
+		}
+
+		private void ExceptionHandler(Exception ex)
+		{
+			HttpException exception = ex as HttpException ?? new HttpException(500, "Internal Server Error", ex);
+
+			Response.Clear();
+			Server.ClearError();
+
+			RouteData routeData = new RouteData();
+			routeData.Values.Add("controller", "error");
+			routeData.Values.Add("action", "index");
+			routeData.Values.Add("exception", exception);
+
+			switch (exception.GetHttpCode())
+			{
+				case 404:
+					routeData.Values["action"] = "http404";
+					break;
+
+				default:
+					routeData.Values["action"] = "index";
+					break;
+			}
+
+			Response.TrySkipIisCustomErrors = true;
+			IController controller = new ErrorController();
+			controller.Execute(new RequestContext(new HttpContextWrapper(Context), routeData));
 		}
 
 		private static void BootstrapWindsor()

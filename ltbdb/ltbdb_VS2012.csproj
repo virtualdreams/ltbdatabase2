@@ -141,6 +141,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Core\DbContextModule.cs">
@@ -273,6 +274,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\Http404.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
