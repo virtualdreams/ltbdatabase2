@@ -54,7 +54,8 @@ $(function() {
 		},
 		offset: {
 			y: 25
-		}
+		},
+		overlay: false
 	});
 
 	$('.addtag').click(function (e) {
