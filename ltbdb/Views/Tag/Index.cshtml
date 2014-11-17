@@ -23,55 +23,56 @@
 </div>
 <script type="text/javascript">
 	$(function () {
-		$('.delete').click(function (e) {
-			e.preventDefault();
 
-			var link = $(this);
+		var link = null;
 
-			$('#delete-msg-box').dialog({
-				modal: true,
-				resizable: false,
-				draggable: false,
-				width: 550,
-				buttons: {
-					Löschen: function () {
-						var dlg = $(this);
-						$.ajax({
-							type: "POST",
-							url: link.attr('href'),
-							statusCode: {
-								403: function () {
-									location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-								}
-							},
-							success: function (data) {
-								if (data.success == false) {
-									$('#error').text('Tag konnte nicht gel&ouml;scht werden');
-								} else {
-									$('#error').text('');
-									dlg.dialog('close');
-									location.href = '/tags';
-								}
-							}
-						})
-					},
-					Abbrechen: function () {
-						$('#error').text('');
-						$(this).dialog('close');
+		var jbox_delete = new jBox('Modal', {
+			attach: $('.delete'),
+			content: $('#delete-msg-box'),
+			overlay: false,
+			closeOnClick: 'body',
+			preventDefault: true,
+			onOpen: function () {
+				$('#error').text('');
+				link = this.source[0].href;
+			},
+			onClose: function () {
+				link = null;
+			}
+		});
+
+		$('#delete-button').click(function () {
+			if (link == null)
+				return;
+
+			$.ajax({
+				type: "POST",
+				url: link,
+				statusCode: {
+					403: function () {
+						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
 					}
 				},
-				overlay: {
-					opacity: 0.3,
-					background: "black"
+				success: function (data) {
+					if (data.success == false) {
+						$('#error').text('Tag konnte nicht gelöscht werden');
+					} else {
+						$('#error').text('');
+						jbox_delete.close();
+						location.href = '/tags';
+					}
 				}
-			});
+			})
 		});
 	});
 </script>
-<div id="delete-msg-box" title="Tag löschen" style="display: none;">
+<div id="delete-msg-box" style="display: none;">
 	<p>
-		Soll dieser Tag wirklich gelöscht werden?
+		Diesen Tag wirklich löschen?
 	</p>
 	<p id="error" style="color: #ff0000;">
 	</p>
+	<div>
+		<input id="delete-button" class="button-red" type="button" value="Löschen" />
+	</div>
 </div>
