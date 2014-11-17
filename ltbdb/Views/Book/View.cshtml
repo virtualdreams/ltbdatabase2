@@ -30,7 +30,7 @@
 			}
 		</div>
 		<div style="float: right;">
-			<a href="@Model.Book.Filename" title="Nr. @Model.Book.Number - @Model.Book.Name (@Model.Book.CategoryName)" data-jbox-image="image">
+			<a id="image-big" href="@Model.Book.Filename" title="Nr. @Model.Book.Number - @Model.Book.Name (@Model.Book.CategoryName)" data-jbox-image="image">
 				<img src="@Model.Book.Filename" />
 			</a>
 		</div>
@@ -57,7 +57,10 @@
 <script type="text/javascript">
 	$(function () {
 
-		new jBox('Image');
+		new jBox('Image', {
+			attach: $('#image-big'),
+			preventDefault: true
+		});
 
 		var link = null;
 
