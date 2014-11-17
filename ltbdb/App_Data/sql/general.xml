@@ -226,6 +226,14 @@
 			tagid = #id#
 		]]>
 	</update>
+	<delete id="deleteTag">
+		<![CDATA[
+		delete from
+			tags
+		where
+			tagid = #id#
+		]]>
+	</delete>
 	
 	<!-- tag 2 book links -->
 	

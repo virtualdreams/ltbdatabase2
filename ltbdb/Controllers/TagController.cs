@@ -111,5 +111,15 @@ namespace ltbdb.Controllers
 
 			return RedirectToAction("index", "home");
 		}
+
+		[AjaxAuthorize]
+		[HttpPost]
+		public ActionResult Delete(int? id)
+		{
+			if (!Request.IsAjaxRequest())
+				return new EmptyResult();
+
+			return new JsonResult { Data = new { success = Tag.Delete(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+		}
     }
 }

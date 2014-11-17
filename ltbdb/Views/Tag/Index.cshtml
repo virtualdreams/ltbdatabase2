@@ -14,10 +14,64 @@
 		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
-			<a style="" href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" /></a>
-			<a style="" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" /></a>
+			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" /></a>
+			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" /></a>
 		</div>
 		}
 	</div>
 }
+</div>
+<script type="text/javascript">
+	$(function () {
+		$('.delete').click(function (e) {
+			e.preventDefault();
+
+			var link = $(this);
+
+			$('#delete-msg-box').dialog({
+				modal: true,
+				resizable: false,
+				draggable: false,
+				width: 550,
+				buttons: {
+					Löschen: function () {
+						var dlg = $(this);
+						$.ajax({
+							type: "POST",
+							url: link.attr('href'),
+							statusCode: {
+								403: function () {
+									location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+								}
+							},
+							success: function (data) {
+								if (data.success == false) {
+									$('#error').text('Tag konnte nicht gel&ouml;scht werden');
+								} else {
+									$('#error').text('');
+									dlg.dialog('close');
+									location.href = '/tags';
+								}
+							}
+						})
+					},
+					Abbrechen: function () {
+						$('#error').text('');
+						$(this).dialog('close');
+					}
+				},
+				overlay: {
+					opacity: 0.3,
+					background: "black"
+				}
+			});
+		});
+	});
+</script>
+<div id="delete-msg-box" title="Tag löschen" style="display: none;">
+	<p>
+		Soll dieser Tag wirklich gelöscht werden?
+	</p>
+	<p id="error" style="color: #ff0000;">
+	</p>
 </div>

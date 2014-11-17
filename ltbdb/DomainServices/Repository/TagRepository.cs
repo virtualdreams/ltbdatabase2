@@ -76,7 +76,10 @@ namespace ltbdb.DomainServices.Repository
 
 		public override bool Delete(TagDTO item)
 		{
-			throw new NotImplementedException();
+			SqlQuery query = this.Config.CreateQuery("deleteTag");
+			query.SetEntities<TagDTO>(item);
+
+			return this.Context.Delete(query) > 0;
 		}
 
 		#region Additional

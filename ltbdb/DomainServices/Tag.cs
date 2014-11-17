@@ -121,6 +121,20 @@ namespace ltbdb.DomainServices
 		}
 
 		/// <summary>
+		/// Delete a tag.
+		/// </summary>
+		/// <param name="id">The tag id.</param>
+		/// <returns>True on success.</returns>
+		static public bool Delete(int id)
+		{
+			Database db = new Database();
+
+			var tag = Get(id);
+
+			return db.TagEntity.Delete(Mapper.Map<TagDTO>(tag));
+		}
+
+		/// <summary>
 		/// Add o update a tag.
 		/// </summary>
 		/// <param name="model">The tag.</param>
