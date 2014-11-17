@@ -5,9 +5,9 @@ using System.Web;
 
 namespace ltbdb.Models
 {
-	public class BookViewDetailModel
+	public class BookViewAllContainer
 	{
-		public BookModel Book { get; set; }
-		public TagModel[] Tags { get; set; }
+		public BookModel[] Books { get; set; }
+		public PageOffset PageOffset { get; set; }
 	}
 }

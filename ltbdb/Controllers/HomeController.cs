@@ -24,7 +24,7 @@ namespace ltbdb.Controllers
 
 			var books = Mapper.Map<BookModel[]>(_books);
 
-			var view = new BookViewModel { Books = books };
+			var view = new BookViewContainer { Books = books };
 
 			return View(view);
         }
@@ -39,7 +39,7 @@ namespace ltbdb.Controllers
 			var books = Mapper.Map<BookModel[]>(_page);
 			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewSearchModel { Books = books, Query = q, PageOffset = pageOffset };
+			var view = new BookViewSearchContainer { Books = books, Query = q, PageOffset = pageOffset };
 
 			return View(view);
 		}

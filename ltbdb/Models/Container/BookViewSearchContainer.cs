@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ltbdb.Models
 {
-	public class BookViewSearchModel
+	public class BookViewSearchContainer
 	{
 		public BookModel[] Books { get; set; }
 		public string Query { get; set; }

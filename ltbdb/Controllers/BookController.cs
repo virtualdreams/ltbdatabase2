@@ -31,7 +31,7 @@ namespace ltbdb.Controllers
 			var book = Mapper.Map<BookModel>(_book);
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
-			var view = new BookViewDetailModel { Book = book, Tags = tags };
+			var view = new BookViewDetailContainer { Book = book, Tags = tags };
 			
 			return View(view);
 		}

@@ -5,10 +5,10 @@ using System.Web;
 
 namespace ltbdb.Models
 {
-	public class BookViewTagModel
+	public class BookViewCategoryContainer
 	{
 		public BookModel[] Books { get; set; }
-		public TagModel Tag { get; set; }
+		public CategoryModel Category { get; set; }
 		public PageOffset PageOffset { get; set; }
 	}
 }

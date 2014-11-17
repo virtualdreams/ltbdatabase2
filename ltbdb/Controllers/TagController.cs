@@ -38,7 +38,7 @@ namespace ltbdb.Controllers
 			var books = Mapper.Map<BookModel[]>(_books);
 			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewTagModel { Books = books, Tag = tag, PageOffset = pageOffset };
+			var view = new BookViewTagContainer { Books = books, Tag = tag, PageOffset = pageOffset };
 
 			return View(view);
         }
