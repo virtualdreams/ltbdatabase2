@@ -8,7 +8,10 @@
 
 <div style="position: relative;">
 	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
-		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
+		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a>
+		@if(Request.IsAuthenticated) {
+		@:| <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
+		}
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
 	<div class="details">
@@ -33,18 +36,20 @@
 
 	<h2>Tags</h2>
 	<div class="tag-container">
-	@foreach (TagModel tag in Model.Tags)
-	{
+		@foreach (TagModel tag in Model.Tags)
+		{
 		<div class="tag" style="position: relative;">
 			@if(Request.IsAuthenticated) {
 			<a class="tag-remove" href="@Url.Action("unlink", "tag", new { id = tag.Id, bookid = Model.Book.Id })" title="Tag entfernen."><img src="~/Content/link_break.png" /></a>	
 			}
 			<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		</div>
-	}
+		}
+		@if(Request.IsAuthenticated) {
 		<div class="tag-add" id="tag-add">
 			<a class="addtag" href="@Url.Action("add", "tag", new { id = Model.Book.Id })">[+]</a>
 		</div>
+		}
 	</div>
 </div>
 <script type="text/javascript">
