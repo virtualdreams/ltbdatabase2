@@ -55,7 +55,8 @@ $(function() {
 		offset: {
 			y: 25
 		},
-		overlay: false
+		overlay: false,
+		closeOnClick: 'body'
 	});
 
 	$('.addtag').click(function (e) {
