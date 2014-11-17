@@ -99,7 +99,7 @@ namespace ltbdb.Controllers
 				}
 			}
 
-			return RedirectToAction("view", "book", new { id = book.Id });
+			return RedirectToAction("view", "book", new { id = _book.Id });
 		}
 
 		[AjaxAuthorize]
