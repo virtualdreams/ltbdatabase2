@@ -232,13 +232,10 @@ img {
 	border-radius: 8px;
 	text-align: center;
 	z-index: 100;
-	background-color: #df3e3e;
-	box-shadow: 0 0 10px #df3e3e;
 }
 
 .tag-remove:hover {
-	background-color: #b33630;
-	box-shadow: 0 0 10px #b33630;
+	
 }
 
 /* tag edit */
@@ -252,13 +249,10 @@ img {
 	border-radius: 8px;
 	text-align: center;
 	z-index: 100;
-	background-color: #df3e3e;
-	box-shadow: 0 0 10px #df3e3e;
 }
 
 .tag-edit:hover {
-	background-color: #b33630;
-	box-shadow: 0 0 10px #b33630;
+	
 }
 
 .tag:hover .tag-remove {

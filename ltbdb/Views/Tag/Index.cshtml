@@ -11,8 +11,13 @@
 @foreach (var tag in Model.Tags)
 {
 	<div class="tag" style="position: relative;">
-		<a class="tag-edit" href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten.">&nbsp;</a>
 		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
+		@if(Request.IsAuthenticated) {
+		<div class="tag-edit">
+			<a style="" href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" /></a>
+			<a style="" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" /></a>
+		</div>
+		}
 	</div>
 }
 </div>

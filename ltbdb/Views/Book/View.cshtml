@@ -36,7 +36,9 @@
 	@foreach (TagModel tag in Model.Tags)
 	{
 		<div class="tag" style="position: relative;">
-			<a class="tag-remove" href="@Url.Action("unlink", "tag", new { id = tag.Id, bookid = Model.Book.Id })" title="Tag entfernen.">&nbsp;</a>
+			@if(Request.IsAuthenticated) {
+			<a class="tag-remove" href="@Url.Action("unlink", "tag", new { id = tag.Id, bookid = Model.Book.Id })" title="Tag entfernen."><img src="~/Content/link_break.png" /></a>	
+			}
 			<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		</div>
 	}
