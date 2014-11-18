@@ -35,11 +35,6 @@ namespace ltbdb.DomainServices
 			}
 		}
 
-		static public Book Default()
-		{
-			return new Book { Id = 0, Number = 0, Name = "", Category = Category.Default(), Created = DateTime.MinValue, Stories = new string[] { } };
-		}
-
 		/// <summary>
 		/// Get all tags related to this book.
 		/// </summary>
@@ -124,7 +119,7 @@ namespace ltbdb.DomainServices
 		{
 			Database db = new Database();
 
-			var book = db.BookEntity.Get(this.Id);
+			var book = Get(this.Id);
 
 			if (ImageStore.Exists(book.Filename))
 			{
@@ -212,10 +207,10 @@ namespace ltbdb.DomainServices
 		/// <returns>The book.</returns>
 		static public Book Set(Book model)
 		{
-			var r = Book.Get(model.Id);
-			model.Id = r.Id;
+			var book = Get(model.Id);
+			model.Id = book.Id;
 
-			if (r.Id == 0)
+			if (book.Id == 0)
 				return Book.Add(model);
 			else
 				return Book.Update(model);

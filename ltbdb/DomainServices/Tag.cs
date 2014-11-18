@@ -15,11 +15,6 @@ namespace ltbdb.DomainServices
 		public string Name { get; set; }
 		public long References { get; set; }
 
-		static public Tag Default()
-		{
-			return new Tag { Id = 0, Name = "", References = 0 };
-		}
-
 		/// <summary>
 		/// Get all books related to this tag.
 		/// </summary>
@@ -141,10 +136,10 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Set(Tag model)
 		{
-			var r = Tag.Get(model.Id);
-			model.Id = r.Id;
+			var tag = Get(model.Id);
+			model.Id = tag.Id;
 
-			if (r.Id == 0)
+			if (tag.Id == 0)
 				return Tag.Add(model);
 			else
 				return Tag.Update(model);

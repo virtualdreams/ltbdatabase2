@@ -13,11 +13,6 @@ namespace ltbdb.DomainServices
 		public int Id { get; set; }
 		public string Name { get; set; }
 
-		static public Category Default()
-		{
-			return new Category { Id = 0, Name = "" };
-		}
-
 		/// <summary>
 		/// Get all books related to this category.
 		/// </summary>
@@ -105,10 +100,10 @@ namespace ltbdb.DomainServices
 		/// <returns>The category.</returns>
 		static public Category Set(Category model)
 		{
-			var r = Category.Get(model.Id);
-			model.Id = r.Id;
+			var category = Category.Get(model.Id);
+			model.Id = category.Id;
 
-			if (r.Id == 0)
+			if (category.Id == 0)
 				return Category.Add(model);
 			else
 				return Category.Update(model);
