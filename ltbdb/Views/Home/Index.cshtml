@@ -13,7 +13,7 @@
 		<a href="@Url.Action("view", "book", new { id = @book.Id })">
 			<div class="book-number">Nr. @book.Number</div>
 			<div>
-				<img src="@Url.Content("~/Content/no-image.png")" />
+				<img src="@book.Filename" />
 			</div>
 			<span>@book.Name</span>
 		</a>
