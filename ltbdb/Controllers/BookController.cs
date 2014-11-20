@@ -86,16 +86,23 @@ namespace ltbdb.Controllers
 			var _book = Book.Set(book);
 
 			//TODO image.
-			if (model.Image != null)
+			if (model.Image != null || model.Remove)
 			{
-				var filename = ImageStore.Save(model.Image.InputStream);
-				if (!String.IsNullOrEmpty(filename))
+				if (model.Remove)
 				{
-					_book.SetImage(filename);
+					_book.SetImage(null);
 				}
-				else
+				else if (model.Image != null)
 				{
-					ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
+					var filename = ImageStore.Save(model.Image.InputStream);
+					if (!String.IsNullOrEmpty(filename))
+					{
+						_book.SetImage(filename);
+					}
+					else
+					{
+						ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
+					}
 				}
 			}
 
@@ -112,18 +119,6 @@ namespace ltbdb.Controllers
 			var b = Book.Delete(id ?? 0);
 			
 			return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
-		}
-
-		[AjaxAuthorize]
-		[HttpPost]
-		public ActionResult DeleteImage(int? id)
-		{
-			if (!Request.IsAjaxRequest())
-				return new EmptyResult();
-
-			var book = Book.Get(id ?? 0).SetImage(null);
-
-			return new JsonResult { Data = new { success = true }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
 		}
     }
 }

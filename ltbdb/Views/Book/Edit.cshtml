@@ -58,6 +58,7 @@
 			<div class="form-element">
 				<input class="button-green" type="button" id="story-add" value="Inhalt hinzufügen" />
 				<input type="hidden" name="filename" value="@Model.Book.Filename" />
+				<input id="remove" type="hidden" name="remove" value="false" />
 			</div>
 
 			<div class="form-element">
@@ -84,59 +85,47 @@
 
 		$('#image-upload').change(function () {
 			if (typeof window.FileReader === 'undefined') {
-				alert("Dein Browser unterstützt diese Funktion nicht.")
+				alert("Dein Browser unterstützt diese Funktion nicht. Vorschau nicht verfügbar.")
 				return;
+			} else {
+
+				var files = $("#image-upload").get(0).files;
+				var reader = new FileReader();
+
+				if (!files[0].type.match('image')) {
+					reset($('#image-upload'));
+					alert("Dateityp nicht unterstützt.");
+					return;
+				}
+
+				reader.onload = function (e) {
+					$('#image').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(files[0]);
 			}
-
-			var files = $("#image-upload").get(0).files;
-			var reader = new FileReader();
-
-			if (!files[0].type.match('image')) {
-				resetFormElement($('#image-upload'));
-				alert("Dateityp nicht unterstützt.");
-				return;
-			}
-
-			reader.onload = function (e) {
-				$('#image').attr('src', e.target.result);
-			}
-
-			reader.readAsDataURL(files[0]);
+			$('#remove').val(false);
 		});
-
-		function resetFormElement(e) {
-			e.wrap('<form>').closest('form').get(0).reset();
-			e.unwrap();
-		}
 
 		$('#image-delete').click(function (e) {
 			e.preventDefault();
-			$.ajax({
-				url: this.href,
-				type: 'POST',
-				statusCode: {
-					403: function () {
-						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-					}
-				},
-				success: function (response, status, xhr) {
-					var ct = xhr.getResponseHeader("content-type") || "";
-					if (ct.indexOf('json') > -1) {
-						if (response.success)
-							$('#image').attr('src', '/content/no-image.png');
-						else
-							alert("Fehler beim löschen des Bildes.");
-					}
-				},
-				cache: false
-			});
+
+			reset($('#image-upload'));
+			$('#image').attr('src', '/content/no-image.png');
+			$('#remove').val(true);
 		});
 
 		$('#image-reset').click(function (e) {
 			e.preventDefault();
 
-			resetFormElement($('#image-upload'));
+			reset($('#image-upload'));
 			$('#image').attr('src', '@Model.Book.Filename');
+			$('#remove').val(false);
 		});
+
+		function reset(e) {
+			var control = e;
+			control.replaceWith(control.clone(true));
+		}
 	});
 </script>

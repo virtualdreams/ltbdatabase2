@@ -104,6 +104,7 @@ namespace ltbdb
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
 				.ForMember(d => d.CategoryName, map => map.MapFrom(s => s.Category.Name))
 				.ForMember(d => d.Image, map => map.Ignore())
+				.ForMember(d => d.Remove, map => map.Ignore())
 				.ForMember(d => d.Filename, map => map.MapFrom(s => ImageStore.Exists(s.Filename) ? String.Format("/images/{0}", s.Filename) : "/content/no-image.png" ));
 
 			Mapper.CreateMap<Tag, TagModel>();
@@ -113,7 +114,8 @@ namespace ltbdb
 			//View -> Domain
 			Mapper.CreateMap<BookModel, Book>()
 				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = "" }))
-				.ForSourceMember(s => s.Image, map => map.Ignore());
+				.ForSourceMember(s => s.Image, map => map.Ignore())
+				.ForSourceMember(s => s.Remove, map => map.Ignore());
 
 			Mapper.CreateMap<CategoryModel, Category>();
 
