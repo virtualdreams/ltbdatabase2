@@ -68,11 +68,13 @@
 				</div>
 			</div>
 		</div>
-		<div style="float: right;">
+		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img id="image" src="@Model.Book.Filename" />
-			<div style="font-size: 8pt; color: #808080; text-align: center">
-				<a id="image-delete" href="@Url.Action("deleteimage", "book", new { id = Model.Book.Id })">Löschen</a> <a id="image-reset" href="#">Zurücksetzen</a>
+			<img style="cursor: pointer;" id="image" src="@Model.Book.Filename" />
+
+			<div style="position: absolute; top: -24px; right: 8px;">
+				<a id="image-delete" href="#" title="Bild löschen."><img src="~/Content/bin.png" /></a>
+				<a id="image-reset" href="#"title="Bild zurücksetzen."><img src="~/Content/cancel.png" /></a>
 			</div>
 		</div>
 	</div>

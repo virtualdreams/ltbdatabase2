@@ -201,6 +201,7 @@
     <Content Include="App_Data\providers.xml" />
     <Content Include="App_Data\sql\general.xml" />
     <Content Include="Content\bin.png" />
+    <Content Include="Content\cancel.png" />
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
     <Content Include="Content\layout.css" />
