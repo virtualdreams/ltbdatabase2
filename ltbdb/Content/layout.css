@@ -170,9 +170,10 @@ img {
 }
 
 .book img {
-	height: 120px;
 	margin: 0 auto;
 	display: block;
+	max-height: 120px;
+	max-width: 120px;
 }
 
 /* book details */
