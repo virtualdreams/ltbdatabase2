@@ -25,7 +25,7 @@ $(function() {
 	});
 
 	$("#q").autocomplete({
-		source: '/ac-search',
+		source: '/ac-search/',
 		minLength: 3,
 		select: function (event, ui) {
 			if (ui.item) {
@@ -36,7 +36,7 @@ $(function() {
 	});
 
 	$("#t").autocomplete({
-		source: '/ac-tag',
+		source: '/ac-tag/',
 		minLength: 3,
 		select: function (event, ui) {
 			if (ui.item) {

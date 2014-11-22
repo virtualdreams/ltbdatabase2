@@ -69,10 +69,8 @@ namespace ltbdb.Controllers
 		{
 			if (Request.IsAjaxRequest())
 			{
-
 				var suggestions = Book.SuggestionList(term ?? "");
 				return new JsonResult { Data = suggestions, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
 			}
 			return new EmptyResult();
 		}
