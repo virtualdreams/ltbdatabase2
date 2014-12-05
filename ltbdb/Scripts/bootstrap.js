@@ -149,4 +149,8 @@ $(function() {
 		var p = $(this).parent();
 		p.remove();
 	});
+
+	$('#cancel-edit').click(function () {
+		location.href = '/';
+	});
 });
