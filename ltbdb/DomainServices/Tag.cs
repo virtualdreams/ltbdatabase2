@@ -64,10 +64,11 @@ namespace ltbdb.DomainServices
 		/// </summary>
 		/// <param name="name">The tag name.</param>
 		/// <returns>The tag.</returns>
-		[Obsolete("Replace or check with Add", false)]
 		static public Tag Create(string name)
 		{
 			Database db = new Database();
+
+			//TODO modify filter and escape
 
 			// look if the tag exists otherwise create them
 			var tag = db.TagEntity.GetByName(name.Filter(@"%\^#_").Escape().Trim());

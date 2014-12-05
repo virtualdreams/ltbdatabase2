@@ -248,6 +248,8 @@ namespace ltbdb.DomainServices
 		{
 			Database db = new Database();
 			
+			//TODO modify filter and escape
+
 			string eterm = term.Filter(@"%\^#_").Escape().Trim();
 
 			if (String.IsNullOrEmpty(eterm))

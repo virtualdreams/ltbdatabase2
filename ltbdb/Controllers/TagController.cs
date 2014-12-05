@@ -62,8 +62,6 @@ namespace ltbdb.Controllers
 				return View("_PartialAddTag", model);
 			}
 
-			// TODO Add tags -> make this stuff better
-
 			var _tags = Book.Get(model.Id).AddTags(model.Tag.Split(',').Select(s => s.Trim()).ToArray());
 
 			var tags = Mapper.Map<TagModel[]>(_tags);

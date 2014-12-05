@@ -85,7 +85,6 @@ namespace ltbdb.Controllers
 			var book = Mapper.Map<Book>(model);
 			var _book = Book.Set(book);
 
-			//TODO image.
 			if (model.Image != null || model.Remove)
 			{
 				if (model.Remove)

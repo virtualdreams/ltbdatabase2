@@ -83,7 +83,6 @@ namespace ltbdb.Controllers
 				return View("edit", view);
 			}
 
-			//TODO Save the category.
 			var category = Mapper.Map<Category>(model);
 			Category.Set(category);
 
