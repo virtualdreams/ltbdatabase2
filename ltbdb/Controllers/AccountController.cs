@@ -34,7 +34,7 @@ namespace ltbdb.Controllers
 			}
 
 			// check login credentials
-			if (GlobalConfig.Get().Password.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
+			if (GlobalConfig.Get().Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
 			{
 				FormsAuthentication.SetAuthCookie(model.Username, false);
 			}
