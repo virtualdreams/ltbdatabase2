@@ -1,5 +1,6 @@
 ﻿@model ltbdb.Models.BookViewTagContainer
 @using ltbdb.Models
+@using ltbdb.Core
 
 @{
 	ViewBag.Title = String.Format("Inhalte getaggt mit \"{0}\"", Model.Tag.Name);
@@ -13,7 +14,7 @@
 			<a href="@Url.Action("view", "book", new { id = @book.Id })">
 				<div class="book-number">Nr. @book.Number</div>
 				<div style="min-height: 120px;">
-					<img src="@book.Filename" />
+					<img src="@ImageStore.GetWebPath(book.Filename, true)" />
 				</div>
 				<span>@book.Name</span>
 			</a>

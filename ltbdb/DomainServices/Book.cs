@@ -121,10 +121,7 @@ namespace ltbdb.DomainServices
 
 			var book = Get(this.Id);
 
-			if (ImageStore.Exists(book.Filename))
-			{
-				ImageStore.Remove(book.Filename);
-			}
+			ImageStore.Remove(book.Filename);
 
 			book.Filename = filename;
 

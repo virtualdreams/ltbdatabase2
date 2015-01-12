@@ -98,6 +98,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>True</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -153,6 +154,7 @@
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Core\GlobalConfig.cs" />
+    <Compile Include="Core\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\ConfigFile.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
@@ -244,7 +246,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppServices\" />

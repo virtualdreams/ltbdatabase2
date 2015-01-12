@@ -32,6 +32,7 @@ namespace ltbdb.Core
 		public string Username { get; private set; }
 		public string Password { get; private set; }
 		public string Storage { get; private set; }
+		public string GraphicsMagick { get; private set; }
 
 		#endregion
 		
@@ -56,6 +57,8 @@ namespace ltbdb.Core
 			}
 
 			this.Storage = cf.GetValue("storage", "");
+
+			this.GraphicsMagick = cf.GetValue("gm", "gm");
 
 			this.Username = cf.GetValue("username", "");
 			this.Password = cf.GetValue("password", "");

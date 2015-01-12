@@ -1,5 +1,6 @@
 ﻿@model ltbdb.Models.BookViewCategoryContainer
 @using ltbdb.Models
+@using ltbdb.Core
 
 @{
     ViewBag.Title = String.Format("Kategorie \"{0}\"", Model.Category.Name);
@@ -17,7 +18,7 @@
 				<a href="@Url.Action("view", "book", new { id = @book.Id })">
 					<div class="book-number">Nr. @book.Number</div>
 					<div style="min-height: 120px;">
-						<img src="@book.Filename" />
+						<img src="@ImageStore.GetWebPath(book.Filename, true)" />
 					</div>
 					<span>@book.Name</span>
 				</a>

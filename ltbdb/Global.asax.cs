@@ -104,8 +104,7 @@ namespace ltbdb
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
 				.ForMember(d => d.CategoryName, map => map.MapFrom(s => s.Category.Name))
 				.ForMember(d => d.Image, map => map.Ignore())
-				.ForMember(d => d.Remove, map => map.Ignore())
-				.ForMember(d => d.Filename, map => map.MapFrom(s => ImageStore.Exists(s.Filename) ? String.Format("/images/{0}", s.Filename) : "/content/no-image.png" ));
+				.ForMember(d => d.Remove, map => map.Ignore());
 
 			Mapper.CreateMap<Tag, TagModel>();
 

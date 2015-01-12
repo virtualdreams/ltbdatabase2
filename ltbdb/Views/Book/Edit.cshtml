@@ -1,5 +1,6 @@
 ﻿@model ltbdb.Models.BookEditContainer
 @using ltbdb.Models
+@using ltbdb.Core
 
 @{
     ViewBag.Title = "Bearbeiten";
@@ -57,7 +58,6 @@
 			</div>
 			<div class="form-element">
 				<input class="button-green" type="button" id="story-add" value="Inhalt hinzufügen" />
-				<input type="hidden" name="filename" value="@Model.Book.Filename" />
 				<input id="remove" type="hidden" name="remove" value="false" />
 			</div>
 
@@ -70,7 +70,8 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img style="cursor: pointer;" id="image" src="@Model.Book.Filename" />
+			<img style="cursor: pointer;" id="image" src="@ImageStore.GetWebPath(Model.Book.Filename, true)" />
+			<input type="hidden" name="filename" value="@ImageStore.GetWebPath(Model.Book.Filename)" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
 				<a id="image-delete" href="#" title="Bild löschen."><img src="~/Content/bin.png" /></a>
@@ -87,7 +88,7 @@
 
 		$('#image-upload').change(function () {
 			if (typeof window.FileReader === 'undefined') {
-				alert("Dein Browser unterstützt diese Funktion nicht. Vorschau nicht verfügbar.")
+				alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.")
 				return;
 			} else {
 
