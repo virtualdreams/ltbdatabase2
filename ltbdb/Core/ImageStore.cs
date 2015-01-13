@@ -141,17 +141,19 @@ namespace ltbdb.Core
 		/// <returns>The web path.</returns>
 		static public string GetWebPath(string filename, bool preferThumbnail = false)
 		{
+			DirectoryInfo di = new DirectoryInfo(GetStoragePath());
+			
 			if (preferThumbnail)
 			{
 				if (Exists(filename, true))
 				{
-					return String.Format("/images/{0}/{1}", thumbnailDirectory, filename);
+					return String.Format("/{0}/{1}/{2}", di.Name, thumbnailDirectory, filename);
 				}
 			}
 			
 			if (Exists(filename))
 			{
-				return String.Format("/images/{0}", filename);
+				return String.Format("/{0}/{1}", di.Name, filename);
 			}
 
 			return "/content/no-image.png";
