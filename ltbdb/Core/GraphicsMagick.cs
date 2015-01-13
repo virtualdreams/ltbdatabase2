@@ -13,9 +13,9 @@ namespace ltbdb.Core
 		/// <summary>
 		/// Invoke "GraphicsMagick" via command line interface.
 		/// </summary>
-		/// <param name="stream"></param>
-		/// <param name="target"></param>
-		/// <param name="arguments"></param>
+		/// <param name="stream">The image data stream.</param>
+		/// <param name="target">The target image file.</param>
+		/// <param name="arguments">GraphicsMagick arguments.</param>
 		static public void PInvoke(Stream stream, string target, string arguments)
 		{
 			var log = MvcApplication.Container.Resolve<ILogger>();
@@ -54,6 +54,11 @@ namespace ltbdb.Core
 					{
 						File.Delete(target);
 						throw new Exception(error);
+					}
+
+					if (!String.IsNullOrEmpty(error))
+					{
+						log.DebugFormat(error);
 					}
 				}
 				catch (Exception ex)
