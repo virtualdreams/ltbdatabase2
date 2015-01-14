@@ -1,7 +1,7 @@
 LTB-DB v2
 =========
 
-Neuprogrammierung der alten *Lustiges Taschenbuch Datenbank*.
+Neuentwicklung der alten **Lustiges Taschenbuch Datenbank**.
 
 Features
 --------
@@ -16,7 +16,7 @@ Features
 Frameworks
 ----------
 
-* C# and MVC4-Framework using .NET4.0 running under mono 3.2.8+
+* C#, .NET4.0, MVC4-Framework, mono 3.2.8+
 * [jQuery 1.10.2](http://jquery.com/)
 * [jQuery-ui 1.10.4](http://jqueryui.com/)
 * [jBox](https://github.com/StephanWagner/jBox)
