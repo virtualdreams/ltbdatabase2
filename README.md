@@ -1,20 +1,27 @@
 LTB-DB v2
 =========
 
-Remake of the old *Lustiges Taschenbuch Datenbank*.
+Neuprogrammierung der alten *Lustiges Taschenbuch Datenbank*.
 
 Features
 --------
 
-* search for books, stories and tags
-* adding, deleting and modifing books
-* adding, deleting and modifing catgories
-* covers
-* tags
+* Bücher + Inhalte
+* Kategorien
+* Suche
+* Covers
+* Tags
+* Authentifizierung
 
-Framework
----------
+Frameworks
+----------
 
-* C# and MVC4-Framework using .NET4.0 running under mono 3.2.8
-* jQuery 1.10.2
-* jQuery-ui 1.10.4
+* C# and MVC4-Framework using .NET4.0 running under mono 3.2.8+
+* [jQuery 1.10.2](http://jquery.com/)
+* [jQuery-ui 1.10.4](http://jqueryui.com/)
+* [jBox](https://github.com/StephanWagner/jBox)
+
+Bildverarbeitung
+----------------
+
+Die Bildverarbeitung wird mit [GraphicsMagick](http://www.graphicsmagick.org/) erledigt. Dieses Paket ist dann entweder unter Linux oder Windows zu installieren.
