@@ -154,8 +154,8 @@
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Core\GlobalConfig.cs" />
-    <Compile Include="Core\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\ConfigFile.cs" />
+    <Compile Include="Core\Helpers\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringHelper.cs" />

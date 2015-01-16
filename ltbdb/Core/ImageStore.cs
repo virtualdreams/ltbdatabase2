@@ -37,50 +37,45 @@ namespace ltbdb.Core
 			log.DebugFormat("Image path: {0}", imagePath);
 			log.DebugFormat("Thumb path: {0}", thumbPath);
 
+			GraphicsMagick.GraphicsImage = GlobalConfig.Get().GraphicsMagick;
+
 			try
 			{
-				GraphicsMagick.PInvoke(stream, imagePath, "convert - -background white -flatten jpg:-");
+				using (var output = File.Create(imagePath))
+				{
+					GraphicsMagick.PInvoke(stream, output, "convert - -background white -flatten jpg:-");
+				}
 
-				CreateThumbnail(filename);
+				stream.Position = 0;
+
+				//check if thumbnail directory exists
+				if (!Directory.Exists(thumbStorage))
+				{
+					Directory.CreateDirectory(thumbStorage);
+				}
+
+				using (var output = File.Create(thumbPath))
+				{
+					GraphicsMagick.PInvoke(stream, output, "convert - -background white -flatten -resize 200x200 jpg:-");
+				}
 
 				return filename;
 			}
 			catch (Exception ex)
 			{
 				log.ErrorFormat(ex.ToString());
+
+				if (File.Exists(imagePath))
+				{
+					File.Delete(imagePath);
+				}
+
+				if (File.Exists(thumbPath))
+				{
+					File.Delete(thumbPath);
+				}
+				
 				return null;
-			}
-		}
-
-		/// <summary>
-		/// Create thumbnail from basic image file.
-		/// </summary>
-		/// <param name="filename">The filename.</param>
-		static public void CreateThumbnail(string filename)
-		{
-			var log = MvcApplication.Container.Resolve<ILogger>();
-			
-			var imageStorage = GetStoragePath();
-			var thumbStorage = GetThumbPath();
-			var imagePath = Path.Combine(imageStorage, filename);
-			var thumbPath = Path.Combine(thumbStorage, filename);
-
-			if (!Exists(filename) || Exists(filename, true))
-				return;
-			
-			//check if thumbnail directory exists
-			if (!Directory.Exists(thumbStorage))
-			{
-				Directory.CreateDirectory(thumbStorage);
-			}
-
-			try
-			{
-				GraphicsMagick.PInvoke(File.OpenRead(imagePath), thumbPath, "convert - -background white -flatten -resize 200x200 jpg:-");
-			}
-			catch (Exception ex)
-			{
-				log.ErrorFormat(ex.ToString());
 			}
 		}
 
