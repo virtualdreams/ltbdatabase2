@@ -14,6 +14,8 @@ namespace ltbdb
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 			routes.IgnoreRoute("images/{*pathInfo}");
 
+			routes.IgnoreRoute("{*url}", new { url = @".*\.asmx(/.*)?" });
+
 			routes.MapRoute(
 				name: "Search",
 				url: "search/",

@@ -135,6 +135,21 @@ namespace ltbdb
 				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Trim().Escape()))
 				.ForMember(d => d.Ref, map => map.Ignore());
 
+			//Domain -> WebService / REST
+			Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
+				.ForSourceMember(s => s.Filename, map => map.Ignore())
+				.ForSourceMember(s => s.Stories, map => map.Ignore())
+				.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }));
+
+			Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()
+				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name));
+
+			Mapper.CreateMap<Tag, ltbdb.Models.WebService.Tag>()
+				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+				.ForMember(d => d.References, map => map.MapFrom(s => s.References ));
+
 			Mapper.AssertConfigurationIsValid();
 		}
 	}
