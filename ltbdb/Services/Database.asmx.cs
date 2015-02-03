@@ -20,7 +20,9 @@ namespace ltbdb.Services
 		[WebMethod(Description="List all available books.")]
 		public ltbdb.Models.WebService.Book[] ListBooks()
 		{
-			return Mapper.Map<ltbdb.Models.WebService.Book[]>(Book.Get());
+			var books = Book.Get().OrderBy(o => o.Category.Id);
+			
+			return Mapper.Map<ltbdb.Models.WebService.Book[]>(books);
 		}
 
 		[WebMethod(Description = "Get a specified book by id.")]
@@ -32,7 +34,9 @@ namespace ltbdb.Services
 		[WebMethod(Description = "List all available categories.")]
 		public ltbdb.Models.WebService.Category[] ListCategories()
 		{
-			return Mapper.Map<ltbdb.Models.WebService.Category[]>(Category.Get());
+			var categories = Category.Get().OrderBy(o => o.Id);
+
+			return Mapper.Map<ltbdb.Models.WebService.Category[]>(categories);
 		}
 
 		[WebMethod(Description = "Get a specified category by id.")]
@@ -44,7 +48,9 @@ namespace ltbdb.Services
 		[WebMethod(Description = "List all available tags.")]
 		public ltbdb.Models.WebService.Tag[] ListTags()
 		{
-			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(Tag.Get());
+			var tags = Tag.Get().OrderBy(o => o.Id);
+
+			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(tags);
 		}
 
 		[WebMethod(Description = "Get a specified tag by id.")]

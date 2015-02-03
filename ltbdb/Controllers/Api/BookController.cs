@@ -13,7 +13,9 @@ namespace ltbdb.Controllers.Api
     {
         public IEnumerable<ltbdb.Models.WebService.Book> Get()
         {
-			return Mapper.Map<ltbdb.Models.WebService.Book[]>(Book.Get());
+			var books = Book.Get().OrderBy(o => o.Category.Id);
+
+			return Mapper.Map<ltbdb.Models.WebService.Book[]>(books);
         }
 
 		public ltbdb.Models.WebService.Book Get(int id)

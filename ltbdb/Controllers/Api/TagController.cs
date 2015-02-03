@@ -13,7 +13,9 @@ namespace ltbdb.Controllers.Api
     {
 		public IEnumerable<ltbdb.Models.WebService.Tag> Get()
         {
-			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(Tag.Get());
+			var tags = Tag.Get().OrderBy(o => o.Id);
+
+			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(tags);
         }
 
 		public ltbdb.Models.WebService.Tag Get(int id)
