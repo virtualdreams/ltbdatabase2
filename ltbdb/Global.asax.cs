@@ -137,8 +137,6 @@ namespace ltbdb
 
 			//Domain -> WebService / REST
 			Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
-				.ForSourceMember(s => s.Filename, map => map.Ignore())
-				.ForSourceMember(s => s.Stories, map => map.Ignore())
 				.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }));
 
 			Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()

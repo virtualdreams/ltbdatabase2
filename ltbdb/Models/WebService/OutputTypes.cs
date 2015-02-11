@@ -13,6 +13,7 @@ namespace ltbdb.Models.WebService
 		public Category Category { get; set; }
 		public DateTime Created { get; set; }
 		public string[] Stories { get; set; }
+		public Tag[] Tags { get; set; }
 	}
 
 	public class Tag
@@ -25,12 +26,6 @@ namespace ltbdb.Models.WebService
 	public class Category
 	{
 		public int Id { get; set; }
-		public string Name { get; set; }
-	}
-
-	public class Story
-	{
-		public int BookId { get; set; }
 		public string Name { get; set; }
 	}
 }
