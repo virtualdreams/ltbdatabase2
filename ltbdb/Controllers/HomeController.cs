@@ -33,7 +33,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Search(string q, int? ofs)
 		{
-			var _books = Book.Search(q ?? "");
+			var _books = Book.Search(q ?? "").OrderBy(o => o.Category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);

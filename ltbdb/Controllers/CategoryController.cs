@@ -19,7 +19,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
         public ActionResult Index(int? ofs)
         {
-			var _books = Book.Get();
+			var _books = Book.Get().OrderBy(o => o.Category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
