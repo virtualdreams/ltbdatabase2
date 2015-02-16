@@ -2,8 +2,8 @@
 @using ltbdb.Models
 
 @{
-    ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Login | Lustiges Taschenbuch - Datenbank";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form action="@Url.Action("login", "account", new { ReturnUrl = Request.QueryString["ReturnUrl"] })" method="post" enctype="multipart/form-data">

@@ -3,15 +3,15 @@
 @using ltbdb.Core
 
 @{
-    ViewBag.Title = String.Format("Nr. {0} - {1}", Model.Book.Number, Model.Book.Name);
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.CategoryName);
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div style="position: relative;">
 	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
-		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created) | <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a>
+		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d MMM, yyyy}", Model.Book.Created)
 		@if(Request.IsAuthenticated) {
-		@:| <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
+		@:| <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
 		}
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
