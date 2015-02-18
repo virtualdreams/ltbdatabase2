@@ -385,6 +385,8 @@
 			books b
 		WHERE 
 			b.name LIKE #term#
+			or b.number LIKE #term#
+			or b.stories LIKE #term#
 		ORDER BY 
 			b.number ASC
 		]]>
