@@ -74,5 +74,20 @@ namespace ltbdb.Controllers
 			}
 			return new EmptyResult();
 		}
+
+		[HttpGet]
+		public ActionResult AcTag(string term)
+		{
+			if (Request.IsAjaxRequest())
+			{
+				var suggestions = Tag.Get().Where(w => w.Name.ToLower().Contains(term.ToLower())).Select(s => s.Name).ToArray();
+				return new JsonResult
+				{
+					Data = suggestions,
+					JsonRequestBehavior = JsonRequestBehavior.AllowGet
+				};
+			}
+			return new EmptyResult();
+		}
     }
 }

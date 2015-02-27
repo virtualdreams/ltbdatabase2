@@ -11,6 +11,14 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
 	}
 });
 
+function split(val) {
+	return val.split(/,\s*/);
+}
+
+function extractLast(term) {
+	return split(term).pop();
+}
+
 $(function() {
 	$('.tt').tooltip({
 		track: true
@@ -32,18 +40,44 @@ $(function() {
 				$(event.target).val(ui.item.value);
 			}
 			$(event.target.form).submit();
+		},
+		open: function () {
+			$(this).autocomplete("widget").width($(this).outerWidth() - 6);
 		}
 	});
 
-	$("#t").autocomplete({
-		source: '/ac-tag/',
-		minLength: 3,
-		select: function (event, ui) {
-			if (ui.item) {
-				$(event.target).val(ui.item.value);
+	$(document).on("keydown.autocomplete", "#t", function (e) {
+		$(this).bind("keydown", function (event) {
+			if (event.keyCode === $.ui.keyCode.TAB && $(this).autocomplete("instance").menu.active) {
+				event.preventDefault();
 			}
-			$(event.target.form).submit();
-		}
+		}).autocomplete({
+			source: function (request, response) {
+				$.getJSON('/ac-tag/', {
+					term: extractLast(request.term)
+				}, response);
+			},
+			search: function () {
+				var term = extractLast(this.value);
+				if (term.length < 3) {
+					return false;
+				}
+			},
+			focus: function () {
+				return false;
+			},
+			select: function (event, ui) {
+				var terms = split(this.value);
+				terms.pop();
+				terms.push(ui.item.value);
+				terms.push("");
+				this.value = terms.join(", ");
+				return false;
+			},
+			open: function () {
+				$(this).autocomplete("widget").width($(this).outerWidth() - 6);
+			}
+		})
 	});
 
 	/* TEST */
@@ -56,7 +90,8 @@ $(function() {
 			y: 25
 		},
 		overlay: false,
-		closeOnClick: 'body'
+		zIndex: 400,
+		closeOnClick: 'overlay'
 	});
 
 	$('.addtag').click(function (e) {

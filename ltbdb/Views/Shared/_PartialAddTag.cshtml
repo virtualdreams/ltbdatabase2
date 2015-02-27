@@ -8,7 +8,7 @@
 	<form method="post" action="@Url.Action("add", "tag")" id="tag-form">
 		<div>
 			<div style="display: block;">@Html.ValidationMessage("tag")</div>
-			<input type="text" name="tag" value="@Model.Tag" placeholder="Tag" />
+			<input id="t" type="text" name="tag" value="@Model.Tag" placeholder="Tag" />
 		</div>
 		<div style="padding-top: 10px;">
 			<input type="hidden" name="id" value="@Model.Id" />
