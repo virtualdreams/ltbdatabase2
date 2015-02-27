@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Castle.Core.Logging;
+using log4net;
 using ltbdb.Core;
 using ltbdb.Core.Filter;
 using ltbdb.DomainServices;
@@ -15,7 +15,7 @@ namespace ltbdb.Controllers
 	[HandleError(View = "Error")]
     public class TagController : Controller
     {
-		public ILogger log { get; set; }
+		private static readonly ILog Log = LogManager.GetLogger(typeof(TagController));
 
 		public ActionResult Index()
 		{

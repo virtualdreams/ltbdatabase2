@@ -5,13 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Drawing;
-using Castle.Core.Logging;
 using System.Diagnostics;
+using log4net;
 
 namespace ltbdb.Core
 {
 	static public class ImageStore
 	{
+		private static readonly ILog Log = LogManager.GetLogger(typeof(ImageStore));
+
 		static readonly string thumbnailDirectory = "thumb";
 
 		/// <summary>
@@ -22,8 +24,6 @@ namespace ltbdb.Core
 		/// <returns>The name of the created file.</returns>
 		static public string Save(Stream stream, bool createThumbnail = true)
 		{
-			var log = MvcApplication.Container.Resolve<ILogger>();
-
 			if (stream == null)
 				throw new Exception("Stream must not be null.");
 
@@ -34,8 +34,8 @@ namespace ltbdb.Core
 			var imagePath = Path.Combine(imageStorage, filename);
 			var thumbPath = Path.Combine(thumbStorage, filename);
 
-			log.DebugFormat("Image path: {0}", imagePath);
-			log.DebugFormat("Thumb path: {0}", thumbPath);
+			Log.DebugFormat("Image path: {0}", imagePath);
+			Log.DebugFormat("Thumb path: {0}", thumbPath);
 
 			GraphicsMagick.GraphicsImage = GlobalConfig.Get().GraphicsMagick;
 
@@ -63,7 +63,7 @@ namespace ltbdb.Core
 			}
 			catch (Exception ex)
 			{
-				log.ErrorFormat(ex.ToString());
+				Log.ErrorFormat(ex.ToString());
 
 				if (File.Exists(imagePath))
 				{

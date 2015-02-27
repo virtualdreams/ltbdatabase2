@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Castle.Windsor;
-using Castle.Windsor.Installer;
 using ltbdb.DomainServices;
 using ltbdb.DomainServices.DTO;
 using ltbdb.Models;
-using ltbdb.Windsor;
 using CS.Helper;
 using System;
 using System.Collections.Generic;
@@ -15,6 +12,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using ltbdb.Core;
 using ltbdb.Controllers;
+using System.IO;
 
 namespace ltbdb
 {
@@ -24,6 +22,8 @@ namespace ltbdb
 	{
 		protected void Application_Start()
 		{
+			log4net.Config.XmlConfigurator.Configure(new FileInfo(IOHelper.ConvertToFullPath("./App_Data/log4net.xml")));
+
 			MvcHandler.DisableMvcResponseHeader = true;
 			
 			AreaRegistration.RegisterAllAreas();
@@ -32,14 +32,12 @@ namespace ltbdb
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-			MvcApplication.BootstrapWindsor();
 			MvcApplication.BootstrapAutoMapper();
 		}
 
-		public static IWindsorContainer Container;
 		protected void Application_End()
 		{
-			Container.Dispose();
+			
 		}
 
 		protected void Application_Error(object sender, EventArgs e)
@@ -76,14 +74,6 @@ namespace ltbdb
 			Response.TrySkipIisCustomErrors = true;
 			IController controller = new ErrorController();
 			controller.Execute(new RequestContext(new HttpContextWrapper(Context), routeData));
-		}
-
-		private static void BootstrapWindsor()
-		{
-			Container = new WindsorContainer().Install(FromAssembly.This());
-
-			var controllerFactory = new WindsorControllerFactory(Container.Kernel);
-			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 		}
 
 		private static void BootstrapAutoMapper()

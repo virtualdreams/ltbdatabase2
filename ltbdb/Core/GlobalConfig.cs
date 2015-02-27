@@ -4,19 +4,17 @@ using System.Linq;
 using System.Web;
 using Singleton;
 using System.Configuration;
-using Castle.Core.Logging;
 using CS.Helper;
+using log4net;
 
 namespace ltbdb.Core
 {
 	public sealed class GlobalConfig: SingletonBase<GlobalConfig>
 	{
-		private ILogger Log { get; set; }
+		private static readonly ILog Log = LogManager.GetLogger(typeof(GlobalConfig));
 		
 		private GlobalConfig()
 		{
-			this.Log = MvcApplication.Container.Resolve<ILogger>();
-
 			ReadConfiguration();
 		}
 

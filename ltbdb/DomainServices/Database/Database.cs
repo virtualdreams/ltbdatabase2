@@ -1,4 +1,4 @@
-﻿using Castle.Core.Logging;
+﻿using log4net;
 using ltbdb.DomainServices.Repository;
 using SqlDataMapper;
 using System;
@@ -13,7 +13,7 @@ namespace ltbdb.DomainServices
 	/// </summary>
 	public class Database
 	{
-		public ILogger Log { get; set; }
+		private static readonly ILog Log = LogManager.GetLogger(typeof(Database));
 
 		public SqlConfig SqlConfig { get; private set; }
 		public SqlContext SqlContext { get; private set; }
@@ -25,8 +25,6 @@ namespace ltbdb.DomainServices
 
 		public Database()
 		{
-			this.Log = MvcApplication.Container.Resolve<ILogger>();
-			
 			// get config and context from request
 			this.SqlConfig = HttpContext.Current.Items["config"] as SqlConfig;
 			this.SqlContext = HttpContext.Current.Items["context"] as SqlContext;
