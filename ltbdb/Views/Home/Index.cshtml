@@ -12,11 +12,10 @@
 @foreach (BookModel book in Model.Books) {
 	<li>
 		<a href="@Url.Action("view", "book", new { id = @book.Id })">
-			<div class="book-number">Nr. @book.Number</div>
 			<div style="min-height: 120px;">
 				<img src="@ImageStore.GetWebPath(book.Filename, true)" />
 			</div>
-			<span>@book.Name</span>
+			<span>Nr. @book.Number - @book.Name</span>
 		</a>
 	</li>
 	}
