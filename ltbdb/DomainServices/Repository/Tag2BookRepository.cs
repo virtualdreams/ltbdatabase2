@@ -22,8 +22,8 @@ namespace ltbdb.DomainServices.Repository
 		public override Tag2BookDTO Add(Tag2BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addTag2Book");
-			query.SetInt("tagid", item.TagId);
-			query.SetInt("bookid", item.BookId);
+			query.SetParameter("tagid", item.TagId);
+			query.SetParameter("bookid", item.BookId);
 			int id = 0;
 
 			try
@@ -45,7 +45,7 @@ namespace ltbdb.DomainServices.Repository
 		public override Tag2BookDTO Get(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getTag2Book");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
 			var result = this.Context.QueryForObject<Tag2BookDTO>(query);
 
@@ -56,7 +56,7 @@ namespace ltbdb.DomainServices.Repository
 		{
 			SqlQuery query = this.Config.CreateQuery("getTags2Book");
 
-			var result = this.Context.QueryForList<Tag2BookDTO>(query);
+			var result = this.Context.QueryForObjectList<Tag2BookDTO>(query);
 
 			return result;
 		}
@@ -69,7 +69,7 @@ namespace ltbdb.DomainServices.Repository
 		public override bool Delete(Tag2BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("deleteTag2Book");
-			query.SetEntities<Tag2BookDTO>(item);
+			query.SetParameter<Tag2BookDTO>(item);
 
 			return this.Context.Delete(query) > 0; 
 		}

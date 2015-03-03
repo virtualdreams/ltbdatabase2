@@ -38,10 +38,10 @@
 		)
 		values
 		(
-			#number#,
-			#name#,
-			#stories#,
-			#category#,
+			@number,
+			@name,
+			@stories,
+			@category,
 			NOW()
 		)
 		]]>
@@ -52,12 +52,12 @@
 		update
 			books
 		set
-			number = #number#,
-			name = #name#,
-			stories = #stories#,
-			catid = #category#
+			number = @number,
+			name = @name,
+			stories = @stories,
+			catid = @category
 		where
-			bookid = #id#
+			bookid = @id
 		]]>
 	</update>
 	<delete id="deleteBook">
@@ -65,7 +65,7 @@
 		delete from
 			books
 		where
-			bookid = #id#
+			bookid = @id
 		]]>
 	</delete>
 
@@ -74,9 +74,9 @@
 		update
 			books
 		set
-			image = #image#
+			image = @image
 		where
-			bookid = #id#
+			bookid = @id
 		]]>
 	</update>
 	
@@ -97,7 +97,7 @@
 		from
 			categories
 		where
-			catid = #id#
+			catid = @id
 		]]>
 	</select>
 
@@ -110,7 +110,7 @@
 		)
 		values
 		(
-			#name#
+			@name
 		)
 		]]>
 	</insert>
@@ -119,9 +119,9 @@
 		update 
 			categories
 		set
-			name = #name#
+			name = @name
 		where
-			catid = #id#
+			catid = @id
 		]]>
 	</update>
 	
@@ -154,7 +154,7 @@
 		on
 			t2b.tagid = t.tagid
 		where
-			t.tagid = #id#
+			t.tagid = @id
 		group by
 			t.tagid
 		]]>
@@ -172,7 +172,7 @@
 		on
 			t2b.tagid = t.tagid
 		where
-			t.name = #name#
+			t.name = @name
 		group by
 			t.tagid
 		]]>
@@ -198,7 +198,7 @@
 		on
 			tt.tagid = t.tagid
 		where
-			b.bookid = #id#
+			b.bookid = @id
 		group by
 			t.tagid
 		]]>
@@ -212,7 +212,7 @@
 		)
 		values
 		(
-			#name#
+			@name
 		)
 		]]>
 	</insert>
@@ -221,9 +221,9 @@
 		update
 			tags
 		set
-			name = #name#
+			name = @name
 		where
-			tagid = #id#
+			tagid = @id
 		]]>
 	</update>
 	<delete id="deleteTag">
@@ -231,7 +231,7 @@
 		delete from
 			tags
 		where
-			tagid = #id#
+			tagid = @id
 		]]>
 	</delete>
 	
@@ -246,7 +246,7 @@
 		from
 			tag2book
 		where
-			tag2book = #id#
+			tag2book = @id
 		]]>
 	</select>
 	<insert id="addTag2Book">
@@ -259,8 +259,8 @@
 		)
 		values
 		(
-			#tagid#,
-			#bookid#
+			@tagid,
+			@bookid
 		)
 		]]>
 	</insert>
@@ -269,8 +269,8 @@
 		delete from
 			tag2book
 		where
-			tagid = #tagid#
-			and bookid = #bookid#
+			tagid = @tagid
+			and bookid = @bookid
 		]]>
 	</delete>
 	
@@ -297,7 +297,7 @@
 		FROM 
 			books b
 		where
-			bookid = #id#
+			bookid = @id
 		]]>
 	</select>
 	<select id="getBooksByTag">
@@ -329,7 +329,7 @@
 		on
 			t.tagid = t2b.tagid
 		where
-			t.tagid = #id#
+			t.tagid = @id
 		ORDER BY	
 			b.number asc
 		]]>
@@ -355,7 +355,7 @@
 		from
 			books b
 		where
-			b.catid = #id#
+			b.catid = @id
 		ORDER BY	
 			b.number asc
 		]]>
@@ -384,9 +384,9 @@
 		FROM 
 			books b
 		WHERE 
-			b.name LIKE #term#
-			or b.number LIKE #term#
-			or b.stories LIKE #term#
+			b.name LIKE @term
+			or b.number LIKE @term
+			or b.stories LIKE @term
 		ORDER BY 
 			b.number ASC
 		]]>
@@ -398,7 +398,7 @@
 		FROM 
 			books 
 		WHERE 
-			name LIKE #term#
+			name LIKE @term
 		ORDER BY name
 		]]>
 	</select>

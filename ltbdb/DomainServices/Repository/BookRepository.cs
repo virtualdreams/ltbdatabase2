@@ -26,7 +26,7 @@ namespace ltbdb.DomainServices.Repository
 		public override BookDTO Add(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addBook");
-			query.SetEntities<BookDTO>(item);
+			query.SetParameter<BookDTO>(item);
 			int id = 0;
 
 			try
@@ -45,7 +45,7 @@ namespace ltbdb.DomainServices.Repository
 		public override BookDTO Get(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getBook");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
 			var result = this.Context.QueryForObject<BookDTO>(query);
 
@@ -56,7 +56,7 @@ namespace ltbdb.DomainServices.Repository
 		{
 			SqlQuery query = this.Config.CreateQuery("getBooks");
 
-			var result = this.Context.QueryForList<BookDTO>(query);
+			var result = this.Context.QueryForObjectList<BookDTO>(query);
 
 			return result;
 		}
@@ -64,7 +64,7 @@ namespace ltbdb.DomainServices.Repository
 		public override BookDTO Update(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("updateBook");
-			query.SetEntities<BookDTO>(item);
+			query.SetParameter<BookDTO>(item);
 
 			try
 			{
@@ -81,7 +81,7 @@ namespace ltbdb.DomainServices.Repository
 		public override bool Delete(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("deleteBook");
-			query.SetEntities<BookDTO>(item);
+			query.SetParameter<BookDTO>(item);
 
 			return this.Context.Delete(query) > 0;
 		}
@@ -91,9 +91,9 @@ namespace ltbdb.DomainServices.Repository
 		public IEnumerable<BookDTO> GetByTag(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getBooksByTag");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
-			var result = this.Context.QueryForList<BookDTO>(query);
+			var result = this.Context.QueryForObjectList<BookDTO>(query);
 
 			return result;
 		}
@@ -101,9 +101,9 @@ namespace ltbdb.DomainServices.Repository
 		public IEnumerable<BookDTO> GetByCategory(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getBooksByCategory");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
-			var result = this.Context.QueryForList<BookDTO>(query);
+			var result = this.Context.QueryForObjectList<BookDTO>(query);
 
 			return result;
 		}
@@ -111,9 +111,9 @@ namespace ltbdb.DomainServices.Repository
 		public IEnumerable<BookDTO> GetByTerm(string term)
 		{
 			SqlQuery query = this.Config.CreateQuery("getBookByTerm");
-			query.SetString("term", String.Format("%{0}%", term));
+			query.SetParameter("term", String.Format("%{0}%", term));
 
-			var result = this.Context.QueryForList<BookDTO>(query);
+			var result = this.Context.QueryForObjectList<BookDTO>(query);
 
 			return result;
 		}
@@ -121,7 +121,7 @@ namespace ltbdb.DomainServices.Repository
 		public IEnumerable<string> GetSuggestionList(string term)
 		{
 			SqlQuery query = this.Config.CreateQuery("getSuggestionList");
-			query.SetString("term", String.Format("%{0}%", term));
+			query.SetParameter("term", String.Format("%{0}%", term));
 
 			var result = this.Context.QueryForScalarList<string>(query);
 
@@ -131,7 +131,7 @@ namespace ltbdb.DomainServices.Repository
 		public BookDTO UpdateImage(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("updateBookImage");
-			query.SetEntities<BookDTO>(item);
+			query.SetParameter<BookDTO>(item);
 
 			try
 			{

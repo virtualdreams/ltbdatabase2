@@ -22,7 +22,7 @@ namespace ltbdb.DomainServices.Repository
 		public override TagDTO Add(TagDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addTag");
-			query.SetEntities<TagDTO>(item);
+			query.SetParameter<TagDTO>(item);
 			int id = 0;
 
 			try
@@ -41,7 +41,7 @@ namespace ltbdb.DomainServices.Repository
 		public override TagDTO Get(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getTagById");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
 			var result = this.Context.QueryForObject<TagDTO>(query);
 
@@ -52,7 +52,7 @@ namespace ltbdb.DomainServices.Repository
 		{
 			SqlQuery query = this.Config.CreateQuery("getTags");
 
-			var result = this.Context.QueryForList<TagDTO>(query);
+			var result = this.Context.QueryForObjectList<TagDTO>(query);
 
 			return result;
 		}
@@ -60,7 +60,7 @@ namespace ltbdb.DomainServices.Repository
 		public override TagDTO Update(TagDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("updateTag");
-			query.SetEntities<TagDTO>(item);
+			query.SetParameter<TagDTO>(item);
 
 			try
 			{
@@ -77,7 +77,7 @@ namespace ltbdb.DomainServices.Repository
 		public override bool Delete(TagDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("deleteTag");
-			query.SetEntities<TagDTO>(item);
+			query.SetParameter<TagDTO>(item);
 
 			return this.Context.Delete(query) > 0;
 		}
@@ -87,9 +87,9 @@ namespace ltbdb.DomainServices.Repository
 		public IEnumerable<TagDTO> GetByBook(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getTagsByBook");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
-			var result = this.Context.QueryForList<TagDTO>(query);
+			var result = this.Context.QueryForObjectList<TagDTO>(query);
 
 			return result;
 		}
@@ -97,7 +97,7 @@ namespace ltbdb.DomainServices.Repository
 		public TagDTO GetByName(string name)
 		{
 			SqlQuery query = this.Config.CreateQuery("getTagByName");
-			query.SetEntity("name", name);
+			query.SetParameter("name", name);
 
 			var result = this.Context.QueryForObject<TagDTO>(query);
 

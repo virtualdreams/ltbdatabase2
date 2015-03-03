@@ -22,7 +22,7 @@ namespace ltbdb.DomainServices.Repository
 		public override CategoryDTO Add(CategoryDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addCategory");
-			query.SetEntities<CategoryDTO>(item);
+			query.SetParameter<CategoryDTO>(item);
 			int id = 0;
 
 			try
@@ -41,7 +41,7 @@ namespace ltbdb.DomainServices.Repository
 		public override CategoryDTO Get(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getCategory");
-			query.SetEntity("id", id);
+			query.SetParameter("id", id);
 
 			var result = this.Context.QueryForObject<CategoryDTO>(query);
 
@@ -52,7 +52,7 @@ namespace ltbdb.DomainServices.Repository
 		{
 			SqlQuery query = this.Config.CreateQuery("getCategories");
 
-			var result = this.Context.QueryForList<CategoryDTO>(query);
+			var result = this.Context.QueryForObjectList<CategoryDTO>(query);
 
 			return result;
 		}
@@ -60,7 +60,7 @@ namespace ltbdb.DomainServices.Repository
 		public override CategoryDTO Update(CategoryDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("updateCategory");
-			query.SetEntities<CategoryDTO>(item);
+			query.SetParameter<CategoryDTO>(item);
 
 			try
 			{
