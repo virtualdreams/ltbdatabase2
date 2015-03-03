@@ -166,25 +166,66 @@ namespace CS.Helper
 		/// Get value from config.
 		/// </summary>
 		/// <param name="key">The config key.</param>
-		/// <returns>The value or null if not found.</returns>
-		public string GetValue(string key)
+		/// <param name="defaultValue">The default value if key not found.</param>
+		/// <returns></returns>
+		public string GetValue(string key, string defaultValue)
 		{
-			return GetValue(key, null);
+			if (String.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+			
+			if (_configValues.ContainsKey(key))
+			{
+				return _configValues[key] as string;
+			}
+			return defaultValue;
 		}
 
 		/// <summary>
 		/// Get value from config.
 		/// </summary>
+		/// <typeparam name="T">Destination type.</typeparam>
 		/// <param name="key">The config key.</param>
-		/// <param name="defaultValue">The value or defaultValue if not found.</param>
+		/// <param name="defaultValue">The default value if key not found.</param>
 		/// <returns></returns>
-		public string GetValue(string key, string defaultValue)
+		public T GetValue<T>(string key, T defaultValue) where T : IConvertible
 		{
-			if (_configValues.Contains(key))
+			if (String.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
+			if (_configValues.ContainsKey(key))
 			{
-				return _configValues[key] as string;
+				try
+				{
+					return (T)Convert.ChangeType(_configValues[key], typeof(T));
+				}
+				catch (Exception e)
+				{
+					throw new ConfigFileException(String.Format("Can't convert key '{0}' to destination type '{1}'.", key, typeof(T)), e);
+				}
 			}
 			return defaultValue;
+		}
+
+		/// <summary>
+		/// Test if key exists in config.
+		/// </summary>
+		/// <param name="key">The config key.</param>
+		/// <returns></returns>
+		public bool KeyExists(string key)
+		{
+			if (String.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
+			return _configValues.ContainsKey(key);
+		}
+
+		/// <summary>
+		/// Get all available config keys.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetKeys()
+		{
+			return _configValues.Keys.Cast<string>().ToArray();
 		}
 	}
 
@@ -192,7 +233,7 @@ namespace CS.Helper
 	/// This exception is thrown when an error in the ConfigFile occurs.
 	/// </summary>
 	/// <remarks>
-	/// This is the base exception for all exceptions thrown in the SVweb
+	/// This is the base exception for all exceptions thrown in the ConfigFile
 	/// </remarks>
 	[Serializable]
 	public class ConfigFileException : ApplicationException

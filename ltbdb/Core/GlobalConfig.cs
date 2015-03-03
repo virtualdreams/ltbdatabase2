@@ -40,23 +40,18 @@ namespace ltbdb.Core
 			Log.InfoFormat("Load configuration...");
 
 			ConfigFile cf = new ConfigFile(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
-			
-			int temp = 0;
-			if(Int32.TryParse(cf.GetValue("items_per_page", "18"), out temp))
-			{
-				this.ItemsPerPage = temp;
-				Log.InfoFormat("Set items per page to {0}", this.ItemsPerPage);
-			}
 
-			if (Int32.TryParse(cf.GetValue("recent_items", "18"), out temp))
-			{
-				this.RecentItems = temp;
-				Log.InfoFormat("Set recently added items to {0}", this.RecentItems);
-			}
+			this.ItemsPerPage = cf.GetValue<int>("items_per_page", 18);
+			Log.InfoFormat("Set items per page to {0}", this.ItemsPerPage);
 
-			this.Storage = cf.GetValue("storage", "");
+			this.RecentItems = cf.GetValue<int>("recent_items", 18);
+			Log.InfoFormat("Set recently added items to {0}", this.RecentItems);
 
-			this.GraphicsMagick = cf.GetValue("gm", "gm");
+			this.Storage = cf.GetValue<string>("storage", "");
+			Log.InfoFormat("Set storage path to {0}", this.Storage);
+
+			this.GraphicsMagick = cf.GetValue<string>("gm", "gm");
+			Log.InfoFormat("Set graphics magick executable to {0}", this.GraphicsMagick);
 
 			this.Username = cf.GetValue("username", "");
 			this.Password = cf.GetValue("password", "");
