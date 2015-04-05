@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using Singleton;
 using System.Configuration;
-using CS.Helper;
 using log4net;
+using ConfigFile;
+using CS.Helper;
 
 namespace ltbdb.Core
 {
@@ -39,22 +40,22 @@ namespace ltbdb.Core
 		{
 			Log.InfoFormat("Load configuration...");
 
-			ConfigFile cf = new ConfigFile(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
+			var config = new ConfigReader(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
 
-			this.ItemsPerPage = cf.GetValue<int>("items_per_page", 18);
+			this.ItemsPerPage = config.GetValue<int>("items_per_page", 18);
 			Log.InfoFormat("Set items per page to {0}", this.ItemsPerPage);
 
-			this.RecentItems = cf.GetValue<int>("recent_items", 18);
+			this.RecentItems = config.GetValue<int>("recent_items", 18);
 			Log.InfoFormat("Set recently added items to {0}", this.RecentItems);
 
-			this.Storage = cf.GetValue<string>("storage", "");
+			this.Storage = config.GetValue<string>("storage", "");
 			Log.InfoFormat("Set storage path to {0}", this.Storage);
 
-			this.GraphicsMagick = cf.GetValue<string>("gm", "gm");
+			this.GraphicsMagick = config.GetValue<string>("gm", "gm");
 			Log.InfoFormat("Set graphics magick executable to {0}", this.GraphicsMagick);
 
-			this.Username = cf.GetValue("username", "");
-			this.Password = cf.GetValue("password", "");
+			this.Username = config.GetValue("username", "");
+			this.Password = config.GetValue("password", "");
 			
 			Log.InfoFormat("Load configuration finished");
 		}
