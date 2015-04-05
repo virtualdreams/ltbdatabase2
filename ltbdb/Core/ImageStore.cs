@@ -151,7 +151,7 @@ namespace ltbdb.Core
 				return String.Format("/{0}/{1}", di.Name, filename);
 			}
 
-			return "/content/no-image.png";
+			return GlobalConfig.Get().NoImage.TrimStart('.');
 		}
 
 		/// <summary>
