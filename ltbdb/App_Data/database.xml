@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<provider file="./App_Data/providers.xml" />
+	<connection provider="mysql" connectionString="Server=localhost;Database=ltbdb2;Uid=root;Pwd=root;Pooling=true" />
+	<statements>
+		<include file="./App_Data/sql/general.xml" />
+	</statements>
+</configuration>

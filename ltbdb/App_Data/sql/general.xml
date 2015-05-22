@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sqlMap>
-	<select id="getBooks">
+<statements>
+	<statement id="getBooks">
 		<![CDATA[
 		SELECT 
 			bookid as id,
@@ -23,9 +23,9 @@
 		ORDER BY	
 			b.number asc
 		]]>
-	</select>
+	</statement>
 
-	<insert id="addBook">
+	<statement id="addBook">
 		<![CDATA[
 		insert into
 			books
@@ -45,9 +45,9 @@
 			NOW()
 		)
 		]]>
-	</insert>
+	</statement>
 
-	<update id="updateBook">
+	<statement id="updateBook">
 		<![CDATA[
 		update
 			books
@@ -59,17 +59,17 @@
 		where
 			bookid = @id
 		]]>
-	</update>
-	<delete id="deleteBook">
+	</statement>
+	<statement id="deleteBook">
 		<![CDATA[
 		delete from
 			books
 		where
 			bookid = @id
 		]]>
-	</delete>
+	</statement>
 
-	<update id="updateBookImage">
+	<statement id="updateBookImage">
 		<![CDATA[
 		update
 			books
@@ -78,9 +78,9 @@
 		where
 			bookid = @id
 		]]>
-	</update>
-	
-	<select id="getCategories">
+	</statement>
+
+	<statement id="getCategories">
 		<![CDATA[
 		select
 			catid as id,
@@ -88,8 +88,8 @@
 		from
 			categories
 		]]>
-	</select>
-	<select id="getCategory">
+	</statement>
+	<statement id="getCategory">
 		<![CDATA[
 		select
 			catid as id,
@@ -99,9 +99,9 @@
 		where
 			catid = @id
 		]]>
-	</select>
+	</statement>
 
-	<insert id="addCategory">
+	<statement id="addCategory">
 		<![CDATA[
 		insert into
 			categories
@@ -113,8 +113,8 @@
 			@name
 		)
 		]]>
-	</insert>
-	<update id="updateCategory">
+	</statement>
+	<statement id="updateCategory">
 		<![CDATA[
 		update 
 			categories
@@ -123,9 +123,9 @@
 		where
 			catid = @id
 		]]>
-	</update>
-	
-	<select id="getTags">
+	</statement>
+
+	<statement id="getTags">
 		<![CDATA[
 		select
 			t.tagid as id,
@@ -140,8 +140,8 @@
 		group by
 			t.tagid
 		]]>
-	</select>
-	<select id="getTagById">
+	</statement>
+	<statement id="getTagById">
 		<![CDATA[
 		select
 			t.tagid as id,
@@ -158,8 +158,8 @@
 		group by
 			t.tagid
 		]]>
-	</select>
-	<select id="getTagByName">
+	</statement>
+	<statement id="getTagByName">
 		<![CDATA[
 		select
 			t.tagid as id,
@@ -176,8 +176,8 @@
 		group by
 			t.tagid
 		]]>
-	</select>
-	<select id="getTagsByBook">
+	</statement>
+	<statement id="getTagsByBook">
 		<![CDATA[
 		select
 			t.tagid as id,
@@ -202,8 +202,8 @@
 		group by
 			t.tagid
 		]]>
-	</select>
-	<insert id="addTag">
+	</statement>
+	<statement id="addTag">
 		<![CDATA[
 		insert into
 			tags
@@ -215,8 +215,8 @@
 			@name
 		)
 		]]>
-	</insert>
-	<update id="updateTag">
+	</statement>
+	<statement id="updateTag">
 		<![CDATA[
 		update
 			tags
@@ -225,19 +225,19 @@
 		where
 			tagid = @id
 		]]>
-	</update>
-	<delete id="deleteTag">
+	</statement>
+	<statement id="deleteTag">
 		<![CDATA[
 		delete from
 			tags
 		where
 			tagid = @id
 		]]>
-	</delete>
+	</statement>
 	
 	<!-- tag 2 book links -->
-	
-	<select id="getTag2Book">
+
+	<statement id="getTag2Book">
 		<![CDATA[
 		select
 			tag2book as id,
@@ -248,8 +248,8 @@
 		where
 			tag2book = @id
 		]]>
-	</select>
-	<insert id="addTag2Book">
+	</statement>
+	<statement id="addTag2Book">
 		<![CDATA[
 		insert into
 			tag2book
@@ -263,8 +263,8 @@
 			@bookid
 		)
 		]]>
-	</insert>
-	<delete id="deleteTag2Book">
+	</statement>
+	<statement id="deleteTag2Book">
 		<![CDATA[
 		delete from
 			tag2book
@@ -272,11 +272,11 @@
 			tagid = @tagid
 			and bookid = @bookid
 		]]>
-	</delete>
+	</statement>
 	
 	<!-- books -->
-	
-	<select id="getBook">
+
+	<statement id="getBook">
 		<![CDATA[
 		SELECT 
 			bookid as id,
@@ -299,8 +299,8 @@
 		where
 			bookid = @id
 		]]>
-	</select>
-	<select id="getBooksByTag">
+	</statement>
+	<statement id="getBooksByTag">
 		<![CDATA[
 		select
 			b.bookid as id,
@@ -333,8 +333,8 @@
 		ORDER BY	
 			b.number asc
 		]]>
-	</select>
-	<select id="getBooksByCategory">
+	</statement>
+	<statement id="getBooksByCategory">
 		<![CDATA[
 		select
 			b.bookid as id,
@@ -359,11 +359,11 @@
 		ORDER BY	
 			b.number asc
 		]]>
-	</select>
+	</statement>
 	
 	<!-- search -->
-	
-	<select id="getBookByTerm">
+
+	<statement id="getBookByTerm">
 		<![CDATA[
 		SELECT distinct
 			b.bookid as id, 
@@ -390,8 +390,8 @@
 		ORDER BY 
 			b.number ASC
 		]]>
-	</select>
-	<select id="getSuggestionList">
+	</statement>
+	<statement id="getSuggestionList">
 		<![CDATA[
 		SELECT DISTINCT 
 			name
@@ -401,10 +401,10 @@
 			name LIKE @term
 		ORDER BY name
 		]]>
-	</select>
-	<select id="getLastInsertId">
+	</statement>
+	<statement id="getLastInsertId">
 		<![CDATA[
 		select last_insert_id()
 		]]>
-	</select>
-</sqlMap>
+	</statement>
+</statements>

@@ -1,4 +1,5 @@
-﻿using SqlDataMapper;
+﻿using CS.Helper;
+using SqlDataMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace ltbdb.Core
 			HttpApplication application = (HttpApplication)sender;
 			HttpContext httpContext = application.Context;
 
-			SqlConfig config = new SqlConfig();
+			SqlConfig config = new SqlConfig(IOHelper.ConvertToFullPath(GlobalConfig.Get().Database));
 
 			httpContext.Items.Add("config", config);
 			httpContext.Items.Add("context", config.CreateContext());

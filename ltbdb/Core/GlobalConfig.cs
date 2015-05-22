@@ -26,6 +26,7 @@ namespace ltbdb.Core
 		
 		#region Public members
 
+		public string Database { get; private set; }
 		public int ItemsPerPage { get; private set; }
 		public int RecentItems { get; private set; }
 		public string Username { get; private set; }
@@ -42,6 +43,9 @@ namespace ltbdb.Core
 			Log.InfoFormat("Load configuration...");
 
 			var config = new ConfigReader(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
+
+			this.Database = config.GetValue<string>("database", "");
+			Log.InfoFormat("Set database configuration to {0}", this.Database);
 
 			this.ItemsPerPage = config.GetValue<int>("items_per_page", 18);
 			Log.InfoFormat("Set items per page to {0}", this.ItemsPerPage);

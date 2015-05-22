@@ -56,9 +56,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SqlDataMapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SqlDataMapper.dll.2.5.0-beta8\lib\SqlDataMapper.dll</HintPath>
+    <Reference Include="SqlDataMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlDataMapper.dll.3.0.0\lib\SqlDataMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -231,7 +231,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Services\Database.asmx" />
-    <Content Include="SqlMapperConfig.xml" />
+    <Content Include="App_Data\database.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
