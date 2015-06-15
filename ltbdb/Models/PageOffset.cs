@@ -11,28 +11,15 @@ namespace ltbdb.Models
 		public bool HasPrevious { get; private set; }
 		public bool HasNext { get; private set; }
 		public int PageSize { get; private set; }
+		public int Items { get; private set; }
 
 		public PageOffset(int pageOffset, int pageSize, int items)
 		{
-			if (pageSize < 0)
-				PageSize = 0;
-			else
-				PageSize = pageSize;
-
-			if (pageOffset < 0)
-				Offset = 0;
-			else
-				Offset = pageOffset;
-
-			if (Offset == 0)
-				HasPrevious = false;
-			else
-				HasPrevious = true;
-
-			if (Offset + PageSize < items)
-				HasNext = true;
-			else
-				HasNext = false;
+			Items = (items < 0) ? 0 : items;
+			PageSize = (pageSize < 0) ? 0 : pageSize;
+			Offset = (pageOffset < 0) ? 0 : pageOffset;
+			HasPrevious = (Offset == 0) ? false : true;
+			HasNext = (Offset + PageSize < Items) ? true : false;
 		}
 	}
 }

@@ -7,24 +7,29 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Alle Inhalte</h2>
-<ul class="book">
-	@foreach (BookModel book in Model.Books) {
-		<li>
-			<a href="@Url.Action("view", "book", new { id = @book.Id })">
-				<div style="min-height: 120px;">
-					<img src="@ImageStore.GetWebPath(book.Filename, true)" />
-				</div>
-				<span>Nr. @book.Number - @book.Name</span>
-			</a>
-		</li>
-	 }
-</ul>
-<div class="pager">
-	@if(Model.PageOffset.HasPrevious) {
-		<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
-	}
-	@if(Model.PageOffset.HasNext) {
-		<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
-	}
+<div style="position: relative;">
+	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
+		Anzahl Bücher in allen Kategorien: @Model.PageOffset.Items
+	</div>
+	<h2>Alle Inhalte</h2>
+	<ul class="book">
+		@foreach (BookModel book in Model.Books) {
+			<li>
+				<a href="@Url.Action("view", "book", new { id = @book.Id })">
+					<div style="min-height: 120px;">
+						<img src="@ImageStore.GetWebPath(book.Filename, true)" />
+					</div>
+					<span>Nr. @book.Number - @book.Name</span>
+				</a>
+			</li>
+		 }
+	</ul>
+	<div class="pager">
+		@if(Model.PageOffset.HasPrevious) {
+			<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+		}
+		@if(Model.PageOffset.HasNext) {
+			<a href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+		}
+	</div>
 </div>
