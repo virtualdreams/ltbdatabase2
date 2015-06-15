@@ -2,7 +2,11 @@
 @using ltbdb.Models
 
 @{
-	ViewBag.Title = "Bearbeiten | Lustiges Taschenbuch - Datenbank";
+	if(Model.Category.Id == 0) {
+		ViewBag.Title = "Neue Kategorie | Lustiges Taschenbuch - Datenbank";
+	} else {
+		ViewBag.Title = String.Format("{0} | Lustiges Taschenbuch - Datenbank", Model.Category.Name);
+	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

@@ -3,7 +3,11 @@
 @using ltbdb.Core
 
 @{
-	ViewBag.Title = "Bearbeiten | Lustiges Taschenbuch - Datenbank";
+	if(Model.Book.Id == 0) {
+		ViewBag.Title = "Neues Buch | Lustiges Taschenbuch - Datenbank";
+	} else {
+		ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.CategoryName);
+	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
