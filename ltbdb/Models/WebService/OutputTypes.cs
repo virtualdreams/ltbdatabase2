@@ -14,6 +14,7 @@ namespace ltbdb.Models.WebService
 		public DateTime Created { get; set; }
 		public string[] Stories { get; set; }
 		public Tag[] Tags { get; set; }
+		public string Thumbnail { get; set; }
 	}
 
 	public class Tag

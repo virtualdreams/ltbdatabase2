@@ -129,7 +129,8 @@ namespace ltbdb
 
 			//Domain -> WebService / REST
 			Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
-				.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }));
+				.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }))
+				.ForMember(d => d.Thumbnail, map => map.MapFrom(s => ImageStore.Exists(s.Filename, true) ? String.Format("{0}://{1}{2}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Authority, ImageStore.GetWebPath(s.Filename, true)) : null));
 
 			Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()
 				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
