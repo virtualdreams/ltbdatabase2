@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
+    <Compile Include="Core\Filter\LogErrorAttribute.cs" />
     <Compile Include="Core\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\ConfigFile.cs" />
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\VersionInfo.cs" />
@@ -298,7 +300,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61124</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

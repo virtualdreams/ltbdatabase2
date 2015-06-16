@@ -9,6 +9,8 @@ using System.Web.Security;
 
 namespace ltbdb.Controllers
 {
+	[LogError(Order = 0)]
+	[HandleError(View = "Error", Order = 99)]
     public class AccountController : Controller
     {
         [HttpGet]

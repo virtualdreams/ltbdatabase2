@@ -13,6 +13,7 @@ using System.Web.Routing;
 using ltbdb.Core;
 using ltbdb.Controllers;
 using System.IO;
+using log4net;
 
 namespace ltbdb
 {
@@ -20,6 +21,8 @@ namespace ltbdb
 	// finden Sie unter "http://go.microsoft.com/?LinkId=9394801".
 	public class MvcApplication : System.Web.HttpApplication
 	{
+		private static readonly ILog Log = LogManager.GetLogger(typeof(MvcApplication));
+
 		protected void Application_Start()
 		{
 			log4net.Config.XmlConfigurator.Configure(new FileInfo(IOHelper.ConvertToFullPath("./App_Data/log4net.xml")));
@@ -51,6 +54,8 @@ namespace ltbdb
 		private void ExceptionHandler(Exception ex)
 		{
 			HttpException exception = ex as HttpException ?? new HttpException(500, "Internal Server Error", ex);
+
+			Log.Fatal("ExceptionHandler", exception);
 
 			Response.Clear();
 			Server.ClearError();

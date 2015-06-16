@@ -12,7 +12,8 @@ using ltbdb.Core;
 
 namespace ltbdb.Controllers
 {
-	[HandleError(View = "Error")]
+	[LogError(Order = 0)]
+	[HandleError(View = "Error", Order=99)]
     public class BookController : Controller
     {
 		[HttpGet]

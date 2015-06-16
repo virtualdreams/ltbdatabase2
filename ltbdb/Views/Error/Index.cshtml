@@ -1,4 +1,4 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model ltbdb.Models.ErrorModel
 
 @{
 	ViewBag.Title = "Fehler | Lustiges Taschenbuch - Datenbank";
@@ -8,14 +8,16 @@
 <h2>Das hat leider nicht geklappt.</h2>
 <div style="margin-bottom: 10px;">
 	<div>
-		Es ist ein unerwarteter Fehler aufgetreten.
+		Es ist ein unerwarteter Fehler aufgetreten. Bitte kontaktieren Sie den Seitenadministrator.
 	</div>
+	@if(HttpContext.Current.IsDebuggingEnabled) {
 	<div style="margin-top: 20px; margin-bottom: 20px; font-size: 9pt; cursor: pointer;" id="exception_display">
 		Technische Details
 	</div>
 	<code id="exception_details" style="display: none; margin-top: 10px;">
 		@Model.Exception
 	</code>
+	}
 </div>
 <script type="text/javascript">
 	$(function () {

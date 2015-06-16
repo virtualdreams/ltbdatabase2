@@ -12,7 +12,8 @@ using System.Web.Mvc;
 
 namespace ltbdb.Controllers
 {
-	[HandleError(View = "Error")]
+	[LogError(Order = 0)]
+	[HandleError(View = "Error", Order=99)]
     public class HomeController : Controller
     {
 		private static readonly ILog Log = LogManager.GetLogger(typeof(HomeController));
