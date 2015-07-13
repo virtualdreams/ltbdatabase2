@@ -41,7 +41,7 @@
 					<select name="category">
 						@foreach (var category in Model.Categories)
 						{
-							<option value="@category.Id" @(Model.Book.Category == category.Id ? "selected=\"selected\"" : "")>@category.Name</option>
+							<option value="@category.Id" @(Model.Book.Category == category.Id ? Html.Raw("selected=\"selected\"") : Html.Raw(""))>@category.Name</option>
 						}
 					</select> @Html.ValidationMessage("category")
 				</div>
@@ -74,12 +74,12 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img style="cursor: pointer;" id="image" src="@ImageStore.GetWebPath(Model.Book.Filename, true)" />
+			<img style="cursor: pointer;" id="image" src="@ImageStore.GetWebPath(Model.Book.Filename, true)" alt="Cover" />
 			<input type="hidden" name="filename" value="@ImageStore.GetWebPath(Model.Book.Filename)" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
-				<a id="image-delete" href="#" title="Bild löschen."><img src="~/Content/bin.png" /></a>
-				<a id="image-reset" href="#" title="Bild zurücksetzen."><img src="~/Content/cancel.png" /></a>
+				<a id="image-delete" href="#" title="Bild löschen."><img src="~/Content/bin.png" alt="" /></a>
+				<a id="image-reset" href="#" title="Bild zurücksetzen."><img src="~/Content/cancel.png" alt="" /></a>
 			</div>
 		</div>
 	</div>

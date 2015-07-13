@@ -106,7 +106,7 @@ $(function() {
 	});
 
 	var tag_template = '<div class="tag" style="position: relative;">\
-							<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen."><img src="/Content/link_break.png" /></a>\
+							<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen."><img src="/Content/link_break.png" alt="" /></a>\
 							<a href="/tag/view/{1}" title="Referenzen: {3}">{0}</a>\
 						</div>';
 

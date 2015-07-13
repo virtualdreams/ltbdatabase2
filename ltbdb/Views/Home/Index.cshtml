@@ -13,7 +13,7 @@
 	<li>
 		<a href="@Url.Action("view", "book", new { id = @book.Id })">
 			<div style="min-height: 120px;">
-				<img src="@ImageStore.GetWebPath(book.Filename, true)" />
+				<img src="@ImageStore.GetWebPath(book.Filename, true)" alt="Cover" />
 			</div>
 			<span>Nr. @book.Number - @book.Name</span>
 		</a>

@@ -32,7 +32,7 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<a id="image-big" href="@ImageStore.GetWebPath(Model.Book.Filename)" title="Nr. @Model.Book.Number - @Model.Book.Name (@Model.Book.CategoryName)" data-jbox-image="image">
-				<img src="@ImageStore.GetWebPath(Model.Book.Filename, true)" />
+				<img src="@ImageStore.GetWebPath(Model.Book.Filename, true)" alt="Cover" />
 			</a>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 		{
 		<div class="tag" style="position: relative;">
 			@if(Request.IsAuthenticated) {
-			<a class="tag-remove" href="@Url.Action("unlink", "tag", new { id = tag.Id, bookid = Model.Book.Id })" title="Tag entfernen."><img src="~/Content/link_break.png" /></a>	
+			<a class="tag-remove" href="@Url.Action("unlink", "tag", new { id = tag.Id, bookid = Model.Book.Id })" title="Tag entfernen."><img src="~/Content/link_break.png" alt="" /></a>	
 			}
 			<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		</div>

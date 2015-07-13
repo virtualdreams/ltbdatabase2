@@ -14,8 +14,8 @@
 		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
-			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" /></a>
-			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" /></a>
+			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" alt="" /></a>
+			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" alt="" /></a>
 		</div>
 		}
 	</div>
