@@ -1,4 +1,4 @@
-﻿using CS.Helper;
+﻿using ltbdb.Core.Helpers;
 using SqlDataMapper;
 using System;
 using System.Collections.Generic;

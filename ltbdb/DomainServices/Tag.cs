@@ -1,7 +1,7 @@
-﻿using CS.Helper;
-using AutoMapper;
+﻿using AutoMapper;
 using ltbdb.DomainServices.DTO;
 using ltbdb.DomainServices.Repository;
+using ltbdb.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace CS.Helper
+namespace ltbdb.Core.Helpers
 {
 	static public class GraphicsMagick
 	{

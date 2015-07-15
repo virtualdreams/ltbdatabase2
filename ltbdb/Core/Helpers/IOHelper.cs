@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 
-namespace CS.Helper
+namespace ltbdb.Core.Helpers
 {
 	/// <summary>
 	/// Helpers for file IO

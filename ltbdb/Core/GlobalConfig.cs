@@ -6,7 +6,7 @@ using Singleton;
 using System.Configuration;
 using log4net;
 using ConfigFile;
-using CS.Helper;
+using ltbdb.Core.Helpers;
 
 namespace ltbdb.Core
 {

@@ -133,6 +133,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BookController.cs" />
     <Compile Include="Controllers\Api\CategoryController.cs" />
@@ -152,7 +153,7 @@
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
-    <Compile Include="Core\Helpers\StringHelper.cs" />
+    <Compile Include="Core\Helpers\StringExtensions.cs" />
     <Compile Include="Core\ImageStore.cs" />
     <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace CS.Helper
+namespace ltbdb.Core.Helpers
 {
-	static public class StringHelper
+	static public class StringExtensions
 	{
 		/// <summary>
 		/// Escape string for mysql.
