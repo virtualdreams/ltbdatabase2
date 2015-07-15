@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -10,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace ConfigFile
 {
 	/// <summary>
-	/// Class to read simple line based configuration based on keys and values.
+	/// Class to read simple line based configuration based on key value pairs.
 	/// 
 	/// Lines beginning with '#' or ';' are treated as comments.
 	/// Empty lines are ignored.
@@ -56,7 +57,10 @@ namespace ConfigFile
 	/// </summary>
 	public class ConfigReader
 	{
-		private Hashtable _configValues = new Hashtable();
+		/// <summary>
+		/// Hold the key value pairs.
+		/// </summary>
+		protected Hashtable _configValues = new Hashtable();
 		
 		/// <summary>
 		/// Occurs before a new key is added.
@@ -75,7 +79,7 @@ namespace ConfigFile
 		{ }
 
 		/// <summary>
-		/// Initialize new instance and read the config file.
+		/// Initialize new instance and read the configuration file.
 		/// </summary>
 		/// <param name="filename"></param>
 		public ConfigReader(string filename)
@@ -84,51 +88,83 @@ namespace ConfigFile
 			{
 				throw new ArgumentNullException(filename);
 			}
-			Read(filename);
+			Open(filename);
+		}
+
+		/// <summary>
+		/// Initialize new instance and read the stream.
+		/// </summary>
+		/// <param name="stream"></param>
+		public ConfigReader(Stream stream)
+		{
+			if (stream == null)
+				throw new ArgumentException("stream");
+
+			Open(stream);
 		}
 
 		/// <summary>
 		/// Open configuration file and clear existing values.
 		/// </summary>
 		/// <param name="filename"></param>
-		public void Read(string filename)
+		public void Open(string filename)
 		{
 			if (!File.Exists(filename))
-				return;
+				throw new FileNotFoundException("File not found.", filename);
 
-			Read(File.OpenRead(filename));
+			_configValues.Clear();
+
+			Parse(() => File.OpenRead(filename));
 		}
 
 		/// <summary>
 		/// Read stream and clear existing values.
 		/// </summary>
 		/// <param name="stream"></param>
-		public void Read(Stream stream)
+		public void Open(Stream stream)
 		{
+			if (stream == null)
+				throw new ArgumentException("stream");
+
 			_configValues.Clear();
 
-			Parse(() => stream);
+			using (var ms = new MemoryStream())
+			{
+				stream.CopyTo(ms);
+				ms.Position = 0;
+
+				Parse(() => ms);
+			}
 		}
 
 		/// <summary>
 		/// Open configuration file and add values.
 		/// </summary>
 		/// <param name="filename"></param>
-		public void Add(string filename)
+		public void Append(string filename)
 		{
 			if (!File.Exists(filename))
-				return;
+				throw new FileNotFoundException("File not found.", filename);
 
-			Add(File.OpenRead(filename));
+			Parse(() => File.OpenRead(filename));
 		}
 
 		/// <summary>
 		/// Read stream and add values.
 		/// </summary>
 		/// <param name="stream"></param>
-		public void Add(Stream stream)
+		public void Append(Stream stream)
 		{
-			Parse(() => stream);
+			if (stream == null)
+				throw new ArgumentException("stream");
+
+			using (var ms = new MemoryStream())
+			{
+				stream.CopyTo(ms);
+				ms.Position = 0;
+
+				Parse(() => ms);
+			}
 		}
 
 		/// <summary>
@@ -153,35 +189,33 @@ namespace ConfigFile
 		/// <summary>
 		/// Read a stream and parse.
 		/// </summary>
-		/// <param name="filename"></param>
+		/// <param name="stream">The stream.</param>
 		private void Parse(Func<Stream> stream)
 		{
-			var lines = this.ReadAllLines(stream);
+			var linenumber = 0;
+			var key = "";
+			var value = "";
+			var continuation = false;
 
-			int fline = 0;
-			string key = "";
-			string value = "";
-			bool continuation = false;
-
-			foreach (string line in lines)
+			foreach (var cline in this.ReadAllLines(stream))
 			{
-				fline++;
+				linenumber++;
 
-				string c = line.Trim();
+				var line = cline.Trim();
 
 				// Test for comments or empty lines
-				if (c.StartsWith("#") || c.StartsWith(";") || c.Length == 0)
+				if (line.StartsWith("#") || line.StartsWith(";") || line.Length == 0)
 				{
 					continue;
 				}
 
 				// Split to <key> = <value> pair
-				string[] pair = c.Split(new char[] { '=' }, 2);
+				string[] pair = line.Split(new char[] { '=' }, 2);
 
 				// Test for one part and not in continuation mode
 				if (pair.Length == 1 && !continuation)
 				{
-					throw new ConfigException(String.Format("No key value pair found on line {0}.", fline));
+					throw new ConfigException(String.Format("No key value pair found on line {0}.", linenumber));
 				}
 
 				// Test for two parts not in continuation mode
@@ -192,25 +226,25 @@ namespace ConfigFile
 
 					if (String.IsNullOrEmpty(key))
 					{
-						throw new ConfigException(String.Format("The key is null on line {0}.", fline));
+						throw new ConfigException(String.Format("The key is null on line {0}.", linenumber));
 					}
 
 					if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
 					{
-						throw new ConfigException(String.Format("The key format for '{0}' is invalid on line {1}.", key, fline));
+						throw new ConfigException(String.Format("The key format for '{0}' is invalid on line {1}.", key, linenumber));
 					}
 				}
 
 				// Test for continuation mode
 				if (continuation)
 				{
-					value = String.Concat(value, c);
+					value = String.Concat(value, line);
 				}
 
 				// Test for trailing backslash
 				if (value.EndsWith("\\"))
 				{
-					value = value.Substring(0, value.Length - 1);
+					value = value.TrimEnd('\\'); //.Substring(0, value.Length - 1);
 					continuation = true;
 					continue;
 				}
@@ -218,7 +252,7 @@ namespace ConfigFile
 				// Test for surrounding double quotes
 				if (value.StartsWith("\"") && value.EndsWith("\""))
 				{
-					value = value.Substring(1, value.Length - 2);
+					value = value.Trim('\"'); //.Substring(1, value.Length - 2);
 				}
 				
 				// escape newline and replace escaped newline
@@ -227,7 +261,7 @@ namespace ConfigFile
 
 				// Add the <key> = <value> to store or override
 				var e = new ConfigReaderEventArgs(key, value);
-				if (!_configValues.Contains(key))
+				if (!_configValues.ContainsKey(key))
 				{
 					if (OnKeyAdd != null)
 						OnKeyAdd(this, e);
@@ -251,29 +285,24 @@ namespace ConfigFile
 		/// <summary>
 		/// Get value from configuration.
 		/// </summary>
-		/// <param name="key">The config key.</param>
+		/// <typeparam name="T">Destination type.</typeparam>
+		/// <param name="key">The configuration key.</param>
 		/// <param name="defaultValue">The default value if key not found.</param>
 		/// <returns></returns>
-		public string GetValue(string key, string defaultValue)
+		public T GetValue<T>(string key, T defaultValue) where T : IConvertible
 		{
-			if (String.IsNullOrEmpty(key))
-				throw new ArgumentNullException("key");
-			
-			if (_configValues.ContainsKey(key))
-			{
-				return _configValues[key] as string;
-			}
-			return defaultValue;
+			return GetValue<T>(key, defaultValue, CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
 		/// Get value from configuration.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
-		/// <param name="key">The config key.</param>
+		/// <param name="key">The configuration key.</param>
 		/// <param name="defaultValue">The default value if key not found.</param>
+		/// <param name="provider">The format provider.</param>
 		/// <returns></returns>
-		public T GetValue<T>(string key, T defaultValue) where T : IConvertible
+		public T GetValue<T>(string key, T defaultValue, IFormatProvider provider) where T : IConvertible
 		{
 			if (String.IsNullOrEmpty(key))
 				throw new ArgumentNullException("key");
@@ -282,7 +311,7 @@ namespace ConfigFile
 			{
 				try
 				{
-					return (T)Convert.ChangeType(_configValues[key], typeof(T));
+					return (T)Convert.ChangeType(_configValues[key], typeof(T), provider);
 				}
 				catch (FormatException e)
 				{
@@ -293,9 +322,50 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Test if key exists in config.
+		/// Try to get value from configuration.
+		/// If the key does not exists, a exception is thrown.
 		/// </summary>
-		/// <param name="key">The config key.</param>
+		/// <typeparam name="T">Destination type.</typeparam>
+		/// <param name="key">The configuration key.</param>
+		/// <returns>Throws a exception if the key not found.</returns>
+		public T TryGetValue<T>(string key) where T : IConvertible
+		{
+			return TryGetValue<T>(key, CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// Try to get value from configuration.
+		/// If the key does not exists, a exception is thrown.
+		/// </summary>
+		/// <typeparam name="T">Destination type.</typeparam>
+		/// <param name="key">The configuration key.</param>
+		/// <param name="provider">The format provider.</param>
+		/// <returns>Throws a exception if the key not found.</returns>
+		public T TryGetValue<T>(string key, IFormatProvider provider) where T : IConvertible
+		{
+			if(String.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key");
+			}
+
+			if(_configValues.ContainsKey(key))
+			{
+				try
+				{
+					return (T)Convert.ChangeType(_configValues[key], typeof(T), provider);
+				}
+				catch (FormatException e)
+				{
+					throw new ConfigException(String.Format("Can't convert key '{0}' to destination type '{1}'.", key, typeof(T)), e);
+				}
+			}
+			throw new ConfigException("The configuration key does not exists.");
+		}
+
+		/// <summary>
+		/// Test if the key exists in configuration.
+		/// </summary>
+		/// <param name="key">The configuration key.</param>
 		/// <returns></returns>
 		public bool KeyExists(string key)
 		{
@@ -306,12 +376,156 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Get all available config keys.
+		/// Get all available configuration keys.
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<string> GetKeys()
 		{
-			return _configValues.Keys.Cast<string>().ToArray();
+			return _configValues.Keys.Cast<string>();
+		}
+
+		/// <summary>
+		/// Get all available configuration values.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<string> GetValues()
+		{
+			return _configValues.Values.Cast<string>();
+		}
+	}
+
+	/// <summary>
+	/// Class to write simple line based configuration based on key values pairs.
+	/// </summary>
+	public class ConfigWriter : ConfigReader
+	{
+		//private Hashtable _configValues = new Hashtable();
+
+		/// <summary>
+		/// Initialize new configuration writer.
+		/// </summary>
+		public ConfigWriter()
+		{ }
+
+		/// <summary>
+		/// Initialize new configuration writer and read in an existing reader.
+		/// </summary>
+		/// <param name="reader">The configuration reader.</param>
+		public ConfigWriter(ConfigReader reader)
+			: this(reader, CultureInfo.InvariantCulture)
+		{ }
+
+		/// <summary>
+		/// Initialize new configuration writer and read in an existing reader.
+		/// </summary>
+		/// <param name="reader">The configuration reader.</param>
+		/// <param name="provider">The format provider.</param>
+		public ConfigWriter(ConfigReader reader, IFormatProvider provider)
+		{
+			if (reader == null)
+				throw new ArgumentNullException("reader");
+
+			if (provider == null)
+				throw new ArgumentNullException("provider");
+
+			foreach (var key in reader.GetKeys())
+			{
+				AddValue<string>(key, reader.GetValue<string>(key, ""), provider);
+			}
+		}
+
+		/// <summary>
+		/// Save configuration to file.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		public void Save(string filename)
+		{
+			using (var stream = File.Open(filename, FileMode.Create, FileAccess.Write, FileShare.None))
+			{
+				Writer(stream);
+			}
+		}
+
+		/// <summary>
+		/// Save configuration to stream.
+		/// </summary>
+		/// <param name="stream">The stream.</param>
+		public void Save(Stream stream)
+		{
+			Writer(stream);
+		}
+
+		/// <summary>
+		/// Write key value pair to stream.
+		/// </summary>
+		/// <param name="stream">The stream.</param>
+		private void Writer(Stream stream)
+		{
+			var writer = new StreamWriter(stream);
+
+			foreach (var key in _configValues.Keys)
+			{
+				writer.WriteLine(String.Format("{0} = {1}", key, Prepare((string)_configValues[key])));
+			}
+
+			writer.Flush();
+		}
+
+		/// <summary>
+		/// Add or set a key value pair.
+		/// </summary>
+		/// <typeparam name="T">Type of value.</typeparam>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		public void AddValue<T>(string key, T value) where T : IConvertible
+		{
+			AddValue<T>(key, value, CultureInfo.InvariantCulture);
+		}
+
+		/// <summary>
+		/// Add or set a key value pair.
+		/// </summary>
+		/// <typeparam name="T">Type of value.</typeparam>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		/// <param name="provider">The format provider.</param>
+		public void AddValue<T>(string key, T value, IFormatProvider provider) where T : IConvertible
+		{
+			if (String.IsNullOrEmpty(key))
+			{
+				throw new ConfigException(String.Format("The key is null or empty."));
+			}
+
+			if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
+			{
+				throw new ConfigException(String.Format("The key format for '{0}' is invalid.", key));
+			}
+
+			if (!_configValues.ContainsKey(key))
+			{
+				_configValues.Add(key, String.Format(provider, "{0}", value));
+			}
+			else
+			{
+				_configValues[key] = String.Format(provider, "{0}", value);
+			}
+		}
+
+		/// <summary>
+		/// Prepare value.
+		/// </summary>
+		/// <param name="input">The value.</param>
+		/// <returns>The prepared value.</returns>
+		private string Prepare(string input)
+		{
+			input = input.Replace("\n", "\\n");
+
+			if (Char.IsWhiteSpace(input.FirstOrDefault()) || Char.IsWhiteSpace(input.LastOrDefault()))
+			{
+				input = String.Format("\"{0}\"", input);
+			}
+
+			return input;
 		}
 	}
 
@@ -335,6 +549,12 @@ namespace ConfigFile
 		/// </summary>
 		public bool Decline { get; set; }
 
+		/// <summary>
+		/// Initialize new event arguments.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		/// <param name="decline">Decline value.</param>
 		public ConfigReaderEventArgs(string key, string value, bool decline = false)
 		{
 			Key = key;
