@@ -190,10 +190,6 @@
     <Compile Include="Models\Container\BookViewSearchContainer.cs" />
     <Compile Include="Models\Container\BookViewTagContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Database.asmx.cs">
-      <DependentUpon>Database.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Models\WebService\OutputTypes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -233,7 +229,6 @@
     <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
-    <Content Include="Services\Database.asmx" />
     <Content Include="App_Data\database.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
