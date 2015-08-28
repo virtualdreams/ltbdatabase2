@@ -11,30 +11,60 @@ using System.Text.RegularExpressions;
 namespace ConfigFile
 {
 	/// <summary>
-	/// Class to read simple line based configuration based on key value pairs.
+	/// Class to read a simple line based configuration [file] based on key and value pairs.
 	/// 
-	/// Lines beginning with '#' or ';' are treated as comments.
-	/// Empty lines are ignored.
-	/// Line contains a '=' are treated as a key = value - pair. Values can
-	/// continued by placing a leading backslash at the of the line. Comment
-	/// lines may appear in the middle of a sequence of continuation lines.
+	/// Lines beginning with '#' or ';' are treated as comments, empty lines are ignored.
 	/// 
-	/// The key format must be "^[a-zA-Z_][a-zA-Z0-9_.]*$".
+	/// Lines contain a '=' are treated as a key and value pair.
+	/// Values can be continued by placing a trailing backslash at the end of the line.
+	/// This backslash is removed from the current line.
+	/// Comment lines or empty lines may appear in the middle of a sequence of continuation lines.
 	/// 
-	/// Trailing and leading whitespaces are ignored in each line, key and value.
+	/// The key format must be in form of "[a-zA-Z_][a-zA-Z0-9_.]*".
+	/// 
+	/// Leading and trailing whitespaces are ignored for keys and values.
 	/// 
 	/// If you want to preserve leading or trailing whitespaces of a value,
-	/// sourround it with double quotes ('"').
+	/// surround it with double quotes ('"').
 	/// 
-	/// The value can contain a '\n' for a newline. You can escape this with '\\n'.
+	/// If you want to ignore a trailing backslash, surround the value with double
+	/// quotes.
+	/// 
+	/// The value can contain some escape characters:
+	/// \n -> newline
+	/// \t -> tabulator
+	/// \\ -> escape the backslash
+	/// 
+	/// Unknown or empty escape characters throws an error.
+	/// 
+	/// A value can also defined as a here document. Such a value begins with
+	/// two left angle bracket followed by a stopword ([a-zA-Z][a-zA-Z0-9]*). The parser reads
+	/// the input as is until the stopword.
+	/// 
+	/// In this mode, comment lines and empty lines are NOT ignored. Leading and trailing
+	/// whitespace is NOT removed and no escape sequence is processed.
+	/// 
+	/// The stopword must appear in a single line with no leading or trailing whitespace.
+	/// 
+	/// If you don't want start the inline mode, surround the value with double quotes.
+	/// 
+	/// Example:
+	/// 
+	/// <![CDATA[
+	/// key = <<EOF
+	///		my value
+	/// EOF
+	/// ]]>
 	/// 
 	/// Examples:
 	/// 
 	/// # Standard 
 	/// key1 = value1
+	/// 
+	/// # Preserver whitespaces
 	/// key2 = " value2 "
 	/// 
-	/// # Multiline value
+	/// # Multiline value with comment
 	/// key3 =	value3\
 	///			value4\
 	///	# One more value
@@ -43,7 +73,7 @@ namespace ConfigFile
 	/// # This is ignored
 	/// ;key4 = value6
 	/// 
-	/// # The leading and trailing whitespace are preseverd
+	/// # Multiline value with preserved leading and trailing whitespace.
 	/// key5 =	" value7, value8,\
 	///			value9, value10\
 	///			value11 "
@@ -51,9 +81,26 @@ namespace ConfigFile
 	/// # This is valid, but the value is null
 	/// key6 = 
 	/// 
-	/// # The following two samples causes an exception.
+	/// # Escape characters; 1st, write newline and tab; 2nd, write the sequence literally.
+	/// key7 = value1\n\value2\tvalue3
+	/// key8 = value1\\nvalue2\\tvalue3
+	/// 
+	/// # Escape leading backslash and ignore continuation
+	/// key9 = "value\\"
+	/// 
+	/// # The following samples causes trouble.
+	/// # Invalid key (key is null)
 	///  = value12
-	/// key 7 = some value
+	///  
+	/// # Invalid key (contains a whitespace)
+	/// key 10 = some value
+	/// 
+	/// # Invalid value, empty escape sequence
+	/// key11 = "value\"
+	/// 
+	/// # Invalid value, unknown escape sequence (\v)
+	/// key12 = value1\\
+	/// value2
 	/// </summary>
 	public class ConfigReader
 	{
@@ -73,13 +120,18 @@ namespace ConfigFile
 		public event EventHandler<ConfigReaderEventArgs> OnKeyChange;
 
 		/// <summary>
+		/// Hold lines for inline mode.
+		/// </summary>
+		private List<string> _inline = new List<string>();
+
+		/// <summary>
 		/// Initialize a new instance.
 		/// </summary>
 		public ConfigReader()
 		{ }
 
 		/// <summary>
-		/// Initialize new instance and read the configuration file.
+		/// Initialize new instance and read the configuration from file.
 		/// </summary>
 		/// <param name="filename"></param>
 		public ConfigReader(string filename)
@@ -92,7 +144,7 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Initialize new instance and read the stream.
+		/// Initialize new instance and read from stream.
 		/// </summary>
 		/// <param name="stream"></param>
 		public ConfigReader(Stream stream)
@@ -195,90 +247,159 @@ namespace ConfigFile
 			var linenumber = 0;
 			var key = "";
 			var value = "";
-			var continuation = false;
+			var mode = ParserMode.Normal;
+			var stop = "";
 
-			foreach (var cline in this.ReadAllLines(stream))
+			foreach (var rawline in this.ReadAllLines(stream))
 			{
 				linenumber++;
 
-				var line = cline.Trim();
+				var line = rawline.Trim();
 
-				// Test for comments or empty lines
-				if (line.StartsWith("#") || line.StartsWith(";") || line.Length == 0)
+				// Test for comments or empty lines and not inline mode
+				if ((line.StartsWith("#") || line.StartsWith(";") || line.Length == 0) && mode != ParserMode.Here)
 				{
 					continue;
 				}
 
-				// Split to <key> = <value> pair
-				string[] pair = line.Split(new char[] { '=' }, 2);
-
-				// Test for one part and not in continuation mode
-				if (pair.Length == 1 && !continuation)
+				// normal parser mode
+				if (mode == ParserMode.Normal)
 				{
-					throw new ConfigException(String.Format("No key value pair found on line {0}.", linenumber));
-				}
+					// Split to <key> = <value> pair
+					var pair = line.Split(new char[] { '=' }, 2);
 
-				// Test for two parts not in continuation mode
-				if (pair.Length == 2 && !continuation)
-				{
-					key = pair[0].Trim();
-					value = pair[1].Trim();
-
-					if (String.IsNullOrEmpty(key))
+					// Test for one part
+					if (pair.Length == 1)
 					{
-						throw new ConfigException(String.Format("The key is null on line {0}.", linenumber));
+						throw new ConfigException(String.Format("Not a key value pair. Line {0}.", linenumber));
 					}
 
-					if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
+					// Test for two parts
+					if (pair.Length == 2)
 					{
-						throw new ConfigException(String.Format("The key format for '{0}' is invalid on line {1}.", key, linenumber));
+						key = pair[0].Trim();
+						value = pair[1].Trim();
+
+						if (String.IsNullOrEmpty(key))
+						{
+							throw new ConfigException(String.Format("The key is null. Line {0}.", linenumber));
+						}
+
+						if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
+						{
+							throw new ConfigException(String.Format("The key format for '{0}' is invalid. Line {1}.", key, linenumber));
+						}
+					}
+
+					// Test for her document mode sequence
+					var inline = Regex.Match(value, "^<<([a-zA-Z][a-zA-Z0-9]*)$");
+					if (inline.Success)
+					{
+						// stopword
+						stop = inline.Groups[1].Value;
+
+						_inline.Clear();
+
+						mode = ParserMode.Here;
+						continue;
 					}
 				}
 
-				// Test for continuation mode
-				if (continuation)
+				// Test, if in continuation mode
+				if (mode == ParserMode.Continuation)
 				{
 					value = String.Concat(value, line);
 				}
 
-				// Test for trailing backslash
+				// Test, if in here document mode
+				if (mode == ParserMode.Here)
+				{
+					// Test for stopword.
+					if (rawline.Equals(stop))
+					{
+						Add(key, String.Join("\n", _inline));
+						mode = ParserMode.Normal;
+
+						_inline.Clear();
+
+						continue;
+					}
+
+					_inline.Add(rawline);
+					continue;
+				}
+
+				// Test for trailing backslash (continuation mode)
 				if (value.EndsWith("\\"))
 				{
-					value = value.TrimEnd('\\'); //.Substring(0, value.Length - 1);
-					continuation = true;
+					value = value.Substring(0, value.Length - 1);
+					
+					mode = ParserMode.Continuation;
 					continue;
 				}
 
 				// Test for surrounding double quotes
 				if (value.StartsWith("\"") && value.EndsWith("\""))
 				{
-					value = value.Trim('\"'); //.Substring(1, value.Length - 2);
+					value = value.Substring(1, value.Length - 2);
 				}
-				
-				// escape newline and replace escaped newline
-				value = Regex.Replace(value, @"((?<!\\)\\n)", Environment.NewLine);
-				value = Regex.Replace(value, @"(\\\\)(n)", "\\$2");
 
-				// Add the <key> = <value> to store or override
-				var e = new ConfigReaderEventArgs(key, value);
-				if (!_configValues.ContainsKey(key))
+				// Unescape the value
+				value = Regex.Replace(value, @"(\\(.?))", m =>
 				{
-					if (OnKeyAdd != null)
-						OnKeyAdd(this, e);
+					switch (m.Groups[2].Value)
+					{
+						case "n":
+							return "\n";
 
-					if(!e.Decline)
-						_configValues.Add(key, value);
-				}
-				else
-				{
-					if (OnKeyChange != null)
-						OnKeyChange(this, e);
+						case "t":
+							return "\t";
 
-					if(!e.Decline)
-						_configValues[key] = value;
-				}
+						case "\\":
+							return "\\";
 
-				continuation = false;
+						case "":
+							throw new ConfigException(String.Format("Empty escape sequence. Line {0}.", linenumber));
+
+						default:
+							throw new ConfigException(String.Format("Unknown escape sequence: \\{0}. Line {1}.", m.Groups[2].Value, linenumber));
+					}
+				});
+
+				Add(key, value);
+
+				mode = ParserMode.Normal;
+			}
+
+			if (mode != ParserMode.Normal)
+			{
+				throw new ConfigException(String.Format("End of file encountered in {0} mode.", mode.ToString().ToLower()));
+			}
+		}
+
+		/// <summary>
+		/// Add the key and value to store or override existing.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		private void Add(string key, string value)
+		{
+			var e = new ConfigReaderEventArgs(key, value);
+			if (!_configValues.ContainsKey(key))
+			{
+				if (OnKeyAdd != null)
+					OnKeyAdd(this, e);
+
+				if (!e.Decline)
+					_configValues.Add(key, value);
+			}
+			else
+			{
+				if (OnKeyChange != null)
+					OnKeyChange(this, e);
+
+				if (!e.Decline)
+					_configValues[key] = value;
 			}
 		}
 
@@ -323,7 +444,7 @@ namespace ConfigFile
 
 		/// <summary>
 		/// Try to get value from configuration.
-		/// If the key does not exists, a exception is thrown.
+		/// If the key does not exists, an exception is thrown.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
 		/// <param name="key">The configuration key.</param>
@@ -335,7 +456,7 @@ namespace ConfigFile
 
 		/// <summary>
 		/// Try to get value from configuration.
-		/// If the key does not exists, a exception is thrown.
+		/// If the key does not exists, an exception is thrown.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
 		/// <param name="key">The configuration key.</param>
@@ -399,8 +520,6 @@ namespace ConfigFile
 	/// </summary>
 	public class ConfigWriter : ConfigReader
 	{
-		//private Hashtable _configValues = new Hashtable();
-
 		/// <summary>
 		/// Initialize new configuration writer.
 		/// </summary>
@@ -512,18 +631,33 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Prepare value.
+		/// Prepare the value for writing.
 		/// </summary>
 		/// <param name="input">The value.</param>
 		/// <returns>The prepared value.</returns>
 		private string Prepare(string input)
 		{
-			input = input.Replace("\n", "\\n");
-
 			if (Char.IsWhiteSpace(input.FirstOrDefault()) || Char.IsWhiteSpace(input.LastOrDefault()))
 			{
 				input = String.Format("\"{0}\"", input);
 			}
+
+			input = Regex.Replace(input, @"(\n|\t|\\)", m =>
+			{
+				switch (m.Groups[1].Value)
+				{
+					case "\n":
+						return "\\n";
+
+					case "\t":
+						return "\\t";
+
+					case "\\":
+						return "\\\\";
+				}
+
+				throw new ConfigException("Unknown escape sequence.");
+			});
 
 			return input;
 		}
@@ -561,6 +695,27 @@ namespace ConfigFile
 			Value = value;
 			Decline = decline;
 		}
+	}
+
+	/// <summary>
+	/// Processing modes of the parser
+	/// </summary>
+	public enum ParserMode
+	{
+		/// <summary>
+		/// Normal parsing mode.
+		/// </summary>
+		Normal,
+
+		/// <summary>
+		/// Continuation mode.
+		/// </summary>
+		Continuation,
+
+		/// <summary>
+		/// Here document mode.
+		/// </summary>
+		Here
 	}
 
 	/// <summary>
