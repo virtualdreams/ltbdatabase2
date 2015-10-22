@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link type="text/css" href="@Url.Content("~/Content/layout.mobile.css")" rel="stylesheet" media="screen" />
+
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.10.4.custom.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.mobile.js")"></script>
+
+		<title>@ViewBag.Title</title>
+	</head>
+	<body>
+		<div id="container">
+			<header>
+				<div id="hamburger">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<div id="header">
+					@ViewBag.Header
+				</div>
+				<div style="clear: both;"></div>
+			</header>
+			<nav>
+				<ul>
+					<li class="main"><a href="/">Home</a></li>
+					<li class="main"><a href="@Url.Action("index", "category")">Kategorien</a></li>
+					@{Html.RenderAction("categories", "home"); }
+					<li class="main"><a href="/tags">Tags</a></li>
+					@{Html.RenderAction("tags", "home"); }
+				</ul>
+			</nav>
+			<div id="content">
+				@RenderBody()
+			</div>
+			<footer>
+				<span>Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version git:<a href="https://github.com/virtualdreams/ltbdatabase2/commits">@ltbdb.Core.VersionInfo.ProductVersion</a></span>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -204,6 +204,7 @@
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
     <Content Include="Content\layout.css" />
+    <Content Include="Content\layout.mobile.css" />
     <Content Include="Content\link_break.png" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\navigation.css" />
@@ -226,6 +227,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.mobile.js" />
     <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
@@ -281,6 +283,13 @@
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\Http404.cshtml" />
+    <Content Include="Views\Home\Index.Mobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Category\Index.Mobile.cshtml" />
+    <Content Include="Views\Category\View.Mobile.cshtml" />
+    <Content Include="Views\Book\View.Mobile.cshtml" />
+    <Content Include="Views\Tag\Index.Mobile.cshtml" />
+    <Content Include="Views\Tag\View.Mobile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

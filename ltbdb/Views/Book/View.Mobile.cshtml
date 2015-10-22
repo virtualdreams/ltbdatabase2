@@ -1,0 +1,33 @@
+﻿@model ltbdb.Models.BookViewDetailContainer
+@using ltbdb.Models
+@using ltbdb.Core
+
+@{
+	ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.CategoryName);
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Header = String.Format("Nr. {0} - {1}", @Model.Book.Number, @Model.Book.Name);
+}
+
+<div class="details">
+	<div class="img">
+		<img src="@ImageStore.GetWebPath(Model.Book.Filename, true)" alt="Cover" />
+	</div>
+	<h3>Kategorie</h3>
+	<ul>
+		<li><a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a></li>
+	</ul>
+	<h3>Inhalte</h3>
+	<ul>
+	@foreach (string story in Model.Book.Stories)
+	{
+		<li>@story</li>
+	}
+	</ul>
+	<h3>Tags</h3>
+	<ul>
+	@foreach (TagModel tag in Model.Tags)
+	{
+		<li><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></li>
+	}
+	</ul>
+</div>

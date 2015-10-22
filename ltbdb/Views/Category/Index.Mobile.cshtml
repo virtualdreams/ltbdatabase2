@@ -1,0 +1,35 @@
+﻿@model ltbdb.Models.BookViewAllContainer
+@using ltbdb.Models
+@using ltbdb.Core
+
+@{
+	ViewBag.Title = "Alle Inhalte | Lustiges Taschenbuch - Datenbank";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Header = "Alle Kategorien";
+}
+
+<div class="book">
+	<ul>
+	@if(Model.PageOffset.HasPrevious) {
+		<li>
+			<a class="pager" href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+		</li>
+	 }
+	@foreach (BookModel book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id })">
+				<div class="img">
+					<img src="@ImageStore.GetWebPath(book.Filename, true)" alt="Cover" />
+				</div>
+				<div class="header">Nr. @book.Number - @book.Name</div>
+				<span>@book.CategoryName</span>
+			</a>
+		</li>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<li>
+			<a class="pager" href="@Url.Action("index", "category", new { ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+		</li>
+	}
+	</ul>
+</div>
