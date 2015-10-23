@@ -9,6 +9,8 @@ using System.IO;
 using log4net;
 using ltbdb.Controllers;
 using ltbdb.Core.Helpers;
+using System.Collections.Specialized;
+using System.Web.WebPages;
 
 namespace ltbdb
 {
@@ -21,6 +23,8 @@ namespace ltbdb
 		protected void Application_Start()
 		{
 			log4net.Config.XmlConfigurator.Configure(new FileInfo(IOHelper.ConvertToFullPath("./App_Data/log4net.xml")));
+
+			DisplayModeProvider.Instance.Modes.Insert(0, new MobileDisplayMode());
 
 			MvcHandler.DisableMvcResponseHeader = true;
 			
@@ -74,6 +78,33 @@ namespace ltbdb
 			Response.TrySkipIisCustomErrors = true;
 			IController controller = new ErrorController();
 			controller.Execute(new RequestContext(new HttpContextWrapper(Context), routeData));
+		}
+	}
+
+	public class MobileDisplayMode : DefaultDisplayMode
+	{
+		private readonly StringCollection _useragenStringPartialIdentifiers = new StringCollection
+		{
+			"Android",
+			"Mobile",
+			"Opera Mobi",
+			"Samsung",
+			"HTC",
+			"Nokia",
+			"Ericsson",
+			"SonyEricsson",
+			"iPhone"
+		};
+
+		public MobileDisplayMode()
+			: base("Mobile")
+		{
+			ContextCondition = (context => IsMobile(context.GetOverriddenUserAgent()));
+		}
+
+		private bool IsMobile(string useragentString)
+		{
+			return _useragenStringPartialIdentifiers.Cast<string>().Any(val => useragentString.IndexOf(val, StringComparison.InvariantCultureIgnoreCase) >= 0);
 		}
 	}
 }
