@@ -34,7 +34,7 @@
 					@{Html.RenderAction("categories", "home"); }
 					<li class="main"><a href="/tags">Tags</a></li>
 					@{Html.RenderAction("tags", "home"); }
-					<li class="main"><a href="/search">Suche</a></li>
+					<li class="main"><a href="@Url.Action("search", "home")">Suche</a></li>
 				</ul>
 			</nav>
 			<div id="content">
