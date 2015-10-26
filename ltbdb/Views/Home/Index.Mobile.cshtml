@@ -14,7 +14,7 @@
 		<li>
 			<a href="@Url.Action("view", "book", new { id = @book.Id })">
 				<div class="img">
-					<img src="@ImageStore.GetWebPath(book.Filename, true)" alt="Cover" />
+					<img src="@ImageStore.GetWebPath(book.Filename, ImageType.Thumbnail)" alt="Cover" />
 				</div>
 				<div class="header">Nr. @book.Number - @book.Name</div>
 				<span>@book.CategoryName</span>

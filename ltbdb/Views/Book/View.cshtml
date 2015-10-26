@@ -32,7 +32,7 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<a id="image-big" href="@ImageStore.GetWebPath(Model.Book.Filename)" title="Nr. @Model.Book.Number - @Model.Book.Name (@Model.Book.CategoryName)" data-jbox-image="image">
-				<img src="@ImageStore.GetWebPath(Model.Book.Filename, true)" alt="Cover" />
+				<img src="@ImageStore.GetWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
 			</a>
 		</div>
 	</div>

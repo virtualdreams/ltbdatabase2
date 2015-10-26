@@ -10,6 +10,27 @@ using ltbdb.Core.Helpers;
 
 namespace ltbdb.Core
 {
+	/// <summary>
+	/// Type of image to request from storage.
+	/// </summary>
+	public enum ImageType
+	{
+		/// <summary>
+		/// Get the normal version if available, otherwise none.
+		/// </summary>
+		Normal,
+
+		/// <summary>
+		/// Get the thumbnail version if available, otherwise none.
+		/// </summary>
+		Thumbnail,
+
+		/// <summary>
+		/// Prefer thumbnail over normal version if available, otherwise none,
+		/// </summary>
+		PreferThumbnail
+	}
+
 	static public class ImageStore
 	{
 		private static readonly ILog Log = LogManager.GetLogger(typeof(ImageStore));
@@ -132,26 +153,32 @@ namespace ltbdb.Core
 		/// Get web path.
 		/// </summary>
 		/// <param name="filename">The image filename.</param>
-		/// <param name="preferThumbnail">Prefer to load thumbnails over full sized images.</param>
+		/// <param name="imageType">Select type of image to load.</param>
 		/// <returns>The web path.</returns>
-		static public string GetWebPath(string filename, bool preferThumbnail = false)
+		static public string GetWebPath(string filename, ImageType imageType = ImageType.Normal)
 		{
-			DirectoryInfo di = new DirectoryInfo(GetStoragePath());
+			var _directory = new DirectoryInfo(GetStoragePath());
 			
-			if (preferThumbnail)
+			switch (imageType)
 			{
-				if (Exists(filename, true))
-				{
-					return String.Format("/{0}/{1}/{2}", di.Name, thumbnailDirectory, filename);
-				}
-			}
-			
-			if (Exists(filename))
-			{
-				return String.Format("/{0}/{1}", di.Name, filename);
-			}
+				case ImageType.Thumbnail:
+					if (Exists(filename, true))
+						return String.Format("/{0}/{1}/{2}", _directory.Name, thumbnailDirectory, filename);
+					goto default;
 
-			return GlobalConfig.Get().NoImage.TrimStart('.');
+				case ImageType.PreferThumbnail:
+					if (Exists(filename, true))
+						return String.Format("/{0}/{1}/{2}", _directory.Name, thumbnailDirectory, filename);
+					goto case ImageType.Normal;
+
+				case ImageType.Normal:
+					if (Exists(filename))
+						return String.Format("/{0}/{1}", _directory.Name, filename);
+					goto default;
+
+				default:
+					return GlobalConfig.Get().NoImage.TrimStart('.');
+			}
 		}
 
 		/// <summary>
