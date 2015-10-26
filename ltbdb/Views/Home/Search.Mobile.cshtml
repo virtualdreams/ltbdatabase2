@@ -11,7 +11,7 @@
 <div class="book">
 	<div class="search">
 		<form action="@Url.Action("search", "home")" method="get">
-			<input id="q" type="text" name="q" value="" placeholder="Suche..." />
+			<input id="q" type="text" name="q" value="@(!String.IsNullOrEmpty(Model.Query) ? Model.Query : "")" placeholder="Suche..." />
 		</form>
 	</div>
 	<ul>

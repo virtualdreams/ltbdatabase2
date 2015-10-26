@@ -3,6 +3,7 @@ using log4net;
 using ltbdb.Core;
 using ltbdb.DomainServices;
 using ltbdb.Models;
+using ltbdb.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,13 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Search(string q, int? ofs)
 		{
-			var _books = Book.Search(q ?? "").OrderBy(o => o.Category.Id);
+			var _books = Book.Search(q.TrimOrNull() ?? "").OrderBy(o => o.Category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
 			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewSearchContainer { Books = books, Query = q, PageOffset = pageOffset };
+			var view = new BookViewSearchContainer { Books = books, Query = q.TrimOrNull(), PageOffset = pageOffset };
 
 			return View(view);
 		}

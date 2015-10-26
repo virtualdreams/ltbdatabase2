@@ -43,5 +43,18 @@ namespace ltbdb.Core.Helpers
 			}
 			return str;
 		}
+
+		/// <summary>
+		/// Trim a string or return null.
+		/// </summary>
+		/// <param name="str">The string to trim.</param>
+		/// <returns>Trimmed string or null.</returns>
+		static public string TrimOrNull(this string str)
+		{
+			if (!String.IsNullOrEmpty(str))
+				return str.Trim();
+
+			return null;
+		}
 	}
 }
