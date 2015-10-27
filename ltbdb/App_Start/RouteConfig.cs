@@ -13,7 +13,7 @@ namespace ltbdb
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 			routes.IgnoreRoute("images/{*pathInfo}");
-
+			routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 			routes.IgnoreRoute("{*url}", new { url = @".*\.asmx(/.*)?" });
 
 			routes.MapRoute(
