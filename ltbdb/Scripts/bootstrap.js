@@ -33,7 +33,7 @@ $(function() {
 	});
 
 	$("#q").autocomplete({
-		source: '/ac-search/',
+		source: '/api/search/title',
 		minLength: 3,
 		select: function (event, ui) {
 			if (ui.item) {
@@ -53,7 +53,7 @@ $(function() {
 			}
 		}).autocomplete({
 			source: function (request, response) {
-				$.getJSON('/ac-tag/', {
+				$.getJSON('/api/search/tag', {
 					term: extractLast(request.term)
 				}, response);
 			},

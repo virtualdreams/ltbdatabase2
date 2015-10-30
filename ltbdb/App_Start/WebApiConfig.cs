@@ -13,6 +13,12 @@ namespace ltbdb
 		public static void Register(HttpConfiguration config)
 		{
 			config.Routes.MapHttpRoute(
+				name: "SearchApi",
+				routeTemplate: "api/search/{action}/{term}",
+				defaults: new { controller = "search", term = RouteParameter.Optional }
+			);
+
+			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
 				routeTemplate: "api/{controller}/{id}",
 				defaults: new { id = RouteParameter.Optional }
@@ -21,7 +27,6 @@ namespace ltbdb
 			config.Formatters.Add(new BrowserJsonFormatter());
 		}
 	}
-
 
 	/// <summary>
 	/// http://stackoverflow.com/questions/9847564/how-do-i-get-asp-net-web-api-to-return-json-instead-of-xml-using-chrome/20556625#20556625
