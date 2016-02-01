@@ -8,7 +8,7 @@ namespace ltbdb.DomainServices.DTO
 {
 	public class TagDTO
 	{
-		[SqlMapperIn(Flag=SqlMapperFlags.Required)]
+		[Required]
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public long Ref { get; set; }

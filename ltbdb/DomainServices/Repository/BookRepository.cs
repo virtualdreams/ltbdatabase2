@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SqlDataMapper;
+using SqlDataMapper.Extension;
 
 namespace ltbdb.DomainServices.Repository
 {

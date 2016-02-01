@@ -1,5 +1,6 @@
 ﻿using ltbdb.DomainServices.DTO;
 using SqlDataMapper;
+using SqlDataMapper.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;

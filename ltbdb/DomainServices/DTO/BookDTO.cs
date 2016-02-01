@@ -8,7 +8,7 @@ namespace ltbdb.DomainServices.DTO
 {
 	public class BookDTO
 	{
-		[SqlMapperIn(Flag=SqlMapperFlags.Required)]
+		[Required]
 		public int Id { get; set; }
 		public int Number { get; set; }
 		public string Name { get; set; }
@@ -29,8 +29,7 @@ namespace ltbdb.DomainServices.DTO
 		public string CategoryName { get; set; }
 		public DateTime Added { get; set; }
 
-		[SqlMapperIn(Alias="image")]
-		[SqlMapperOut(Alias="image")]
+		[Alias("image")]
 		public string Filename { get; set; }
 	}
 }

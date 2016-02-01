@@ -8,7 +8,7 @@ namespace ltbdb.DomainServices.DTO
 {
 	public class CategoryDTO
 	{
-		[SqlMapperIn(Flag=SqlMapperFlags.Required)]
+		[Required]
 		public int Id { get; set; }
 
 		public string Name { get; set; }
