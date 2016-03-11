@@ -15,7 +15,7 @@
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
 			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" alt="" /></a>
-			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen."><img src="~/Content/bin.png" alt="" /></a>
+			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen." data-jbox-title="Tag &quot;@tag.Name&quot;"><img src="~/Content/bin.png" alt="" /></a>
 		</div>
 		}
 	</div>
@@ -29,12 +29,14 @@
 		var jbox_delete = new jBox('Modal', {
 			attach: $('.delete'),
 			content: $('#delete-msg-box'),
-			overlay: false,
+			overlay: true,
 			closeOnClick: 'body',
 			preventDefault: true,
+			closeButton: 'title',
+			getTitle: 'data-jbox-title',
 			onOpen: function () {
 				$('#error').text('');
-				link = this.source[0].href;
+				link = this.source.attr('href');
 			},
 			onClose: function () {
 				link = null;

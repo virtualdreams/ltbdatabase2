@@ -11,7 +11,7 @@
 	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
 		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.CategoryName</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
 		@if(Request.IsAuthenticated) {
-		@:| <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )">Löschen</a>
+		@:| <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <a id="delete" href="@Url.Action("delete", "book", new { id = Model.Book.Id } )" data-jbox-title="Buch &quot;@Model.Book.Name&quot;">Löschen</a>
 		}
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Name</h2>
@@ -68,12 +68,14 @@
 		var jbox_delete = new jBox('Modal', {
 			attach: $('#delete'),
 			content: $('#delete-msg-box'),
-			overlay: false,
+			overlay: true,
 			closeOnClick: 'body',
 			preventDefault: true,
+			closeButton: 'title',
+			getTitle: 'data-jbox-title',
 			onOpen: function () {
 				$('#error').text('');
-				link = this.source[0].href;
+				link = this.source.attr('href');
 			},
 			onClose: function () {
 				link = null;
