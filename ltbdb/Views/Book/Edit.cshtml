@@ -11,7 +11,7 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form action="@Url.Action("edit", "book")" method="post" enctype="multipart/form-data">
+<form action="@Url.Action("edit", "book")" method="post" enctype="multipart/form-data" id="book-form">
 	<h2>Buch</h2>
 	<div class="details">
 		<div style="float: left;">
@@ -38,10 +38,10 @@
 					<label for="category">Kategorie</label>
 				</div>
 				<div class="form-element-field">
-					<select name="category">
+					<select id="category" name="category">
 						@foreach (var category in Model.Categories)
 						{
-							<option value="@category.Id" @(Model.Book.Category == category.Id ? Html.Raw("selected=\"selected\"") : Html.Raw(""))>@category.Name</option>
+							<option value="@category.Id" @(Model.Book.Category == category.Id ? "selected" : "")>@category.Name</option>
 						}
 					</select> @Html.ValidationMessage("category")
 				</div>
@@ -55,7 +55,7 @@
 					@foreach (var story in Model.Book.Stories)
 					{
 					<div class="form-element-field story">
-						<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />
+						<input type="text" name="stories" value="@story" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="+" /> <input class="button-red story-rem" type="button" value="&ndash;" />
 					</div>
 					}
 				</div>													  

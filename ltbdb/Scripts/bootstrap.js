@@ -80,7 +80,7 @@ $(function() {
 		})
 	});
 
-	/* TEST */
+	/* tag */
 	jbox_tag = new jBox('Modal', {
 		position: {
 			x: 'left',
@@ -168,7 +168,7 @@ $(function() {
 
 	var story_container = $('#story-container');
 	var story_template =	'<div class="form-element-field story">\
-								<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="Einf&uuml;gen" /> <input class="button-red story-rem" type="button" value="Entfernen" />\
+								<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="+" /> <input class="button-red story-rem" type="button" value="&ndash;" />\
 							</div>';
 
 	$(document).on('click', '#story-add', function (e) {
@@ -187,5 +187,112 @@ $(function() {
 
 	$('#cancel-edit').click(function () {
 		location.href = '/';
+	});
+
+	/* validation */
+	$.validator.addMethod(
+	    "regex",
+	    function (value, element, regexp) {
+	    	return this.optional(element) || value.match(regexp);
+	    },
+	    "Please check your input."
+	);
+
+	$.validator.addMethod(
+		'nowhitespace',
+		function (value, element) {
+			return this.optional(element) || value.trim() != ''
+		},
+		'No white space.'
+	);
+
+	$('#book-form').validate({
+		errorClass: 'field-validation-error',
+		validClass: 'field-validation-valid',
+		errorElement: 'span',
+		rules: {
+			number: {
+				required: true,
+				nowhitespace: true,
+				regex: '[0-9]+'
+			},
+			name: {
+				required: true,
+				nowhitespace: true
+			}
+		},
+		messages: {
+			number: {
+				required: 'Bitte gib eine Nummer ein.',
+				nowhitespace: 'Bitte gib eine Nummer ein.',
+				regex: 'Bitte gib eine Nummer ein.'
+			},
+			name: {
+				required: 'Bitte gib einen Titel ein.',
+				nowhitespace: 'Bitte gib einen Titel ein.'
+			}
+		}
+	});
+
+	$('#category-form').validate({
+		errorClass: 'field-validation-error',
+		validClass: 'field-validation-valid',
+		errorElement: 'span',
+		rules: {
+			name: {
+				required: true,
+				nowhitespace: true
+			}
+		},
+		messages: {
+			name: {
+				required: 'Bitte gib einen Namen ein.',
+				nowhitespace: 'Bitte gib einen Namen ein.'
+			}
+		}
+	});
+
+	$('#tag-form').validate({
+		errorClass: 'field-validation-error',
+		validClass: 'field-validation-valid',
+		errorElement: 'span',
+		rules: {
+			name: {
+				required: true,
+				nowhitespace: true
+			}
+		},
+		messages: {
+			name: {
+				required: 'Bitte gib einen Namen ein.',
+				nowhitespace: 'Bitte gib einen Namen ein.'
+			}
+		}
+	});
+
+	$('#login-form').validate({
+		errorClass: 'field-validation-error',
+		validClass: 'field-validation-valid',
+		errorElement: 'span',
+		rules: {
+			username: {
+				required: true,
+				nowhitespace: true
+			},
+			password: {
+				required: true,
+				nowhitespace: true
+			}
+		},
+		messages: {
+			username: {
+				required: 'Bitte gib einen Benutzernamen ein.',
+				nowhitespace: 'Bitte gib einen Benutzernamen ein.'
+			},
+			password: {
+				required: 'Bitte gib ein Passwort ein.',
+				nowhitespace: 'Bitte gib ein Passwort ein.'
+			}
+		}
 	});
 });
