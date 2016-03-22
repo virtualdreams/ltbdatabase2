@@ -1,0 +1,8 @@
+<apps>
+	<web-application>
+		<name>LTB-Database2</name>
+		<vhost>ltb.stichelbiene.de</vhost>
+		<vpath>/</vpath>
+		<path>/srv/www/ltbdb2/</path>
+	</web-application>
+</apps>

@@ -1,0 +1,14 @@
+[Unit]
+Description=FastCGI mono server 4
+After=network.target
+
+[Service]
+Environment=MONO_IOMAP=all
+EnvironmentFile=
+Type=simple
+ExecStart=/usr/bin/fastcgi-mono-server4 /appconfigdir=/etc/mono-server4/webapps-enabled /socket=tcp:127.0.0.1:9009
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target
