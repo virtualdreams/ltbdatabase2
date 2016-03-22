@@ -10,13 +10,13 @@ namespace ltbdb.Models
 	{
 		public int Id { get; set; }
 
-		[Required(ErrorMessage = "Bitte gib eine Nummer ein")]
+		[Required(ErrorMessage = "Bitte gib eine Nummer ein.")]
 		public int? Number { get; set; }
 		
 		[Required(ErrorMessage="Bitte gib einen Titel ein.")]
 		public string Name { get; set; }
 
-		[Required(ErrorMessage = "Bitte wähle eine Kategorie aus")]
+		[Required(ErrorMessage = "Bitte wähle eine Kategorie aus.")]
 		public int Category { get; set; }
 		
 		public string CategoryName { get; set; }
