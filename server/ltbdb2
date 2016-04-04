@@ -39,7 +39,7 @@ server {
 	}
 
 	location / {
-		if ($ssl_protocol = "") {
+		if ($scheme = "http") {
 			rewrite ^ https://$host$request_uri? permanent;
 		}
 		
