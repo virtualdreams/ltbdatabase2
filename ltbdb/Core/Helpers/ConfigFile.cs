@@ -17,10 +17,10 @@ namespace ConfigFile
 	/// 
 	/// Lines contain a '=' are treated as a key and value pair.
 	/// Values can be continued by placing a trailing backslash at the end of the line.
-	/// This backslash is removed from the current line.
+	/// The backslash is removed from the current line.
 	/// Comment lines or empty lines may appear in the middle of a sequence of continuation lines.
 	/// 
-	/// The key format must be in form of "[a-zA-Z_][a-zA-Z0-9_.]*".
+	/// The key format must be in form of "@?[a-zA-Z_][a-zA-Z0-9_.]*".
 	/// 
 	/// Leading and trailing whitespaces are ignored for keys and values.
 	/// 
@@ -37,12 +37,15 @@ namespace ConfigFile
 	/// 
 	/// Unknown or empty escape characters throws an error.
 	/// 
+	/// You can turn off the escape mode (which is the default mode) with an preceding '@' character. This
+	/// starts the literal mode only for the current key value pair.
+	/// 
 	/// A value can also defined as a here document. Such a value begins with
-	/// two left angle bracket followed by a stopword ([a-zA-Z][a-zA-Z0-9]*). The parser reads
-	/// the input as is until the stopword.
+	/// two left angle brackets followed by a stopword ([a-zA-Z][a-zA-Z0-9]*). The parser reads
+	/// the input as is (literally) until the stopword.
 	/// 
 	/// In this mode, comment lines and empty lines are NOT ignored. Leading and trailing
-	/// whitespace is NOT removed and no escape sequence is processed.
+	/// whitespace is NOT removed and NO escape sequence is processed.
 	/// 
 	/// The stopword must appear in a single line with no leading or trailing whitespace.
 	/// 
@@ -101,6 +104,9 @@ namespace ConfigFile
 	/// # Invalid value, unknown escape sequence (\v)
 	/// key12 = value1\\
 	/// value2
+	/// 
+	/// # Literal mode. Ignore unknown escape sequence.
+	/// @key13 = valu\e1
 	/// </summary>
 	public class ConfigReader
 	{
@@ -120,9 +126,9 @@ namespace ConfigFile
 		public event EventHandler<ConfigReaderEventArgs> OnKeyChange;
 
 		/// <summary>
-		/// Hold lines for inline mode.
+		/// Hold lines for here mode.
 		/// </summary>
-		private List<string> _inline = new List<string>();
+		private List<string> _here = new List<string>();
 
 		/// <summary>
 		/// Initialize a new instance.
@@ -249,6 +255,7 @@ namespace ConfigFile
 			var value = "";
 			var mode = ParserMode.Normal;
 			var stop = "";
+			var literal = false;
 
 			foreach (var rawline in this.ReadAllLines(stream))
 			{
@@ -256,7 +263,7 @@ namespace ConfigFile
 
 				var line = rawline.Trim();
 
-				// Test for comments or empty lines and not inline mode
+				// Test for comments or empty lines and not here mode
 				if ((line.StartsWith("#") || line.StartsWith(";") || line.Length == 0) && mode != ParserMode.Here)
 				{
 					continue;
@@ -285,20 +292,32 @@ namespace ConfigFile
 							throw new ConfigException(String.Format("The key is null. Line {0}.", linenumber));
 						}
 
-						if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
+						// test for valid key format
+						if (!Regex.IsMatch(key, "^@?[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
 						{
-							throw new ConfigException(String.Format("The key format for '{0}' is invalid. Line {1}.", key, linenumber));
+							throw new ConfigException(String.Format("The format for key '{0}' is invalid. Line {1}.", key, linenumber));
+						}
+
+						// literal mode
+						if (key.StartsWith("@"))
+						{
+							key = key.Substring(1);
+							literal = true;
 						}
 					}
 
-					// Test for her document mode sequence
+					// Test for here document mode sequence
 					var inline = Regex.Match(value, "^<<([a-zA-Z][a-zA-Z0-9]*)$");
 					if (inline.Success)
 					{
+						// test for literal
+						if (literal)
+							throw new ConfigException("Literal mode in here document not allowed.");
+						
 						// stopword
 						stop = inline.Groups[1].Value;
 
-						_inline.Clear();
+						_here.Clear();
 
 						mode = ParserMode.Here;
 						continue;
@@ -317,15 +336,18 @@ namespace ConfigFile
 					// Test for stopword.
 					if (rawline.Equals(stop))
 					{
-						Add(key, String.Join("\n", _inline));
+						Add(key, String.Join("\n", _here));
+						
+						// reset parser
+						literal = false;
 						mode = ParserMode.Normal;
 
-						_inline.Clear();
+						_here.Clear();
 
 						continue;
 					}
 
-					_inline.Add(rawline);
+					_here.Add(rawline);
 					continue;
 				}
 
@@ -344,30 +366,35 @@ namespace ConfigFile
 					value = value.Substring(1, value.Length - 2);
 				}
 
-				// Unescape the value
-				value = Regex.Replace(value, @"(\\(.?))", m =>
+				if (!literal)
 				{
-					switch (m.Groups[2].Value)
+					// Unescape the value
+					value = Regex.Replace(value, @"(\\(.?))", m =>
 					{
-						case "n":
-							return "\n";
+						switch (m.Groups[2].Value)
+						{
+							case "n":
+								return "\n";
 
-						case "t":
-							return "\t";
+							case "t":
+								return "\t";
 
-						case "\\":
-							return "\\";
+							case "\\":
+								return "\\";
 
-						case "":
-							throw new ConfigException(String.Format("Empty escape sequence. Line {0}.", linenumber));
+							case "":
+								throw new ConfigException(String.Format("Empty escape sequence. Line {0}.", linenumber));
 
-						default:
-							throw new ConfigException(String.Format("Unknown escape sequence: \\{0}. Line {1}.", m.Groups[2].Value, linenumber));
-					}
-				});
+							default:
+								throw new ConfigException(String.Format("Unknown escape sequence: \\{0}. Line {1}.", m.Groups[2].Value, linenumber));
+						}
+					});
+				}
 
 				Add(key, value);
 
+				// reset parser
+				literal = false;
 				mode = ParserMode.Normal;
 			}
 
@@ -378,7 +405,7 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Add the key and value to store or override existing.
+		/// Add the key and value to storage or override existing.
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <param name="value">The value.</param>
@@ -404,35 +431,45 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Get value from configuration.
+		/// Gets the value associated with the specified key.
+		/// If the key does not exists, the default value is returned.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
-		/// <param name="key">The configuration key.</param>
+		/// <param name="key">The key of the value to get.</param>
 		/// <param name="defaultValue">The default value if key not found.</param>
-		/// <returns></returns>
-		public T GetValue<T>(string key, T defaultValue) where T : IConvertible
+		/// <param name="valueNotEmpty">If the value is empty, then retrun the default value.</param>
+		/// <returns>The value from the key, otherwise the default value.</returns>
+		public T GetValue<T>(string key, T defaultValue, bool valueNotEmpty = false) where T : IConvertible
 		{
-			return GetValue<T>(key, defaultValue, CultureInfo.InvariantCulture);
+			return GetValue<T>(key, defaultValue, CultureInfo.InvariantCulture, valueNotEmpty);
 		}
 
 		/// <summary>
-		/// Get value from configuration.
+		/// Gets the value associated with the specified key.
+		/// If the key does not exists, the default value is returned.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
-		/// <param name="key">The configuration key.</param>
+		/// <param name="key">The key of the value to get.</param>
 		/// <param name="defaultValue">The default value if key not found.</param>
 		/// <param name="provider">The format provider.</param>
-		/// <returns></returns>
-		public T GetValue<T>(string key, T defaultValue, IFormatProvider provider) where T : IConvertible
+		/// <param name="valueNotEmpty">If the value is empty, then retrun the default value.</param>
+		/// <returns>The value from the key, otherwise the default value.</returns>
+		public T GetValue<T>(string key, T defaultValue, IFormatProvider provider, bool valueNotEmpty = false) where T : IConvertible
 		{
 			if (String.IsNullOrEmpty(key))
 				throw new ArgumentNullException("key");
 
 			if (_configValues.ContainsKey(key))
 			{
+				var _value = _configValues[key] as string;
+				if (valueNotEmpty && String.IsNullOrEmpty(_value))
+				{
+					return defaultValue;
+				}
+
 				try
 				{
-					return (T)Convert.ChangeType(_configValues[key], typeof(T), provider);
+					return (T)Convert.ChangeType(_value, typeof(T), provider);
 				}
 				catch (FormatException e)
 				{
@@ -443,26 +480,28 @@ namespace ConfigFile
 		}
 
 		/// <summary>
-		/// Try to get value from configuration.
+		/// Gets the value associated with the specified key.
 		/// If the key does not exists, an exception is thrown.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
-		/// <param name="key">The configuration key.</param>
-		/// <returns>Throws a exception if the key not found.</returns>
-		public T TryGetValue<T>(string key) where T : IConvertible
+		/// <param name="key">The key of the value to get.</param>
+		/// <param name="valueNotEmpty">If the value is empty, then throw an exception.</param>
+		/// <returns>Throws an exception if the key is not found.</returns>
+		public T TryGetValue<T>(string key, bool valueNotEmpty = false) where T : IConvertible
 		{
-			return TryGetValue<T>(key, CultureInfo.InvariantCulture);
+			return TryGetValue<T>(key, CultureInfo.InvariantCulture, valueNotEmpty);
 		}
 
 		/// <summary>
-		/// Try to get value from configuration.
+		/// Gets the value associated with the specified key.
 		/// If the key does not exists, an exception is thrown.
 		/// </summary>
 		/// <typeparam name="T">Destination type.</typeparam>
-		/// <param name="key">The configuration key.</param>
+		/// <param name="key">The key of the value to get.</param>
 		/// <param name="provider">The format provider.</param>
-		/// <returns>Throws a exception if the key not found.</returns>
-		public T TryGetValue<T>(string key, IFormatProvider provider) where T : IConvertible
+		/// <param name="valueNotEmpty">If the value is empty, then throw an exception.</param>
+		/// <returns>Throws a exception if the key is not found.</returns>
+		public T TryGetValue<T>(string key, IFormatProvider provider, bool valueNotEmpty = false) where T : IConvertible
 		{
 			if(String.IsNullOrEmpty(key))
 			{
@@ -471,20 +510,79 @@ namespace ConfigFile
 
 			if(_configValues.ContainsKey(key))
 			{
+				var _value = _configValues[key] as string;
+				if (valueNotEmpty && String.IsNullOrEmpty(_value))
+				{
+					throw new ConfigException(String.Format("The value for key '{0}' must not be empty.", key));
+				}
+
 				try
 				{
-					return (T)Convert.ChangeType(_configValues[key], typeof(T), provider);
+					return (T)Convert.ChangeType(_value, typeof(T), provider);
 				}
 				catch (FormatException e)
 				{
 					throw new ConfigException(String.Format("Can't convert key '{0}' to destination type '{1}'.", key, typeof(T)), e);
 				}
 			}
-			throw new ConfigException("The configuration key does not exists.");
+			throw new ConfigException(String.Format("The configuration key '{0}' does not exists.", key));
 		}
 
 		/// <summary>
-		/// Test if the key exists in configuration.
+		/// Gets the value associated with the specified key.
+		/// </summary>
+		/// <typeparam name="T">The destination type.</typeparam>
+		/// <param name="key">The key of the value to get.</param>
+		/// <param name="value">The value if the is found, otherwise the default value.</param>
+		/// <param name="valueNotEmpty">If the value is empty, then false is returned.</param>
+		/// <returns>Returns true if the key is found, otherwise false.</returns>
+		public bool TryGetValue<T>(string key, out T value, bool valueNotEmpty = false) where T : IConvertible
+		{
+			return TryGetValue<T>(key, out value, CultureInfo.InvariantCulture, valueNotEmpty);
+		}
+
+		/// <summary>
+		/// Gets the value associated with the specified key.
+		/// </summary>
+		/// <typeparam name="T">The destination type.</typeparam>
+		/// <param name="key">The key of the value to get.</param>
+		/// <param name="value">The value if the is found, otherwise the default value.</param>
+		/// <param name="provider">The format provider.</param>
+		/// <param name="valueNotEmpty">If the value is empty, then false is returned.</param>
+		/// <returns>Returns true if the key is found, otherwise false.</returns>
+		public bool TryGetValue<T>(string key, out T value, IFormatProvider provider, bool valueNotEmpty = false) where T : IConvertible
+		{
+			value = default(T);
+
+			if (String.IsNullOrEmpty(key))
+			{
+				throw new ArgumentNullException("key");
+			}
+
+			if (_configValues.ContainsKey(key))
+			{
+				var _value = _configValues[key] as string;
+				if (valueNotEmpty && String.IsNullOrEmpty(_value))
+				{
+					return false;
+				}
+
+				try
+				{
+					value = (T)Convert.ChangeType(_value, typeof(T), provider);
+					return true;
+				}
+				catch (FormatException e)
+				{
+					throw new ConfigException(String.Format("Can't convert key '{0}' to destination type '{1}'.", key, typeof(T)), e);
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Test if the key exists.
 		/// </summary>
 		/// <param name="key">The configuration key.</param>
 		/// <returns></returns>
@@ -518,8 +616,13 @@ namespace ConfigFile
 	/// <summary>
 	/// Class to write simple line based configuration based on key values pairs.
 	/// </summary>
-	public class ConfigWriter : ConfigReader
+	public class ConfigWriter
 	{
+		/// <summary>
+		/// Hold the key value pairs.
+		/// </summary>
+		protected Hashtable _configValues = new Hashtable();
+
 		/// <summary>
 		/// Initialize new configuration writer.
 		/// </summary>
@@ -617,7 +720,7 @@ namespace ConfigFile
 
 			if (!Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_.]*$", RegexOptions.Singleline))
 			{
-				throw new ConfigException(String.Format("The key format for '{0}' is invalid.", key));
+				throw new ConfigException(String.Format("The format for key '{0}' is invalid.", key));
 			}
 
 			if (!_configValues.ContainsKey(key))
@@ -656,7 +759,7 @@ namespace ConfigFile
 						return "\\\\";
 				}
 
-				throw new ConfigException("Unknown escape sequence.");
+				throw new ConfigException(String.Format("Unknown escape sequence: \\{0}.", m.Groups[1].Value));
 			});
 
 			return input;
@@ -716,6 +819,27 @@ namespace ConfigFile
 		/// Here document mode.
 		/// </summary>
 		Here
+	}
+
+	/// <summary>
+	/// Key mode.
+	/// </summary>
+	public enum KeyMode
+	{
+		/// <summary>
+		/// Overwrite value of the existing key.
+		/// </summary>
+		Overwrite,
+
+		/// <summary>
+		/// Append value to existing key.
+		/// </summary>
+		Append,
+
+		/// <summary>
+		/// Ignore new value for existing key.
+		/// </summary>
+		Ignore
 	}
 
 	/// <summary>
