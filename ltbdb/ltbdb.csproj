@@ -60,8 +60,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SqlDataMapper, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlDataMapper.dll.4.1.0\lib\SqlDataMapper.dll</HintPath>
+    <Reference Include="SqlDataMapper, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlDataMapper.dll.5.0.0-beta1\lib\net40\SqlDataMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
