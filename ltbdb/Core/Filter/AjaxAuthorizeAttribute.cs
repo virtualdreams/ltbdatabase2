@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace ltbdb.Core.Filter
 {
+	/// <summary>
+	/// Allow only authorized ajax requests.
+	/// </summary>
 	public class AjaxAuthorizeAttribute: AuthorizeAttribute
 	{
 		protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
