@@ -8,5 +8,6 @@ namespace ltbdb.Models
 	public class TagViewContainer
 	{
 		public TagModel[] Tags { get; set; }
+		public TagModel[] UnreferencedTags { get; set; }
 	}
 }

@@ -21,6 +21,23 @@
 	</div>
 }
 </div>
+@if(Request.IsAuthenticated && Model.UnreferencedTags.Count() > 0) {
+<h2>Unbenutze Tags</h2>
+<div class="tag-container">
+@foreach (var tag in Model.UnreferencedTags)
+{
+	<div class="tag" style="position: relative;">
+		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
+		@if(Request.IsAuthenticated) {
+		<div class="tag-edit">
+			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" alt="" /></a>
+			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen." data-jbox-title="Tag &quot;@tag.Name&quot;"><img src="~/Content/bin.png" alt="" /></a>
+		</div>
+		}
+	</div>
+}
+</div>
+}
 <script type="text/javascript">
 	$(function () {
 

@@ -20,11 +20,14 @@ namespace ltbdb.Controllers
 
 		public ActionResult Index()
 		{
-			var _tags = Tag.Get().Where(s => s.References != 0).OrderBy(o => o.Name);
+			var _tags = Tag.Get();
+			var _referencedTags = _tags.Where(s => s.References != 0).OrderBy(o => o.Name);
+			var _unreferencedTags = _tags.Where(s => s.References == 0).OrderBy(o => o.Name);
 
-			var tags = Mapper.Map<TagModel[]>(_tags);
+			var referencedTags = Mapper.Map<TagModel[]>(_referencedTags);
+			var unreferencedTags = Mapper.Map<TagModel[]>(_unreferencedTags);
 
-			var view = new TagViewContainer { Tags = tags };
+			var view = new TagViewContainer { Tags = referencedTags, UnreferencedTags = unreferencedTags };
 
 			return View(view);
 		}
