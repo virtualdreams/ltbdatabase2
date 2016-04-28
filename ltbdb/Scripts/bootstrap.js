@@ -252,7 +252,7 @@ $(function() {
 		}
 	});
 
-	$('#tag-form').validate({
+	$('#tag-edit').validate({
 		errorClass: 'field-validation-error',
 		validClass: 'field-validation-valid',
 		errorElement: 'span',

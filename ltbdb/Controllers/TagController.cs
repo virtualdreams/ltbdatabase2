@@ -111,7 +111,7 @@ namespace ltbdb.Controllers
 			var tag = Mapper.Map<Tag>(model);
 			Tag.Set(tag);
 
-			return RedirectToAction("index", "home");
+			return RedirectToAction("index", "tag");
 		}
 
 		[AjaxAuthorize]
