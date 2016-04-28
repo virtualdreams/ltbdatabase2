@@ -247,7 +247,7 @@ namespace ltbdb.DomainServices
 			
 			//TODO modify filter and escape
 
-			string eterm = term.Filter(@"%\^#_").Escape().Trim();
+			string eterm = term.Escape().EscapeForSearch().Trim();
 
 			if (String.IsNullOrEmpty(eterm))
 			{
@@ -268,7 +268,7 @@ namespace ltbdb.DomainServices
 		{
 			Database db = new Database();
 			
-			string eterm = term.Filter(@"%\^#_").Escape().Trim();
+			string eterm = term.Escape().EscapeForSearch().Trim();
 			if (String.IsNullOrEmpty(eterm))
 			{
 				return new string[] { };

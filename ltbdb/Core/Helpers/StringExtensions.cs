@@ -9,19 +9,36 @@ namespace ltbdb.Core.Helpers
 	static public class StringExtensions
 	{
 		/// <summary>
-		/// Escape string for mysql.
+		/// Escape string to insert.
 		/// </summary>
 		/// <param name="str"></param>
 		/// <returns></returns>
 		static public string Escape(this string str)
 		{
 			if (!String.IsNullOrEmpty(str))
+			{
 				return str
 					.Replace("\\", "\\\\")
 					.Replace("'", "\\'")
 					.Replace("\"", "\\\"");
-					//.Replace("%", "\\%")
-					//.Replace("_", "\\_");
+			}
+
+			return str;
+		}
+
+		/// <summary>
+		/// Escape string to search for special characters.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		static public string EscapeForSearch(this string str)
+		{
+			if (!String.IsNullOrEmpty(str))
+			{
+				return str
+					.Replace("_", @"\_")
+					.Replace("%", @"\%");
+			}
 
 			return str;
 		}

@@ -71,10 +71,10 @@ namespace ltbdb.DomainServices
 			//TODO modify filter and escape
 
 			// look if the tag exists otherwise create them
-			var tag = db.TagEntity.GetByName(name.Filter(@"%\^#_").Escape().Trim());
+			var tag = db.TagEntity.GetByName(name.Escape().Trim());
 			if (tag == null)
 			{
-				tag = db.TagEntity.Add(new TagDTO { Name = name.Filter(@"%\^#_").Escape().Trim() });
+				tag = db.TagEntity.Add(new TagDTO { Name = name.Escape().Trim() });
 			}
 
 			return Mapper.Map<Tag>(tag);
