@@ -80,6 +80,9 @@ $(function() {
 		})
 	});
 
+	/* image */
+	jbox_image = new jBox('Image');
+
 	/* tag */
 	jbox_tag = new jBox('Modal', {
 		position: {
