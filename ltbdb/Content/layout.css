@@ -468,6 +468,7 @@ img {
 	color: #666666;
 }
 
-.field-validation-error {
+span.field-validation-error {
 	color: #e43d3d;
+	margin-left: 10px;
 }
