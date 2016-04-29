@@ -12,7 +12,7 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
 });
 
 function split(val) {
-	return val.split(/,\s*/);
+	return val.split(/;\s*/);
 }
 
 function extractLast(term) {
@@ -71,7 +71,7 @@ $(function() {
 				terms.pop();
 				terms.push(ui.item.value);
 				terms.push("");
-				this.value = terms.join(", ");
+				this.value = terms.join("; ");
 				return false;
 			},
 			open: function () {
