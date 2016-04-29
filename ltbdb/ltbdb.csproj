@@ -223,7 +223,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.mobile.js" />
     <Content Include="Scripts\jBox.min.js" />
-    <Content Include="Scripts\jquery-1.12.3.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="App_Data\database.xml" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
