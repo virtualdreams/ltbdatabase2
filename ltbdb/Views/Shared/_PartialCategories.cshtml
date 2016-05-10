@@ -1,11 +1,11 @@
-﻿@model ltbdb.Models.CategoryModel[]
+﻿@model ltbdb.Models.CategoryViewContainer
 @using ltbdb.Models;
 
 @{
    Layout = null;
 }
 
-@foreach (CategoryModel category in Model)
+@foreach (var category in Model.Categories)
 {
 <li><a href="@Url.Action("view", "category", new { id = category.Id })">@category.Name</a></li>
 }

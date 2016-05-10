@@ -1,0 +1,32 @@
+﻿@model ltbdb.Models.CategoryEditContainer
+@using ltbdb.Models
+@{
+	if (Model.Category.Id == 0) {
+		ViewBag.Title = "Neue Kategorie | Lustiges Taschenbuch - Administration";
+	} else {
+		ViewBag.Title = String.Format("{0} | Lustiges Taschenbuch - Administration", Model.Category.Name);
+	}
+}
+
+<div class="box">
+	<h3>Kategorie bearbeiten</h3>
+	<div>
+		<form action="@Url.Action("edit", "category", new { area = "admin" })" method="post" enctype="multipart/form-data" id="category-form">
+			<div class="form-element">
+				<div class="form-element-field">
+					<label for="name">Name</label>
+				</div>
+				<div class="form-element-field">
+					<input type="text" id="name" name="name" value="@Model.Category.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
+				</div>
+			</div>
+
+			<div class="form-element">
+				<div class="form-element-button-bar">
+					<input class="button-green" type="submit" value="Speichern" />
+					<input id="cancel-edit" class="button-red" type="button" value="Abbrechen" />
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

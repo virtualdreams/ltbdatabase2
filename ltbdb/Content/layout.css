@@ -125,6 +125,85 @@ img {
 	width: 1200px;
 }
 
+/* split content pane into two columns */
+.one-fourth {
+	width: 300px;
+	float: left;
+}
+
+.three-fourth {
+	width: 900px;
+	float: left;
+}
+
+.three-fourth:after {
+	clear: both;
+}
+
+.left-box {
+	padding: 10px 10px 10px 0;
+}
+
+.right-box {
+	padding: 10px 0 10px 10px;
+}
+
+/* navigation box */
+nav {
+	 border: 1px solid #dddddd;
+	 border-radius: 3px;
+}
+
+nav a {
+	position: relative;
+	display: block;
+	padding: 8px 10px;
+}
+
+/* content box with header */
+.box {
+	border: 1px solid #dddddd;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	margin-bottom: 10px;
+}
+
+.box h3 {
+	background-color: #eeeeee;
+	font-size: 14px; 
+	margin: 0; 
+	padding: 10px; 
+	border-bottom: 1px solid #dddddd;
+}
+
+.box div {
+	padding: 10px;
+}
+
+/* simple lists */
+.list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.list li {
+	margin-bottom: 10px;
+	background-color: #eeeeee;
+	background-image: linear-gradient(#fcfcfc, #eeeeee);
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+}
+
+.list a {
+	display: block;
+	padding: 7px;
+}
+
+.list li:last-child {
+	margin-bottom: 0;
+}
+
 /* menu link list */
 .link-list {
 	/*margin: 0;

@@ -19,19 +19,29 @@ namespace ltbdb
 			routes.MapRoute(
 				name: "Search",
 				url: "search",
-				defaults: new { controller = "home", action = "search" }
+				defaults: new { controller = "home", action = "search" },
+				namespaces: new[] { "ltbdb.Controllers" }
 			);
 
 			routes.MapRoute(
 				name: "Tags",
 				url: "tags",
-				defaults: new { controller = "tag", action = "index" }
+				defaults: new { controller = "tag", action = "index" },
+				namespaces: new[] { "ltbdb.Controllers" }
+			);
+
+			routes.MapRoute(
+				name: "Categories",
+				url: "all",
+				defaults: new { controller = "category", action = "index" },
+				namespaces: new[] { "ltbdb.Controllers" }
 			);
 
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "home", action = "index", id = UrlParameter.Optional }
+				defaults: new { controller = "home", action = "index", id = UrlParameter.Optional },
+				namespaces: new[] { "ltbdb.Controllers" }
 			);
 		}
 	}

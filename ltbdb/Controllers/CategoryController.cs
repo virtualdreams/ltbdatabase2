@@ -46,48 +46,5 @@ namespace ltbdb.Controllers
 
 			return View(view);
 		}
-
-		[Authorize]
-		[HttpGet]
-		public ActionResult Create()
-		{
-			var _category = new Category();
-
-			var category = Mapper.Map<CategoryModel>(_category);
-
-			var view = new CategoryEditContainer { Category = category };
-
-			return View("edit", view);
-		}
-
-		[Authorize]
-		[HttpGet]
-		public ActionResult Edit(int? id)
-		{
-			var _category = Category.Get(id ?? 0);
-
-			var category = Mapper.Map<CategoryModel>(_category);
-
-			var view = new CategoryEditContainer { Category = category };
-			
-			return View(view);
-		}
-
-		[Authorize]
-		[HttpPost]
-		public ActionResult Edit(CategoryModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				var view = new CategoryEditContainer { Category = model };
-
-				return View("edit", view);
-			}
-
-			var category = Mapper.Map<Category>(model);
-			Category.Set(category);
-
-			return RedirectToAction("index", "home");
-		}
     }
 }

@@ -1,0 +1,17 @@
+﻿@model ltbdb.Models.CategoryViewContainer
+@using ltbdb.Models;
+@{
+    ViewBag.Title = "Kategorien | Lustiges Taschenbuch - Administration";
+}
+
+<div class="box">
+	<h3>Kategorien</h3>
+	<div>
+		<ul class="list">
+			@foreach(var category in Model.Categories) {
+			<li><a href="@Url.Action("edit", "category", new { area = "admin", id = category.Id })">@category.Name</a></li>
+			}
+		</ul>
+		<a href="@Url.Action("create", "category", new { area = "admin" })" class="button-green" style="margin-top: 10px;">Neue Kategorie</a>
+	</div>
+</div>

@@ -63,7 +63,9 @@ namespace ltbdb.Controllers
 
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 
-			return View("_PartialCategories", categories);
+			var view = new CategoryViewContainer { Categories = categories };
+
+			return View("_PartialCategories", view);
 		}
     }
 }
