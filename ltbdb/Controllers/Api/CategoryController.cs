@@ -9,18 +9,20 @@ using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
-    public class CategoryController : ApiController
-    {
+	public class CategoryController : ApiController
+	{
+		[HttpGet]
 		public IEnumerable<ltbdb.Models.WebService.Category> Get()
-        {
+		{
 			var categories = Category.Get().OrderBy(o => o.Id);
 
 			return Mapper.Map<ltbdb.Models.WebService.Category[]>(categories);
-        }
+		}
 
+		[HttpGet]
 		public ltbdb.Models.WebService.Category Get(int id)
-        {
+		{
 			return Mapper.Map<ltbdb.Models.WebService.Category>(Category.Get(id));
-        }
-    }
+		}
+	}
 }

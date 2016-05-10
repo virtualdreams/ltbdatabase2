@@ -9,18 +9,20 @@ using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
-    public class TagController : ApiController
-    {
+	public class TagController : ApiController
+	{
+		[HttpGet]
 		public IEnumerable<ltbdb.Models.WebService.Tag> Get()
-        {
+		{
 			var tags = Tag.Get().OrderBy(o => o.Id);
 
 			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(tags);
-        }
+		}
 
+		[HttpGet]
 		public ltbdb.Models.WebService.Tag Get(int id)
-        {
+		{
 			return Mapper.Map<ltbdb.Models.WebService.Tag>(Tag.Get(id));
-        }
-    }
+		}
+	}
 }

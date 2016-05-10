@@ -140,6 +140,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\BookController.cs" />
     <Compile Include="Controllers\Api\CategoryController.cs" />
@@ -149,8 +150,9 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Api\StatsController.cs" />
     <Compile Include="Controllers\TagController.cs" />
-    <Compile Include="Core\DbContextModule.cs">
+    <Compile Include="Core\HttpModule\DbContextModule.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
@@ -259,6 +261,7 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Stats\Index.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

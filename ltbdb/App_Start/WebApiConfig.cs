@@ -13,6 +13,12 @@ namespace ltbdb
 		public static void Register(HttpConfiguration config)
 		{
 			config.Routes.MapHttpRoute(
+				name: "StatsApi",
+				routeTemplate: "api/stats/{action}",
+				defaults: new { controller = "stats" }
+			);
+
+			config.Routes.MapHttpRoute(
 				name: "SearchApi",
 				routeTemplate: "api/search/{action}/{term}",
 				defaults: new { controller = "search", term = RouteParameter.Optional }
