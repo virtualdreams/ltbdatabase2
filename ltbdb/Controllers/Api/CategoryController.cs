@@ -30,7 +30,10 @@ namespace ltbdb.Controllers.Api
 		[HttpPost]
 		public dynamic Delete(int? id)
 		{
-			throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not implemented yet."));
+			if((id ?? 0) == 0)
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Id not found."));
+
+			return new { Deleted = Category.Delete(id ?? 0) };
 		}
 
 		[HttpPost]

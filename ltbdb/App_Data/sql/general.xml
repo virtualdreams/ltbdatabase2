@@ -73,9 +73,9 @@
 		update
 			books
 		set
-			category = {to}
+			catid = {to}
 		where
-			category = {from}
+			catid = {from}
 		]]>
 	</statement>
 	<statement id="updateBookImage">
@@ -137,7 +137,7 @@
 		delete from
 			categories
 		where
-			id = {id}
+			catid = {id}
 		]]>
 	</statement>
 	

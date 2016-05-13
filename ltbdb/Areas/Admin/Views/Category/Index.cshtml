@@ -51,6 +51,25 @@
 		</div>
 	</div>
 </div>
+
+<div id="delete-msg-box" style="display: none;">
+	<p>
+		Soll diese Kategorie wirklich gelöscht werden?
+	</p>
+	<div>
+		<input id="delete-button" class="button-red" type="button" value="Löschen" />
+	</div>
+</div>
+
+<div id="move-msg-box" style="display: none;">
+	<p>
+		Soll diese Kategorie wirklich verschoben werden?
+	</p>
+	<div>
+		<input id="move-button" class="button-red" type="button" value="Löschen" />
+	</div>
+</div>
+
 <script type="text/javascript">
 	$(function () {
 		$.ajax({
@@ -78,6 +97,66 @@
 					}
 				});
 			}
+		});
+
+		var jbox_delete = new jBox('Modal', {
+			overlay: true,
+			closeOnClick: 'body',
+			closeButton: 'title',
+			onOpen: function () {
+				//$('#error').text('');
+				//link = this.source.attr('href');
+			},
+			onClose: function () {
+				//link = null;
+			}
+		});
+
+		$('#delete').click(function () {
+			jbox_delete.setContent($('#delete-msg-box'), true).setTitle('Kategorie löschen').open();
+		});
+
+		$('#move').click(function () {
+			jbox_delete.setContent($('#move-msg-box'), true).setTitle('Kategorie verschieben').open();
+		});
+
+		$('#delete-button').click(function () {
+			$.ajax({
+				type: 'POST',
+				url: '/api/category/delete/' + $('#category-delete').val(),
+				statusCode: {
+					401: function () {
+						alert("Not authorized.");
+					},
+					404: function () {
+						alert("An error has occured.");
+					}
+				},
+				success: function (data) {
+					jbox_delete.close();
+					location.reload(true);
+				}
+			});
+		});
+
+		$('#move-button').click(function () {
+			$.ajax({
+				type: 'POST',
+				url: '/api/category/move?from=' + $('#category-move-from').val() + '&to=' + $('#category-move-to').val(),
+				statusCode: {
+					401: function () {
+						jbox_delete.close();
+						alert("Not authorized.");
+					},
+					404: function () {
+						jbox_delete.close();
+						alert("An error has occured.");
+					}
+				},
+				success: function (data) {
+					jbox_delete.close();
+				}
+			});
 		});
 	});
 </script>
