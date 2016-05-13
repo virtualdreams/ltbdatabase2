@@ -142,10 +142,10 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Api\BookController.cs" />
-    <Compile Include="Controllers\Api\CategoryController.cs" />
+    <Compile Include="Controllers\Api\CategoryController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Api\SearchController.cs" />
-    <Compile Include="Controllers\Api\TagController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -174,7 +174,7 @@
     <Compile Include="Core\VersionInfo.cs" />
     <Compile Include="DomainServices\Category.cs" />
     <Compile Include="DomainServices\Book.cs" />
-    <Compile Include="DomainServices\Database\Database.cs" />
+    <Compile Include="DomainServices\Database\DatabaseContext.cs" />
     <Compile Include="DomainServices\DTO\Tag2BookDTO.cs" />
     <Compile Include="DomainServices\Repository\CategoryRepository.cs" />
     <Compile Include="DomainServices\Repository\Tag2BookRepository.cs" />

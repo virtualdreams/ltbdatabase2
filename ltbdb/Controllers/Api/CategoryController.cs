@@ -9,20 +9,34 @@ using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
+	[Authorize]
 	public class CategoryController : ApiController
 	{
 		[HttpGet]
-		public IEnumerable<ltbdb.Models.WebService.Category> Get()
+		public IEnumerable<dynamic> List()
 		{
-			var categories = Category.Get().OrderBy(o => o.Id);
-
-			return Mapper.Map<ltbdb.Models.WebService.Category[]>(categories);
+			var t = Category.Get();
+			foreach (var c in t)
+			{
+				yield return new
+				{
+					name = c.Name,
+					id = c.Id,
+					used = Category.Get(c.Id).GetBooks().Count() != 0
+				};
+			}
 		}
 
-		[HttpGet]
-		public ltbdb.Models.WebService.Category Get(int id)
+		[HttpPost]
+		public dynamic Delete(int? id)
 		{
-			return Mapper.Map<ltbdb.Models.WebService.Category>(Category.Get(id));
+			throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not implemented yet."));
+		}
+
+		[HttpPost]
+		public dynamic Move(int? from, int? to)
+		{
+			throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not implemented yet."));
 		}
 	}
 }

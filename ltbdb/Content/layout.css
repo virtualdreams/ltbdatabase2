@@ -12,7 +12,7 @@ body {
 	background-color: #F9F9F9;
 }
 
-a, a:visited, :focus, :active {
+a, a:visited, a:focus, a:active {
 	text-decoration: none;
 	color: #6B7B95;
 }
@@ -118,7 +118,7 @@ img {
 	
 }
 
-/* content */
+/* the main content pane */
 .content {
 	margin: 0;
 	padding: 0;
@@ -140,6 +140,7 @@ img {
 	clear: both;
 }
 
+/* left and right content box */
 .left-box {
 	padding: 10px 10px 10px 0;
 }
@@ -168,7 +169,7 @@ nav a {
 	margin-bottom: 10px;
 }
 
-.box h3 {
+.box>h3 {
 	background-color: #eeeeee;
 	font-size: 14px; 
 	margin: 0; 
@@ -176,7 +177,7 @@ nav a {
 	border-bottom: 1px solid #dddddd;
 }
 
-.box div {
+.box>div {
 	padding: 10px;
 }
 
@@ -471,6 +472,60 @@ nav a {
 	margin: 0;
 	padding: 0;
 	margin-top: 15px;
+}
+
+/* new input element block design */
+.element {
+	margin-bottom: 20px;
+}
+
+.element:last-child {
+	margin-bottom: 0;
+}
+
+.element > label {
+	font-weight: bold;
+	color: #6B7B95;
+	display: block;
+	padding-bottom: 10px;
+}
+
+/* inputs */
+.element > input[type=text], 
+.element > input[type=password], 
+.element > select,
+.element > div > input[type=text] {
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	background-color: #fafafa;
+	padding: 7px;
+	vertical-align: middle;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+	color: #333333;
+	width: 500px;
+}
+
+.element > input[type=text]:focus,
+.element > input[type=password]:focus, 
+.element > select:focus,
+.element > div > input[type=text]:focus {
+	border: 1px solid #a8dd6d;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(96, 176, 68, 0.5)
+}
+
+.element > select {
+	width: 516px;
+}
+
+.element > select,
+.element > input,
+.element > div > input {
+	margin-bottom: 10px;
+}
+
+.element > select:last-child,
+.element > input:last-child {
+	margin-bottom: 0;
 }
 
 /* buttons */

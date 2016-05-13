@@ -3,29 +3,24 @@
 @{
 	if (Model.Category.Id == 0) {
 		ViewBag.Title = "Neue Kategorie | Lustiges Taschenbuch - Administration";
+		ViewBag.Headline = "Neue Kategorie";
 	} else {
 		ViewBag.Title = String.Format("{0} | Lustiges Taschenbuch - Administration", Model.Category.Name);
+		ViewBag.Headline = "Kategorie bearbeiten";
 	}
 }
 
 <div class="box">
-	<h3>Kategorie bearbeiten</h3>
+	<h3>@ViewBag.Headline</h3>
 	<div>
 		<form action="@Url.Action("edit", "category", new { area = "admin" })" method="post" enctype="multipart/form-data" id="category-form">
-			<div class="form-element">
-				<div class="form-element-field">
-					<label for="name">Name</label>
-				</div>
-				<div class="form-element-field">
-					<input type="text" id="name" name="name" value="@Model.Category.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
-				</div>
+			<div class="element">
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" value="@Model.Category.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
 			</div>
 
-			<div class="form-element">
-				<div class="form-element-button-bar">
-					<input class="button-green" type="submit" value="Speichern" />
-					<input id="cancel-edit" class="button-red" type="button" value="Abbrechen" />
-				</div>
+			<div class="element">
+				<input class="button-green" type="submit" value="Speichern" />
 			</div>
 		</form>
 	</div>

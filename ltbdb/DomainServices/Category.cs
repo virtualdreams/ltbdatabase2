@@ -8,9 +8,19 @@ using System.Web;
 
 namespace ltbdb.DomainServices
 {
+	/// <summary>
+	/// Represents a category.
+	/// </summary>
 	public class Category
 	{
+		/// <summary>
+		/// The id of the category.
+		/// </summary>
 		public int Id { get; set; }
+
+		/// <summary>
+		/// The name of the category.
+		/// </summary>
 		public string Name { get; set; }
 
 		/// <summary>
@@ -19,13 +29,28 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		public Book[] GetBooks()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var books = db.BookEntity.GetByCategory(this.Id);
 
 			var result = Mapper.Map<Book[]>(books);
 
 			return result;
+		}
+
+		/// <summary>
+		/// Move all contents from this category to another one.
+		/// </summary>
+		/// <param name="to">The new category.</param>
+		/// <returns>This instance.</returns>
+		public bool MoveTo(Category to)
+		{
+			var _db = new DatabaseContext();
+
+			var _from = Mapper.Map<CategoryDTO>(this);
+			var _to = Mapper.Map<CategoryDTO>(to);
+
+			return _db.CategoryEntity.Move(_from, _to);
 		}
 
 		#region Static methods
@@ -36,7 +61,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of categories.</returns>
 		static public Category[] Get()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var categories = db.CategoryEntity.GetAll();
 
@@ -50,7 +75,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The category.</returns>
 		static public Category Get(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var category = db.CategoryEntity.Get(id);
 
@@ -64,7 +89,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The new category</returns>
 		static public Category Add(Category model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<CategoryDTO>(model);
 
@@ -82,7 +107,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The category.</returns>
 		static public Category Update(Category model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<CategoryDTO>(model);
 
@@ -107,6 +132,18 @@ namespace ltbdb.DomainServices
 				return Category.Add(model);
 			else
 				return Category.Update(model);
+		}
+
+		/// <summary>
+		/// Delete a category and all related contents.
+		/// </summary>
+		/// <param name="id">The id of the category.</param>
+		/// <returns></returns>
+		static public bool Delete(int id)
+		{
+			var _db = new DatabaseContext();
+
+			return _db.CategoryEntity.Delete(new CategoryDTO { Id = id });
 		}
 
 		#endregion

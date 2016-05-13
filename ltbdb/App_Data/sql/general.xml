@@ -68,7 +68,16 @@
 			bookid = {id}
 		]]>
 	</statement>
-
+	<statement id="moveBooks">
+		<![CDATA[
+		update
+			books
+		set
+			category = {to}
+		where
+			category = {from}
+		]]>
+	</statement>
 	<statement id="updateBookImage">
 		<![CDATA[
 		update
@@ -100,7 +109,6 @@
 			catid = {id}
 		]]>
 	</statement>
-
 	<statement id="addCategory">
 		<![CDATA[
 		insert into
@@ -124,7 +132,15 @@
 			catid = {id}
 		]]>
 	</statement>
-
+	<statement id="deleteCategory">
+		<![CDATA[
+		delete from
+			categories
+		where
+			id = {id}
+		]]>
+	</statement>
+	
 	<statement id="getTags">
 		<![CDATA[
 		select

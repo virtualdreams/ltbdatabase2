@@ -11,9 +11,9 @@ namespace ltbdb.DomainServices
 	/// <summary>
 	/// Access the database. Provide entities for each table.
 	/// </summary>
-	public class Database
+	public class DatabaseContext
 	{
-		private static readonly ILog Log = LogManager.GetLogger(typeof(Database));
+		private static readonly ILog Log = LogManager.GetLogger(typeof(DatabaseContext));
 
 		public SqlConfig SqlConfig { get; private set; }
 		public SqlContext SqlContext { get; private set; }
@@ -23,7 +23,7 @@ namespace ltbdb.DomainServices
 		public TagRepository TagEntity { get; private set; }
 		public Tag2BookRepository Tag2BookEntity { get; private set; }
 
-		public Database()
+		public DatabaseContext()
 		{
 			// get config and context from request
 			this.SqlConfig = HttpContext.Current.Items["config"] as SqlConfig;

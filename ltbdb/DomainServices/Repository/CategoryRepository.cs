@@ -77,7 +77,37 @@ namespace ltbdb.DomainServices.Repository
 
 		public override bool Delete(CategoryDTO item)
 		{
-			throw new NotImplementedException();
+			var query = this.Config.CreateQuery("deleteCategory");
+			query.SetParameter("id", item.Id);
+
+			try
+			{
+				var ret = this.Context.Delete(query);
+
+				return ret > 0;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		public bool Move(CategoryDTO from, CategoryDTO to)
+		{
+			var query = this.Config.CreateQuery("moveBooks");
+			query.SetParameter("from", from.Id);
+			query.SetParameter("to", to.Id);
+
+			try
+			{
+				var ret = this.Context.Update(query);
+
+				return ret > 0;
+			}
+			catch (Exception)
+			{
+				throw;
+			}
 		}
 	}
 }

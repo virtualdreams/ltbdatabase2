@@ -21,7 +21,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book[] GetBooks()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var books = db.BookEntity.GetByTag(this.Id);
 
@@ -38,7 +38,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of tags</returns>
 		static public Tag[] Get()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			var tags = db.TagEntity.GetAll();
 
@@ -52,7 +52,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Get(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			var tag = db.TagEntity.Get(id);
 
@@ -66,7 +66,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Create(string name)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			//TODO modify filter and escape
 
@@ -87,7 +87,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The new tag.</returns>
 		static public Tag Add(Tag model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<TagDTO>(model);
 
@@ -105,7 +105,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		static public Tag Update(Tag model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<TagDTO>(model);
 
@@ -123,7 +123,7 @@ namespace ltbdb.DomainServices
 		/// <returns>True on success.</returns>
 		static public bool Delete(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var tag = Get(id);
 

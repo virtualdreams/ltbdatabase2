@@ -41,7 +41,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Tag[] GetTags()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var tags = db.TagEntity.GetByBook(this.Id);
 
@@ -57,7 +57,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The tag.</returns>
 		public Tag AddTag(string name)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			// TODO validate the book before link tags
 
@@ -103,7 +103,7 @@ namespace ltbdb.DomainServices
 		/// <returns>True on success.</returns>
 		public bool Unlink(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var _tag = Tag.Get(id);
 			
@@ -117,7 +117,7 @@ namespace ltbdb.DomainServices
 		/// <returns></returns>
 		public Book SetImage(string filename)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var book = Get(this.Id);
 
@@ -138,7 +138,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		static public Book[] Get()
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			var books = db.BookEntity.GetAll();
 
@@ -152,7 +152,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The book.</returns>
 		static public Book Get(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			var book = db.BookEntity.Get(id);
 
@@ -168,7 +168,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The new book.</returns>
 		static public Book Add(Book model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<BookDTO>(model);
 
@@ -186,7 +186,7 @@ namespace ltbdb.DomainServices
 		/// <returns>The book.</returns>
 		static public Book Update(Book model)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var @in = Mapper.Map<BookDTO>(model);
 
@@ -215,7 +215,7 @@ namespace ltbdb.DomainServices
 
 		static public bool Delete(int id)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 
 			var book = Get(id);
 
@@ -243,7 +243,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of books.</returns>
 		static public Book[] Search(string term)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			//TODO modify filter and escape
 
@@ -266,7 +266,7 @@ namespace ltbdb.DomainServices
 		/// <returns>A list of suggestions.</returns>
 		static public string[] SuggestionList(string term)
 		{
-			Database db = new Database();
+			DatabaseContext db = new DatabaseContext();
 			
 			string eterm = term.Escape().EscapeForSearch().Trim();
 			if (String.IsNullOrEmpty(eterm))
