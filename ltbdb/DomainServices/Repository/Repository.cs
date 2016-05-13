@@ -8,10 +8,17 @@ using System.Web;
 
 namespace ltbdb.DomainServices.Repository
 {
+	/// <summary>
+	/// Basic repository
+	/// </summary>
 	public interface IRepository
 	{
 	}
 
+	/// <summary>
+	/// Basic typed repository
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public interface IRepository<T> : IRepository where T : class, new()
 	{
 		T Add(T item);
@@ -21,10 +28,14 @@ namespace ltbdb.DomainServices.Repository
 		bool Delete(T item);
 	}
 
+	/// <summary>
+	/// Basic abstract typed repository.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public abstract class Repository<T> : IRepository<T> where T : class, new()
 	{
-		public SqlConfig Config { get; private set; }
-		public SqlContext Context { get; private set; }
+		protected SqlConfig Config { get; private set; }
+		protected SqlContext Context { get; private set; }
 
 		protected Repository(SqlConfig config, SqlContext context)
 		{
