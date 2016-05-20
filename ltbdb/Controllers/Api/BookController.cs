@@ -12,25 +12,20 @@ namespace ltbdb.Controllers.Api
 	public class BookController : ApiController
 	{
 		[HttpGet]
-		public IEnumerable<ltbdb.Models.WebService.Book> List()
+		public IEnumerable<dynamic> List()
 		{
-			var books = Book.Get().OrderBy(o => o.Category.Id).ThenBy(o => o.Number);
-
-			return Mapper.Map<ltbdb.Models.WebService.Book[]>(books);
+			foreach (var book in Book.Get().OrderBy(o => o.Category.Name).ThenBy(o => o.Number))
+			{
+				yield return new
+				{
+					Number = book.Number,
+					Title = book.Name,
+					Category = book.Category.Name,
+					Added = book.Created,
+					Stories = book.Stories,
+					Tags = book.GetTags().Select(s => s.Name).ToArray()
+				};
+			}
 		}
-		
-		//[HttpGet]
-		//public IEnumerable<ltbdb.Models.WebService.Book> Get()
-		//{
-		//	var books = Book.Get().OrderBy(o => o.Category.Id);
-
-		//	return Mapper.Map<ltbdb.Models.WebService.Book[]>(books);
-		//}
-
-		//[HttpGet]
-		//public ltbdb.Models.WebService.Book Get(int id)
-		//{
-		//	return Mapper.Map<ltbdb.Models.WebService.Book>(Book.Get(id));
-		//}
 	}
 }

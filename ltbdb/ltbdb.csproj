@@ -142,6 +142,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\BookController.cs" />
     <Compile Include="Controllers\Api\CategoryController.cs">
       <SubType>Code</SubType>
     </Compile>
