@@ -84,5 +84,16 @@ namespace ltbdb.Core.Services
 
 			return Mapper.Map<Book[]>(BookEntity.GetByTerm(_escapedTerm));
 		}
+
+		public IEnumerable<string> Suggestion(string term)
+		{
+			var _escapedTerm = term.Escape().EscapeForSearch().Trim();
+			if (String.IsNullOrEmpty(_escapedTerm))
+			{
+				return Enumerable.Empty<string>();
+			}
+
+			return BookEntity.GetSuggestionList(_escapedTerm);
+		}
 	}
 }

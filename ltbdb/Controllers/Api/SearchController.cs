@@ -1,4 +1,6 @@
-﻿using ltbdb.Core.Filter;
+﻿using log4net;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -9,16 +11,29 @@ namespace ltbdb.Controllers.Api
 	[LogError(Order = 0)]
     public class SearchController : ApiController
     {
-		[HttpGet]
-		public IEnumerable<string> Title(string term)
+		private static readonly ILog Log = LogManager.GetLogger(typeof(SearchController));
+
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public SearchController(BookService book, TagService tag, CategoryService category)
 		{
-			return Enumerable.Empty<string>(); //Book.SuggestionList(term ?? "");
+			Book = book;
+			Tag = tag;
+			Category = category;
 		}
 
 		[HttpGet]
-		public IEnumerable<string> Tag(string term)
+		public dynamic Title(string term)
 		{
-			return Enumerable.Empty<string>(); //ltbdb.DomainServices.Tag.Get().Where(w => w.Name.ToLower().Contains(term.ToLower())).Select(s => s.Name).ToArray();
+			return Book.Suggestion(term ?? "");
+		}
+
+		[HttpGet]
+		public dynamic Tags(string term)
+		{
+			return Tag.Get().Where(w => w.Name.ToLower().Contains(term.ToLower())).Select(s => s.Name);
 		}
     }
 }

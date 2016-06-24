@@ -53,7 +53,7 @@ $(function() {
 			}
 		}).autocomplete({
 			source: function (request, response) {
-				$.getJSON('/api/search/tag', {
+				$.getJSON('/api/search/tags', {
 					term: extractLast(request.term)
 				}, response);
 			},
