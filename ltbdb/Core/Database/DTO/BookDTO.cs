@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using SqlDataMapper;
 
-namespace ltbdb.DomainServices.DTO
+namespace ltbdb.Core.Database.DTO
 {
 	public class BookDTO
 	{

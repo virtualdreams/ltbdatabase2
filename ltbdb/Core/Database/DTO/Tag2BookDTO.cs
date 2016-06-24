@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ltbdb.DomainServices.DTO
+namespace ltbdb.Core.Database.DTO
 {
 	public class Tag2BookDTO
 	{

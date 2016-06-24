@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using ltbdb.DomainServices;
-using System;
+﻿using log4net;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,20 +9,51 @@ using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
+	[LogError(Order = 0)]
 	public class TagController : ApiController
 	{
-		[HttpGet]
-		public IEnumerable<ltbdb.Models.WebService.Tag> Get()
-		{
-			var tags = Tag.Get().OrderBy(o => o.Id);
+		private static readonly ILog Log = LogManager.GetLogger(typeof(TagController));
 
-			return Mapper.Map<ltbdb.Models.WebService.Tag[]>(tags);
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public TagController(BookService book, TagService tag, CategoryService category)
+		{
+			Book = book;
+			Tag = tag;
+			Category = category;
 		}
 
 		[HttpGet]
-		public ltbdb.Models.WebService.Tag Get(int id)
+		public IEnumerable<dynamic> Get()
 		{
-			return Mapper.Map<ltbdb.Models.WebService.Tag>(Tag.Get(id));
+			var _tags = Tag.Get().OrderBy(o => o.Name);
+
+			foreach (var tag in _tags)
+			{
+				yield return new
+				{
+					Id = tag.Id,
+					Name = tag.Name,
+					References = tag.References
+				};
+			}
+		}
+
+		[HttpGet]
+		public dynamic Get(int id)
+		{
+			var _tag = Tag.Get(id);
+			if (_tag == null)
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
+
+			return new
+			{
+				Id = _tag.Id,
+				Name = _tag.Name,
+				References = _tag.References
+			};
 		}
 	}
 }

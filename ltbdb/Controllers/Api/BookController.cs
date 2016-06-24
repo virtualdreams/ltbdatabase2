@@ -1,16 +1,29 @@
-﻿using AutoMapper;
-using ltbdb.DomainServices;
-using System;
+﻿using log4net;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Models;
+using ltbdb.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
+	[LogError(Order = 0)]
 	public class BookController : ApiController
 	{
+		private static readonly ILog Log = LogManager.GetLogger(typeof(BookController));
+
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public BookController(BookService book, TagService tag, CategoryService category)
+		{
+			Book = book;
+			Tag = tag;
+			Category = category;
+		}
+
 		[HttpGet]
 		public IEnumerable<dynamic> List()
 		{
@@ -23,7 +36,7 @@ namespace ltbdb.Controllers.Api
 					Category = book.Category.Name,
 					Added = book.Created,
 					Stories = book.Stories,
-					Tags = book.GetTags().Select(s => s.Name).ToArray()
+					Tags = Tag.GetByBook(book.Id).Select(s => s.Name)
 				};
 			}
 		}

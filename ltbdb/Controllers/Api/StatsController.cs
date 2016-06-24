@@ -1,17 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using log4net;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Models;
+using ltbdb.Core.Services;
 using System.Linq;
-using ltbdb.DomainServices;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web;
 
 namespace ltbdb.Controllers.Api
 {
 	[Authorize]
+	[LogError(Order = 0)]
 	public class StatsController : ApiController
 	{
+		private static readonly ILog Log = LogManager.GetLogger(typeof(StatsController));
+
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public StatsController(BookService book, TagService tag, CategoryService category)
+		{
+			Book = book;
+			Tag = tag;
+			Category = category;
+		}
+
 		[HttpGet]
 		public dynamic Books()
 		{
@@ -32,8 +44,8 @@ namespace ltbdb.Controllers.Api
 			return new
 			{
 				total = t.Count(),
-				used = t.Where(w => Category.Get(w.Id).GetBooks().Count() > 0).Count(),
-				unused = t.Where(w => Category.Get(w.Id).GetBooks().Count() == 0).Count(),
+				used = t.Where(w => Book.GetByCategory(w.Id).Count() > 0).Count(),
+				unused = t.Where(w => Book.GetByCategory(w.Id).Count() == 0).Count()
 			};
 		}
 

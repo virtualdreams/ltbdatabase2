@@ -68,6 +68,26 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SimpleInjector, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.1.5\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Extensions.ExecutionContextScoping, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Extensions.ExecutionContextScoping.3.1.5\lib\net45\SimpleInjector.Extensions.ExecutionContextScoping.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.3.1.5\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.3.1.5\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.WebApi.3.1.5\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SqlDataMapper, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SqlDataMapper.dll.5.0.0-beta2\lib\net45\SqlDataMapper.dll</HintPath>
       <Private>True</Private>
@@ -141,33 +161,52 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutomapperConfig.cs" />
+    <Compile Include="App_Start\SimpleInjectorConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\StatsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Admin\Controllers\StatsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Api\BookController.cs" />
+    <Compile Include="Controllers\Api\BookController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\Api\CategoryController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\Api\SearchController.cs" />
-    <Compile Include="Controllers\BookController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\Api\StatsController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Api\TagController.cs" />
+    <Compile Include="Controllers\BookController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\CategoryController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Api\StatsController.cs" />
-    <Compile Include="Controllers\TagController.cs" />
-    <Compile Include="Core\HttpModule\DbContextModule.cs">
+    <Compile Include="Controllers\TagController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Core\Filter\LogErrorAttribute.cs" />
-    <Compile Include="Core\GlobalConfig.cs" />
+    <Compile Include="Core\Helpers\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringExtensions.cs" />
-    <Compile Include="Core\ImageStore.cs" />
+    <Compile Include="Core\Helpers\ImageStore.cs" />
+    <Compile Include="Core\Services\BookService.cs" />
+    <Compile Include="Core\Services\CategoryService.cs" />
+    <Compile Include="Core\Services\DemoService.cs" />
+    <Compile Include="Core\Services\TagService.cs" />
     <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
@@ -175,20 +214,20 @@
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PageOffset.cs" />
-    <Compile Include="Core\VersionInfo.cs" />
-    <Compile Include="DomainServices\Category.cs" />
-    <Compile Include="DomainServices\Book.cs" />
-    <Compile Include="DomainServices\Database\DatabaseContext.cs" />
-    <Compile Include="DomainServices\DTO\Tag2BookDTO.cs" />
-    <Compile Include="DomainServices\Repository\CategoryRepository.cs" />
-    <Compile Include="DomainServices\Repository\Tag2BookRepository.cs" />
-    <Compile Include="DomainServices\Repository\TagRepository.cs" />
-    <Compile Include="DomainServices\Tag.cs" />
-    <Compile Include="DomainServices\Repository\BookRepository.cs" />
-    <Compile Include="DomainServices\Repository\Repository.cs" />
-    <Compile Include="DomainServices\DTO\BookDTO.cs" />
-    <Compile Include="DomainServices\DTO\CategoryDTO.cs" />
-    <Compile Include="DomainServices\DTO\TagDTO.cs" />
+    <Compile Include="Core\Helpers\VersionInfo.cs" />
+    <Compile Include="Core\Models\Category.cs" />
+    <Compile Include="Core\Models\Book.cs" />
+    <Compile Include="Core\Database\DatabaseContext.cs" />
+    <Compile Include="Core\Database\DTO\Tag2BookDTO.cs" />
+    <Compile Include="Core\Database\Repository\CategoryRepository.cs" />
+    <Compile Include="Core\Database\Repository\Tag2BookRepository.cs" />
+    <Compile Include="Core\Database\Repository\TagRepository.cs" />
+    <Compile Include="Core\Models\Tag.cs" />
+    <Compile Include="Core\Database\Repository\BookRepository.cs" />
+    <Compile Include="Core\Database\Repository\Repository.cs" />
+    <Compile Include="Core\Database\DTO\BookDTO.cs" />
+    <Compile Include="Core\Database\DTO\CategoryDTO.cs" />
+    <Compile Include="Core\Database\DTO\TagDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,7 +243,6 @@
     <Compile Include="Models\Container\BookViewSearchContainer.cs" />
     <Compile Include="Models\Container\BookViewTagContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\WebService\OutputTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

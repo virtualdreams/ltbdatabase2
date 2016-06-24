@@ -2,7 +2,8 @@
 using log4net;
 using ltbdb.Core;
 using ltbdb.Core.Filter;
-using ltbdb.DomainServices;
+using ltbdb.Core.Helpers;
+using ltbdb.Core.Services;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,18 @@ namespace ltbdb.Controllers
     {
 		private static readonly ILog Log = LogManager.GetLogger(typeof(TagController));
 
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public TagController(BookService book, TagService tag, CategoryService category)
+		{
+			Book = book;
+			Tag = tag;
+			Category = category;
+		}
+
+		[HttpGet]
 		public ActionResult Index()
 		{
 			var _tags = Tag.Get();
@@ -27,22 +40,35 @@ namespace ltbdb.Controllers
 			var referencedTags = Mapper.Map<TagModel[]>(_referencedTags);
 			var unreferencedTags = Mapper.Map<TagModel[]>(_unreferencedTags);
 
-			var view = new TagViewContainer { Tags = referencedTags, UnreferencedTags = unreferencedTags };
+			var view = new TagViewContainer
+			{
+				Tags = referencedTags,
+				UnreferencedTags = unreferencedTags
+			};
 
 			return View(view);
 		}
 
+		[HttpGet]
         public ActionResult View(int? id, int? ofs)
         {
 			var _tag = Tag.Get(id ?? 0);
-			var _books = _tag.GetBooks();
+			if(_tag == null)
+				throw new HttpException(404, "Ressource not found.");
+
+			var _books = Book.GetByTag(_tag.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var tag = Mapper.Map<TagModel>(_tag);
 			var books = Mapper.Map<BookModel[]>(_books);
-			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewTagContainer { Books = books, Tag = tag, PageOffset = pageOffset };
+			var view = new BookViewTagContainer
+			{
+				Books = books,
+				Tag = tag,
+				PageOffset = offset
+			};
 
 			return View(view);
         }
@@ -56,39 +82,43 @@ namespace ltbdb.Controllers
 			return View("_PartialAddTag", view);
 		}
 
-		[AjaxAuthorize]
-		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		[HttpPost]
-		public ActionResult Add(AddTagModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View("_PartialAddTag", model);
-			}
+		//TODO add tag
+		//[AjaxAuthorize]
+		//[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+		//[HttpPost]
+		//public ActionResult Add(AddTagModel model)
+		//{
+		//	if (!ModelState.IsValid)
+		//	{
+		//		return View("_PartialAddTag", model);
+		//	}
 
-			var _tags = Book.Get(model.Id).AddTags(model.Tag.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).Where(w => !String.IsNullOrEmpty(w)).ToArray());
+		//	var _tags = Book.Get(model.Id).AddTags(model.Tag.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).Where(w => !String.IsNullOrEmpty(w)).ToArray());
 
-			var tags = Mapper.Map<TagModel[]>(_tags);
+		//	var tags = Mapper.Map<TagModel[]>(_tags);
 
-			return new JsonResult { Data = new { tags = tags, bookid = model.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-		}
+		//	return new JsonResult { Data = new { tags = tags, bookid = model.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+		//}
 
-		[AjaxAuthorize]
-		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		[HttpPost]
-		public ActionResult Unlink(int? id, int? bookid)
-		{
-			if (!Request.IsAjaxRequest())
-				return new EmptyResult();
+		//TODO remove/unlink tag
+		//[AjaxAuthorize]
+		//[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+		//[HttpPost]
+		//public ActionResult Unlink(int? id, int? bookid)
+		//{
+		//	if (!Request.IsAjaxRequest())
+		//		return new EmptyResult();
 
-			return new JsonResult { Data = new { success = Book.Get(bookid ?? 0).Unlink(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-		}
+		//	return new JsonResult { Data = new { success = Book.Get(bookid ?? 0).RemoveTag(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+		//}
 
 		[Authorize]
 		[HttpGet]
 		public ActionResult Edit(int? id)
 		{
 			var _tag = Tag.Get(id ?? 0);
+			if(_tag == null)
+				throw new HttpException(404, "Ressource not found.");
 
 			var tag = Mapper.Map<TagModel>(_tag);
 
@@ -108,20 +138,22 @@ namespace ltbdb.Controllers
 				return View("edit", view);
 			}
 
-			var tag = Mapper.Map<Tag>(model);
-			Tag.Set(tag);
+			//TODO save tag
+			//var tag = Mapper.Map<Tag>(model);
+			//Tag.Set(tag);
 
 			return RedirectToAction("index", "tag");
 		}
 
-		[AjaxAuthorize]
-		[HttpPost]
-		public ActionResult Delete(int? id)
-		{
-			if (!Request.IsAjaxRequest())
-				return new EmptyResult();
+		//TODO move to webapi
+		//[AjaxAuthorize]
+		//[HttpPost]
+		//public ActionResult Delete(int? id)
+		//{
+		//	if (!Request.IsAjaxRequest())
+		//		return new EmptyResult();
 
-			return new JsonResult { Data = new { success = Tag.Delete(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
-		}
+		//	return new JsonResult { Data = new { success = Tag.Delete(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+		//}
     }
 }

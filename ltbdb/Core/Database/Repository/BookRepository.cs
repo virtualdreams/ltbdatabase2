@@ -1,12 +1,12 @@
-﻿using ltbdb.DomainServices.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SqlDataMapper;
 using SqlDataMapper.Extension;
+using ltbdb.Core.Database.DTO;
 
-namespace ltbdb.DomainServices.Repository
+namespace ltbdb.Core.Database.Repository
 {
 	public class BookRepository: Repository<BookDTO>
 	{
@@ -14,16 +14,12 @@ namespace ltbdb.DomainServices.Repository
 			: base(config, context)
 		{
 		}
-
+		
 		/// <summary>
-		/// Represents a default object.
+		/// Add a book to database.
 		/// </summary>
+		/// <param name="item">The book dto.</param>
 		/// <returns></returns>
-		static public BookDTO Default()
-		{
-			return new BookDTO { Id = 0, Category = 0, CategoryName = "", Name = "", Number = 0, Added = DateTime.MinValue };
-		}
-
 		public override BookDTO Add(BookDTO item)
 		{
 			SqlQuery query = this.Config.CreateQuery("addBook");
@@ -43,6 +39,11 @@ namespace ltbdb.DomainServices.Repository
 			return Get(id);
 		}
 
+		/// <summary>
+		/// Get a book from database.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public override BookDTO Get(object id)
 		{
 			SqlQuery query = this.Config.CreateQuery("getBook");
@@ -50,7 +51,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<BookDTO>(query);
 
-			return result ?? Default();
+			return result;
 		}
 
 		public override IEnumerable<BookDTO> GetAll()

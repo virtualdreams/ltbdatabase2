@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using log4net;
 using ltbdb.Core;
-using ltbdb.DomainServices;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Helpers;
+using ltbdb.Core.Services;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
@@ -17,16 +19,31 @@ namespace ltbdb.Controllers
     {
 		private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public CategoryController(BookService book, TagService tag, CategoryService category)
+		{
+			Book = book;
+			Tag = tag;
+			Category = category;
+		}
+
 		[HttpGet]
         public ActionResult Index(int? ofs)
         {
-			var _books = Book.Get().OrderBy(o => o.Category.Id);
+			var _books = Book.Get().OrderBy(o => o.Category.Name);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewAllContainer { Books = books, PageOffset = pageOffset};
+			var view = new BookViewAllContainer
+			{
+				Books = books,
+				PageOffset = offset
+			};
 
 			return View(view);
         }
@@ -35,14 +52,22 @@ namespace ltbdb.Controllers
 		public ActionResult View(int? id, int? ofs)
 		{
 			var _category = Category.Get(id ?? 0);
-			var _books = _category.GetBooks();
+			if(_category == null)
+				throw new HttpException(404, "Ressource not found.");
+
+			var _books = Book.GetByCategory(_category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var category = Mapper.Map<CategoryModel>(_category);
 			var books = Mapper.Map<BookModel[]>(_page);
-			var pageOffset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var view = new BookViewCategoryContainer { Books = books, Category = category, PageOffset = pageOffset };
+			var view = new BookViewCategoryContainer
+			{
+				Books = books,
+				Category = category,
+				PageOffset = offset
+			};
 
 			return View(view);
 		}

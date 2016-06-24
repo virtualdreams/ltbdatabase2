@@ -1,4 +1,7 @@
-﻿using ltbdb.Core;
+﻿using log4net;
+using ltbdb.Core;
+using ltbdb.Core.Filter;
+using ltbdb.Core.Helpers;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +16,8 @@ namespace ltbdb.Controllers
 	[HandleError(View = "Error", Order = 99)]
     public class AccountController : Controller
     {
+		private static readonly ILog Log = LogManager.GetLogger(typeof(AccountController));
+
         [HttpGet]
         public ActionResult Index()
         {

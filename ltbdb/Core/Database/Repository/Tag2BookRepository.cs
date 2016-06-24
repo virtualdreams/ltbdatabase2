@@ -1,4 +1,4 @@
-﻿using ltbdb.DomainServices.DTO;
+﻿using ltbdb.Core.Database.DTO;
 using SqlDataMapper;
 using SqlDataMapper.Extension;
 using System;
@@ -6,18 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ltbdb.DomainServices.Repository
+namespace ltbdb.Core.Database.Repository
 {
 	public class Tag2BookRepository: Repository<Tag2BookDTO>
 	{
 		public Tag2BookRepository(SqlConfig config, SqlContext context)
 			: base(config, context)
 		{
-		}
-
-		static public Tag2BookDTO Default()
-		{
-			return new Tag2BookDTO { Id = 0, BookId = 0, TagId = 0 };
 		}
 
 		public override Tag2BookDTO Add(Tag2BookDTO item)

@@ -35,6 +35,7 @@ namespace ltbdb
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
 			AutomapperConfig.RegisterAutomapper();
+			SimpleInjectorConfig.Register();
 		}
 
 		protected void Application_End()

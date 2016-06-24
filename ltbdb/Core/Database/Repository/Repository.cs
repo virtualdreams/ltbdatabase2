@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 
-namespace ltbdb.DomainServices.Repository
+namespace ltbdb.Core.Database.Repository
 {
 	/// <summary>
 	/// Basic repository

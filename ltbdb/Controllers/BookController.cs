@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
+using log4net;
+using ltbdb.Core;
 using ltbdb.Core.Filter;
-using ltbdb.DomainServices;
+using ltbdb.Core.Models;
+using ltbdb.Core.Services;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using ltbdb.Core;
 
 namespace ltbdb.Controllers
 {
@@ -15,22 +18,36 @@ namespace ltbdb.Controllers
 	[HandleError(View = "Error", Order=99)]
     public class BookController : Controller
     {
-		[HttpGet]
-		public ActionResult Index()
+		private static readonly ILog Log = LogManager.GetLogger(typeof(BookController));
+
+		private readonly BookService Book;
+		private readonly TagService Tag;
+		private readonly CategoryService Category;
+
+		public BookController(BookService book, TagService tag, CategoryService category)
 		{
-			return View();
+			Book = book;
+			Tag = tag;
+			Category = category;
 		}
 
 		[HttpGet]
 		public ActionResult View(int? id)
 		{
 			var _book = Book.Get(id ?? 0);
-			var _tags = _book.GetTags();
+			if (_book == null)
+				throw new HttpException(404, "Ressource not found.");
+
+			var _tags = Tag.GetByBook(_book.Id);
 
 			var book = Mapper.Map<BookModel>(_book);
 			var tags = Mapper.Map<TagModel[]>(_tags);
 
-			var view = new BookViewDetailContainer { Book = book, Tags = tags };
+			var view = new BookViewDetailContainer
+			{
+				Book = book,
+				Tags = tags
+			};
 			
 			return View(view);
 		}
@@ -56,12 +73,19 @@ namespace ltbdb.Controllers
 		public ActionResult Edit(int? id)
 		{
 			var _book = Book.Get(id ?? 0);
+			if (_book == null)
+				throw new HttpException(404, "Ressource not found.");
+
 			var _categories = Category.Get();
 
 			var book = Mapper.Map<BookModel>(_book);
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 
-			var view = new BookEditContainer { Book = book, Categories = categories };
+			var view = new BookEditContainer
+			{
+				Book = book,
+				Categories = categories
+			};
 
 			return View("edit", view);
 		}
@@ -76,47 +100,54 @@ namespace ltbdb.Controllers
 
 				var categories = Mapper.Map<CategoryModel[]>(_categories);
 
-				var view = new BookEditContainer { Book = model, Categories = categories };
+				var view = new BookEditContainer
+				{
+					Book = model,
+					Categories = categories 
+				};
 
 				return View("edit", view);
 			}
 
 			var book = Mapper.Map<Book>(model);
-			var _book = Book.Set(book);
+			//TODO save book and image
+			//var _book = Book.Set(book);
 
-			if (model.Image != null || model.Remove)
-			{
-				if (model.Remove)
-				{
-					_book.SetImage(null);
-				}
-				else if (model.Image != null)
-				{
-					var filename = ImageStore.Save(model.Image.InputStream);
-					if (!String.IsNullOrEmpty(filename))
-					{
-						_book.SetImage(filename);
-					}
-					else
-					{
-						ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
-					}
-				}
-			}
+			//if (model.Image != null || model.Remove)
+			//{
+			//	if (model.Remove)
+			//	{
+			//		_book.SetImage(null);
+			//	}
+			//	else if (model.Image != null)
+			//	{
+			//		var filename = ImageStore.Save(model.Image.InputStream);
+			//		if (!String.IsNullOrEmpty(filename))
+			//		{
+			//			_book.SetImage(filename);
+			//		}
+			//		else
+			//		{
+			//			ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
+			//		}
+			//	}
+			//}
 
-			return RedirectToAction("view", "book", new { id = _book.Id });
+			//TODO fix book id
+			return RedirectToAction("view", "book", new { id = 0 });
 		}
 
-		[AjaxAuthorize]
-		[HttpPost]
-		public ActionResult Delete(int? id)
-		{
-			if (!Request.IsAjaxRequest())
-				return new EmptyResult();
+		//TODO move to webapi
+		//[AjaxAuthorize]
+		//[HttpPost]
+		//public ActionResult Delete(int? id)
+		//{
+		//	if (!Request.IsAjaxRequest())
+		//		return new EmptyResult();
 
-			var b = Book.Delete(id ?? 0);
+		//	var b = Book.Delete(id ?? 0);
 			
-			return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
-		}
+		//	return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+		//}
     }
 }

@@ -1,0 +1,151 @@
+﻿using AutoMapper;
+using ltbdb.Core.Database;
+using ltbdb.Core.Database.DTO;
+using ltbdb.Core.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ltbdb.Core.Models
+{
+	public class Tag
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public long References { get; set; }
+
+		///// <summary>
+		///// Get all books related to this tag.
+		///// </summary>
+		///// <returns></returns>
+		//public Book[] GetBooks()
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+
+		//	var books = db.BookEntity.GetByTag(this.Id);
+
+		//	var result = Mapper.Map<Book[]>(books);
+
+		//	return result;
+		//}
+
+		//#region Static methods
+
+		///// <summary>
+		///// Get all available tags.
+		///// </summary>
+		///// <returns>A list of tags</returns>
+		//static public Tag[] Get()
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+			
+		//	var tags = db.TagEntity.GetAll();
+
+		//	return Mapper.Map<Tag[]>(tags);
+		//}
+
+		///// <summary>
+		///// Get a specified tag by id.
+		///// </summary>
+		///// <param name="id">The tag id.</param>
+		///// <returns>The tag.</returns>
+		//static public Tag Get(int id)
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+			
+		//	var tag = db.TagEntity.Get(id);
+
+		//	return Mapper.Map<Tag>(tag);
+		//}
+
+		///// <summary>
+		///// create a new tag or return existing tag.
+		///// </summary>
+		///// <param name="name">The tag name.</param>
+		///// <returns>The tag.</returns>
+		//static public Tag Create(string name)
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+
+		//	//TODO modify filter and escape
+
+		//	// look if the tag exists otherwise create them
+		//	var tag = db.TagEntity.GetByName(name.Escape().Trim());
+		//	if (tag == null)
+		//	{
+		//		tag = db.TagEntity.Add(new TagDTO { Name = name.Escape().Trim() });
+		//	}
+
+		//	return Mapper.Map<Tag>(tag);
+		//}
+
+		///// <summary>
+		///// Add a new tag to database.
+		///// </summary>
+		///// <param name="model">The new tag.</param>
+		///// <returns>The new tag.</returns>
+		//static public Tag Add(Tag model)
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+
+		//	var @in = Mapper.Map<TagDTO>(model);
+
+		//	var result = db.TagEntity.Add(@in);
+
+		//	var @out = Mapper.Map<Tag>(result);
+
+		//	return @out;
+		//}
+
+		///// <summary>
+		///// Update a tag.
+		///// </summary>
+		///// <param name="model">The tag.</param>
+		///// <returns>The tag.</returns>
+		//static public Tag Update(Tag model)
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+
+		//	var @in = Mapper.Map<TagDTO>(model);
+
+		//	var result = db.TagEntity.Update(@in);
+
+		//	var @out = Mapper.Map<Tag>(result);
+
+		//	return @out;
+		//}
+
+		///// <summary>
+		///// Delete a tag.
+		///// </summary>
+		///// <param name="id">The tag id.</param>
+		///// <returns>True on success.</returns>
+		//static public bool Delete(int id)
+		//{
+		//	DatabaseContext db = new DatabaseContext();
+
+		//	var tag = Get(id);
+
+		//	return db.TagEntity.Delete(Mapper.Map<TagDTO>(tag));
+		//}
+
+		///// <summary>
+		///// Add o update a tag.
+		///// </summary>
+		///// <param name="model">The tag.</param>
+		///// <returns>The tag.</returns>
+		//static public Tag Set(Tag model)
+		//{
+		//	var tag = Get(model.Id);
+		//	model.Id = tag.Id;
+
+		//	if (tag.Id == 0)
+		//		return Tag.Add(model);
+		//	else
+		//		return Tag.Update(model);
+		//}
+
+		//#endregion
+	}
+}

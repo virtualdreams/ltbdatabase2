@@ -1,4 +1,4 @@
-﻿using ltbdb.DomainServices.DTO;
+﻿using ltbdb.Core.Database.DTO;
 using SqlDataMapper;
 using SqlDataMapper.Extension;
 using System;
@@ -6,18 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ltbdb.DomainServices.Repository
+namespace ltbdb.Core.Database.Repository
 {
 	public class CategoryRepository: Repository<CategoryDTO>
 	{
 		public CategoryRepository(SqlConfig config, SqlContext context)
 			: base(config, context)
 		{
-		}
-
-		static public CategoryDTO Default()
-		{
-			return new CategoryDTO { Id = 0, Name = "" };
 		}
 
 		public override CategoryDTO Add(CategoryDTO item)
@@ -46,7 +41,7 @@ namespace ltbdb.DomainServices.Repository
 
 			var result = this.Context.QueryForObject<CategoryDTO>(query);
 
-			return result ?? Default();
+			return result;
 		}
 
 		public override IEnumerable<CategoryDTO> GetAll()

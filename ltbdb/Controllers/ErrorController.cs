@@ -1,4 +1,5 @@
 ﻿using ltbdb.Core;
+using ltbdb.Core.Filter;
 using ltbdb.Models;
 using System;
 using System.Collections.Generic;

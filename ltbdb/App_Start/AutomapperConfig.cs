@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using ltbdb.DomainServices;
-using ltbdb.DomainServices.DTO;
 using ltbdb.Models;
 using ltbdb.Core;
 using ltbdb.Controllers;
@@ -9,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ltbdb.Core.Database.DTO;
+using ltbdb.Core.Models;
 
 namespace ltbdb
 {
@@ -16,7 +16,7 @@ namespace ltbdb
 	{
 		public static void RegisterAutomapper()
 		{
-			Mapper.Configuration.AllowNullDestinationValues = false;
+			//Mapper.Configuration.AllowNullDestinationValues = false;
 
 			// Repository -> Domain
 			Mapper.CreateMap<BookDTO, Book>()
@@ -66,18 +66,18 @@ namespace ltbdb
 				.ForMember(d => d.Ref, map => map.Ignore());
 
 			//Domain -> WebService / REST
-			Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
-				.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }))
-				.ForMember(d => d.Thumbnail, map => map.MapFrom(s => ImageStore.Exists(s.Filename, true) ? String.Format("{0}://{1}{2}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Authority, ImageStore.GetWebPath(s.Filename, ImageType.PreferThumbnail)) : null));
+			//Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
+			//	.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }))
+			//	.ForMember(d => d.Thumbnail, map => map.MapFrom(s => ImageStore.Exists(s.Filename, true) ? String.Format("{0}://{1}{2}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Authority, ImageStore.GetWebPath(s.Filename, ImageType.PreferThumbnail)) : null));
 
-			Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()
-				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name));
+			//Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()
+			//	.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+			//	.ForMember(d => d.Name, map => map.MapFrom(s => s.Name));
 
-			Mapper.CreateMap<Tag, ltbdb.Models.WebService.Tag>()
-				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
-				.ForMember(d => d.References, map => map.MapFrom(s => s.References));
+			//Mapper.CreateMap<Tag, ltbdb.Models.WebService.Tag>()
+			//	.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+			//	.ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+			//	.ForMember(d => d.References, map => map.MapFrom(s => s.References));
 
 			Mapper.AssertConfigurationIsValid();
 		}

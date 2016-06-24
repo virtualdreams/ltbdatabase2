@@ -8,7 +8,7 @@ using log4net;
 using ConfigFile;
 using ltbdb.Core.Helpers;
 
-namespace ltbdb.Core
+namespace ltbdb.Core.Helpers
 {
 	public sealed class GlobalConfig: SingletonBase<GlobalConfig>
 	{

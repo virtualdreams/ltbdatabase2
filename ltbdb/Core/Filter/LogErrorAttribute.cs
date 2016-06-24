@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ltbdb.Core
+namespace ltbdb.Core.Filter
 {
 	public class LogErrorAttribute : FilterAttribute, IExceptionFilter
 	{
