@@ -27,7 +27,7 @@
 @foreach (var tag in Model.UnreferencedTags)
 {
 	<div class="tag" style="position: relative;">
-		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
 			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
