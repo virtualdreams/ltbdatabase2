@@ -7,7 +7,7 @@ namespace ltbdb.Models
 {
 	public class BookEditContainer
 	{
-		public BookModel Book { get; set; }
+		public BookWriteModel Book { get; set; }
 		public CategoryModel[] Categories { get; set; }
 	}
 }

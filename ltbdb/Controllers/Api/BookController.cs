@@ -5,6 +5,8 @@ using ltbdb.Core.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Net.Http;
+using System.Net;
 
 namespace ltbdb.Controllers.Api
 {
@@ -39,6 +41,22 @@ namespace ltbdb.Controllers.Api
 					Tags = Tag.GetByBook(book.Id).Select(s => s.Name)
 				};
 			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		public dynamic Delete(int id)
+		{
+			var _book = Book.Get(id);
+			if(_book == null)
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Id not found."));
+
+			var result = Book.Delete(_book);
+
+			return new
+			{
+				success = result
+			};
 		}
 	}
 }

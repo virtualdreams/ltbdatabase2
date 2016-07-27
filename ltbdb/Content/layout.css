@@ -283,7 +283,7 @@ nav a {
 }
 
 .tag {
-	margin-right: 5px;
+	margin-right: 10px;
     margin-bottom: 5px;
 	padding-left: 10px;
     padding-right: 10px;
@@ -605,4 +605,16 @@ nav a {
 span.field-validation-error {
 	color: #e43d3d;
 	margin-left: 10px;
+}
+
+.bigger {
+	font-size: 14pt;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.material-icons:hover {
+	color: #990000;
 }

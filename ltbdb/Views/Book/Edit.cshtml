@@ -1,12 +1,13 @@
 ﻿@model ltbdb.Models.BookEditContainer
 @using ltbdb.Models
 @using ltbdb.Core
+@using ltbdb.Core.Helpers
 
 @{
 	if(Model.Book.Id == 0) {
 		ViewBag.Title = "Neues Buch | Lustiges Taschenbuch - Datenbank";
 	} else {
-		ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.CategoryName);
+		ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.Category.Name);
 	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -38,10 +39,10 @@
 					<label for="category">Kategorie</label>
 				</div>
 				<div class="form-element-field">
-					<select id="category" name="category">
+					<select id="category" name="targetcategory">
 						@foreach (var category in Model.Categories)
 						{
-							<option value="@category.Id" @(Model.Book.Category == category.Id ? "selected" : "")>@category.Name</option>
+							<option value="@category.Id" @(Model.Book.TargetCategory == category.Id ? "selected" : "")>@category.Name</option>
 						}
 					</select> @Html.ValidationMessage("category")
 				</div>
@@ -78,8 +79,8 @@
 			<input type="hidden" name="filename" value="@ImageStore.GetWebPath(Model.Book.Filename)" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
-				<a id="image-delete" href="#" title="Bild löschen."><img src="~/Content/bin.png" alt="" /></a>
-				<a id="image-reset" href="#" title="Bild zurücksetzen."><img src="~/Content/cancel.png" alt="" /></a>
+				<span style="display: none;" id="image-reset" title="Bild zurücksetzen."><i class="material-icons bigger">undo</i></span>
+				<span id="image-delete" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
 			</div>
 		</div>
 	</div>
@@ -95,7 +96,6 @@
 				alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.")
 				return;
 			} else {
-
 				var files = $("#image-upload").get(0).files;
 				var reader = new FileReader();
 
@@ -111,7 +111,9 @@
 
 				reader.readAsDataURL(files[0]);
 			}
+
 			$('#remove').val(false);
+			$('#image-reset').show();
 		});
 
 		$('#image-delete').click(function (e) {
@@ -120,6 +122,7 @@
 			reset($('#image-upload'));
 			$('#image').attr('src', '@GlobalConfig.Get().NoImage.TrimStart('.')');
 			$('#remove').val(true);
+			$('#image-reset').show();
 		});
 
 		$('#image-reset').click(function (e) {
@@ -128,6 +131,7 @@
 			reset($('#image-upload'));
 			$('#image').attr('src', '@ImageStore.GetWebPath(Model.Book.Filename)');
 			$('#remove').val(false);
+			$('#image-reset').hide();
 		});
 
 		function reset(e) {

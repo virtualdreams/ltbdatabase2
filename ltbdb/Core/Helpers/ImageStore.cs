@@ -46,7 +46,7 @@ namespace ltbdb.Core
 		static public string Save(Stream stream, bool createThumbnail = true)
 		{
 			if (stream == null)
-				throw new Exception("Stream must not be null.");
+				throw new Exception("Stream must not null.");
 
 			var filename = String.Format("{0}.jpg", GetFilename());
 			var imageStorage = GetStoragePath();
@@ -55,8 +55,8 @@ namespace ltbdb.Core
 			var imagePath = Path.Combine(imageStorage, filename);
 			var thumbPath = Path.Combine(thumbStorage, filename);
 
-			Log.DebugFormat("Image path: {0}", imagePath);
-			Log.DebugFormat("Thumb path: {0}", thumbPath);
+			Log.InfoFormat("Image path: {0}", imagePath);
+			Log.InfoFormat("Thumb path: {0}", thumbPath);
 
 			GraphicsMagick.GraphicsImage = GlobalConfig.Get().GraphicsMagick;
 
@@ -84,7 +84,7 @@ namespace ltbdb.Core
 			}
 			catch (Exception ex)
 			{
-				Log.ErrorFormat(ex.ToString());
+				Log.ErrorFormat(ex.Message);
 
 				if (File.Exists(imagePath))
 				{

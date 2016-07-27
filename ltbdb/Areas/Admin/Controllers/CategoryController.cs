@@ -76,9 +76,8 @@ namespace ltbdb.Areas.Admin.Controllers
 				return View("edit", view);
 			}
 
-			//TODO save category
-			//var category = Mapper.Map<Category>(model);
-			//Category.Set(category);
+			var category = Mapper.Map<Category>(model);
+			Category.Save(category);
 
 			return RedirectToAction("index", "category");
 		}

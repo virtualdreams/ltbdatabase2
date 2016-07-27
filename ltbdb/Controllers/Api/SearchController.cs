@@ -7,7 +7,6 @@ using System.Web.Http;
 
 namespace ltbdb.Controllers.Api
 {
-	//TODO modify return types
 	[LogError(Order = 0)]
     public class SearchController : ApiController
     {

@@ -7,5 +7,5 @@
 
 @foreach (TagModel tag in Model)
 {
-	<li><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></li>
+	<li><a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a></li>
 }

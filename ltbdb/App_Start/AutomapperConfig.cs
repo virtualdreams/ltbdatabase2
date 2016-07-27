@@ -30,21 +30,25 @@ namespace ltbdb
 				.ForMember(d => d.References, map => map.MapFrom(s => s.Ref));
 
 			//Domain -> View
-			Mapper.CreateMap<Book, BookModel>()
-				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Id))
-				.ForMember(d => d.CategoryName, map => map.MapFrom(s => s.Category.Name))
+			Mapper.CreateMap<Book, BookWriteModel>()
+				.ForMember(d => d.TargetCategory, map => map.MapFrom(s => s.Category.Id))
 				.ForMember(d => d.Image, map => map.Ignore())
 				.ForMember(d => d.Remove, map => map.Ignore());
+
+			Mapper.CreateMap<Book, BookModel>()
+				.ForMember(d => d.Category, map => map.MapFrom(s => new CategoryModel { Id = s.Category.Id, Name = s.Category.Name }));
 
 			Mapper.CreateMap<Tag, TagModel>();
 
 			Mapper.CreateMap<Category, CategoryModel>();
 
 			//View -> Domain
-			Mapper.CreateMap<BookModel, Book>()
-				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.Category, Name = "" }))
+			Mapper.CreateMap<BookWriteModel, Book>()
+				.ForMember(d => d.Category, map => map.MapFrom(s => new Category { Id = s.TargetCategory, Name = String.Empty }))
+				.ForSourceMember(s => s.Category, map => map.Ignore())
 				.ForSourceMember(s => s.Image, map => map.Ignore())
-				.ForSourceMember(s => s.Remove, map => map.Ignore());
+				.ForSourceMember(s => s.Remove, map => map.Ignore())
+				.ForMember(s => s.Created, map => map.Ignore());
 
 			Mapper.CreateMap<CategoryModel, Category>();
 
@@ -64,20 +68,6 @@ namespace ltbdb
 			Mapper.CreateMap<Tag, TagDTO>()
 				.ForMember(d => d.Name, map => map.MapFrom(s => s.Name.Trim().Escape()))
 				.ForMember(d => d.Ref, map => map.Ignore());
-
-			//Domain -> WebService / REST
-			//Mapper.CreateMap<Book, ltbdb.Models.WebService.Book>()
-			//	.ForMember(d => d.Category, map => map.MapFrom(s => new ltbdb.Models.WebService.Category { Id = s.Category.Id, Name = s.Category.Name }))
-			//	.ForMember(d => d.Thumbnail, map => map.MapFrom(s => ImageStore.Exists(s.Filename, true) ? String.Format("{0}://{1}{2}", HttpContext.Current.Request.Url.Scheme, HttpContext.Current.Request.Url.Authority, ImageStore.GetWebPath(s.Filename, ImageType.PreferThumbnail)) : null));
-
-			//Mapper.CreateMap<Category, ltbdb.Models.WebService.Category>()
-			//	.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
-			//	.ForMember(d => d.Name, map => map.MapFrom(s => s.Name));
-
-			//Mapper.CreateMap<Tag, ltbdb.Models.WebService.Tag>()
-			//	.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
-			//	.ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
-			//	.ForMember(d => d.References, map => map.MapFrom(s => s.References));
 
 			Mapper.AssertConfigurationIsValid();
 		}

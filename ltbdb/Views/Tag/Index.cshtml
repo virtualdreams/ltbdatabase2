@@ -11,11 +11,11 @@
 @foreach (var tag in Model.Tags)
 {
 	<div class="tag" style="position: relative;">
-		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
-			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" alt="" /></a>
-			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen." data-jbox-title="Tag &quot;@tag.Name&quot;"><img src="~/Content/bin.png" alt="" /></a>
+			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
+			<span class="delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
 		</div>
 		}
 	</div>
@@ -30,8 +30,8 @@
 		<a href="@Url.Action("view", "tag", new { id = tag.Id })" title="Referenzen: @tag.References">@tag.Name</a>
 		@if(Request.IsAuthenticated) {
 		<div class="tag-edit">
-			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Tag bearbeiten."><img src="~/Content/pen.png" alt="" /></a>
-			<a class="delete" href="@Url.Action("delete", "tag", new { id = tag.Id })" title="Tag löschen." data-jbox-title="Tag &quot;@tag.Name&quot;"><img src="~/Content/bin.png" alt="" /></a>
+			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
+			<span class="delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
 		</div>
 		}
 	</div>
@@ -41,7 +41,7 @@
 <script type="text/javascript">
 	$(function () {
 
-		var link = null;
+		var id = null;
 
 		var jbox_delete = new jBox('Modal', {
 			attach: $('.delete'),
@@ -50,23 +50,23 @@
 			closeOnClick: 'body',
 			preventDefault: true,
 			closeButton: 'title',
-			getTitle: 'data-jbox-title',
+			getTitle: 'data-title',
 			onOpen: function () {
 				$('#error').text('');
-				link = this.source.attr('href');
+				id = this.source.attr('data-id');
 			},
 			onClose: function () {
-				link = null;
+				id = null;
 			}
 		});
 
 		$('#delete-button').click(function () {
-			if (link == null)
+			if (id == null)
 				return;
 
 			$.ajax({
 				type: "POST",
-				url: link,
+				url: '/api/tag/delete/' + id,
 				statusCode: {
 					403: function () {
 						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);

@@ -19,7 +19,7 @@ function extractLast(term) {
 	return split(term).pop();
 }
 
-$(function() {
+$(function () {
 	$('.tt').tooltip({
 		track: true
 	});
@@ -94,78 +94,39 @@ $(function() {
 		},
 		overlay: false,
 		zIndex: 400,
-		closeOnClick: 'overlay'
-	});
-
-	$('.addtag').click(function (e) {
-		e.preventDefault();
-		jbox_tag.open({
-			target: $(this)
-		}).ajax({
-			url: this.href,
-			reload: true,
-			type: 'GET'
-		});
-	});
-
-	var tag_template = '<div class="tag" style="position: relative;">\
-							<a class="tag-remove" href="/tag/unlink/{1}?bookid={2}" title="Tag entfernen."><img src="/Content/link_break.png" alt="" /></a>\
-							<a href="/tag/view/{1}" title="Referenzen: {3}">{0}</a>\
-						</div>';
-
-	$(document).on('submit', '#tag-form', function(e) {
-		e.preventDefault();
-		$.ajax({
-			url: this.action,
-			type: 'POST',
-			data: $('#tag-form').serialize(),
-			statusCode: {
-				403: function () {
-					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-				}
-			},
-			success: function(response, status, xhr) {
-				var ct = xhr.getResponseHeader("content-type") || "";
-				if (ct.indexOf('html') > -1) {
-					//html
-					$('.jBox-content').html(response);
-				}
-				if (ct.indexOf('json') > -1) {
-					$.each(response.tags, function () {
-						var t = tag_template.replace(/\{0\}/g, this.Name).replace(/\{1\}/g, this.Id).replace(/\{2\}/g, response.bookid).replace(/\{3\}/g, this.References);
-						$(t).insertBefore('#tag-add');
-					});
-
-					jbox_tag.close();
-				}
-			},
-			cache: false
-		});
+		closeOnClick: 'overlay',
+		content: $('#tag-msg-box')
 	});
 
 	$(document).on('click', '.tag-remove', function (e) {
-		e.preventDefault();
-
 		var p = $(this).parent();
 
+		data = {
+			id: $(this).attr('data-id'),
+			tagid: $(this).attr('data-tagid')
+		};
+
 		$.ajax({
-			url: this.href,
+			cache: false,
+			url: '/api/tag/remove',
 			type: 'POST',
+			data: data,
+			dataType: 'json',
 			statusCode: {
 				403: function () {
 					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+				},
+				404: function () {
+					alert("Resource not found.");
 				}
 			},
-			success: function (response, status, xhr) {
-				var ct = xhr.getResponseHeader("content-type") || "";
-				if (ct.indexOf('json') > -1) {
-					if (response.success)
-						$(p).remove();
-					else
-						alert("Can't remove tag.")
+			success: function(data){
+				if (data.success) {
+					$(p).remove();
+				} else {
+					alert("Dieses Tag konnte nicht entfernt werden.");
 				}
-			},
-			cache: false
+			}
 		});
 	});
 

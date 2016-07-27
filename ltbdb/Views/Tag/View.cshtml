@@ -9,7 +9,7 @@
 
 <h2>Inhalte getaggt mit "@Model.Tag.Name"</h2>
 <ul class="book">
-	@foreach (BookModel book in Model.Books) {
+	@foreach (var book in Model.Books) {
 		<li>
 			<a href="@Url.Action("view", "book", new { id = @book.Id })">
 				<div style="min-height: 120px;">

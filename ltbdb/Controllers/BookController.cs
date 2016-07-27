@@ -59,11 +59,15 @@ namespace ltbdb.Controllers
 			var _book = new Book();
 			var _categories = Category.Get();
 
-			var book = Mapper.Map<BookModel>(_book);
+			var book = Mapper.Map<BookWriteModel>(_book);
 			book.Number = null;
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 
-			var view = new BookEditContainer { Book = book, Categories = categories };
+			var view = new BookEditContainer
+			{
+				Book = book,
+				Categories = categories
+			};
 			
 			return View("edit", view);
 		}
@@ -78,7 +82,7 @@ namespace ltbdb.Controllers
 
 			var _categories = Category.Get();
 
-			var book = Mapper.Map<BookModel>(_book);
+			var book = Mapper.Map<BookWriteModel>(_book);
 			var categories = Mapper.Map<CategoryModel[]>(_categories);
 
 			var view = new BookEditContainer
@@ -92,7 +96,7 @@ namespace ltbdb.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult Edit(BookModel model)
+		public ActionResult Edit(BookWriteModel model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -110,44 +114,21 @@ namespace ltbdb.Controllers
 			}
 
 			var book = Mapper.Map<Book>(model);
-			//TODO save book and image
-			//var _book = Book.Set(book);
+			var result = Book.Save(book);
 
-			//if (model.Image != null || model.Remove)
-			//{
-			//	if (model.Remove)
-			//	{
-			//		_book.SetImage(null);
-			//	}
-			//	else if (model.Image != null)
-			//	{
-			//		var filename = ImageStore.Save(model.Image.InputStream);
-			//		if (!String.IsNullOrEmpty(filename))
-			//		{
-			//			_book.SetImage(filename);
-			//		}
-			//		else
-			//		{
-			//			ModelState.AddModelError("image", "Fehler beim speichern des Bildes.");
-			//		}
-			//	}
-			//}
+			if (model.Image != null || model.Remove)
+			{
+				if (model.Remove)
+				{
+					Book.SetImage(result, null);
+				}
+				else
+				{
+					Book.SetImage(result, model.Image.InputStream);
+				}
+			}
 
-			//TODO fix book id
-			return RedirectToAction("view", "book", new { id = 0 });
+			return RedirectToAction("view", "book", new { id = result.Id });
 		}
-
-		//TODO move to webapi
-		//[AjaxAuthorize]
-		//[HttpPost]
-		//public ActionResult Delete(int? id)
-		//{
-		//	if (!Request.IsAjaxRequest())
-		//		return new EmptyResult();
-
-		//	var b = Book.Delete(id ?? 0);
-			
-		//	return new JsonResult { Data = new { success = b }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
-		//}
     }
 }

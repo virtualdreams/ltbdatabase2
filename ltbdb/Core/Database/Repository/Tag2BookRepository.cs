@@ -1,4 +1,5 @@
-﻿using ltbdb.Core.Database.DTO;
+﻿using log4net;
+using ltbdb.Core.Database.DTO;
 using SqlDataMapper;
 using SqlDataMapper.Extension;
 using System;
@@ -10,6 +11,8 @@ namespace ltbdb.Core.Database.Repository
 {
 	public class Tag2BookRepository: Repository<Tag2BookDTO>
 	{
+		private static readonly ILog Log = LogManager.GetLogger(typeof(Tag2BookRepository));
+
 		public Tag2BookRepository(SqlConfig config, SqlContext context)
 			: base(config, context)
 		{
@@ -66,6 +69,11 @@ namespace ltbdb.Core.Database.Repository
 		{
 			SqlQuery query = this.Config.CreateQuery("deleteTag2Book");
 			query.SetParameter<Tag2BookDTO>(item);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(query.QueryString);
+			}
 
 			return this.Context.Delete(query) > 0; 
 		}

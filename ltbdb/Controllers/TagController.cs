@@ -3,6 +3,7 @@ using log4net;
 using ltbdb.Core;
 using ltbdb.Core.Filter;
 using ltbdb.Core.Helpers;
+using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 using System;
@@ -50,10 +51,10 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-        public ActionResult View(int? id, int? ofs)
+        public ActionResult View(string id, int? ofs)
         {
-			var _tag = Tag.Get(id ?? 0);
-			if(_tag == null)
+			var _tag = Tag.GetByName(id);
+			if (_tag == null)
 				throw new HttpException(404, "Ressource not found.");
 
 			var _books = Book.GetByTag(_tag.Id);
@@ -72,45 +73,6 @@ namespace ltbdb.Controllers
 
 			return View(view);
         }
-
-		[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		[HttpGet]
-		public ActionResult Add(int? id)
-		{
-			var view = new AddTagModel { Id = id ?? 0, Tag = "" };
-
-			return View("_PartialAddTag", view);
-		}
-
-		//TODO add tag
-		//[AjaxAuthorize]
-		//[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		//[HttpPost]
-		//public ActionResult Add(AddTagModel model)
-		//{
-		//	if (!ModelState.IsValid)
-		//	{
-		//		return View("_PartialAddTag", model);
-		//	}
-
-		//	var _tags = Book.Get(model.Id).AddTags(model.Tag.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).Where(w => !String.IsNullOrEmpty(w)).ToArray());
-
-		//	var tags = Mapper.Map<TagModel[]>(_tags);
-
-		//	return new JsonResult { Data = new { tags = tags, bookid = model.Id }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-		//}
-
-		//TODO remove/unlink tag
-		//[AjaxAuthorize]
-		//[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-		//[HttpPost]
-		//public ActionResult Unlink(int? id, int? bookid)
-		//{
-		//	if (!Request.IsAjaxRequest())
-		//		return new EmptyResult();
-
-		//	return new JsonResult { Data = new { success = Book.Get(bookid ?? 0).RemoveTag(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-		//}
 
 		[Authorize]
 		[HttpGet]
@@ -138,22 +100,11 @@ namespace ltbdb.Controllers
 				return View("edit", view);
 			}
 
-			//TODO save tag
-			//var tag = Mapper.Map<Tag>(model);
-			//Tag.Set(tag);
+			var tag = Mapper.Map<Tag>(model);
+
+			Tag.Update(tag);
 
 			return RedirectToAction("index", "tag");
 		}
-
-		//TODO move to webapi
-		//[AjaxAuthorize]
-		//[HttpPost]
-		//public ActionResult Delete(int? id)
-		//{
-		//	if (!Request.IsAjaxRequest())
-		//		return new EmptyResult();
-
-		//	return new JsonResult { Data = new { success = Tag.Delete(id ?? 0) }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
-		//}
     }
 }

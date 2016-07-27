@@ -15,14 +15,14 @@
 			<a class="pager" href="@Url.Action("view", "category", new { id = Model.Category.Id, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
 		</li>
 	}
-	@foreach (BookModel book in Model.Books) {
+	@foreach (var book in Model.Books) {
 		<li>
 			<a href="@Url.Action("view", "book", new { id = @book.Id })">
 				<div class="img">
 					<img src="@ImageStore.GetWebPath(book.Filename, ImageType.Thumbnail)" alt="Cover" />
 				</div>
 				<div class="header">Nr. @book.Number - @book.Name</div>
-				<span>@book.CategoryName</span>
+				<span>@book.Category.Name</span>
 			</a>
 		</li>
 	}

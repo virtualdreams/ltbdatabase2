@@ -207,7 +207,6 @@
     <Compile Include="Core\Services\CategoryService.cs" />
     <Compile Include="Core\Services\DemoService.cs" />
     <Compile Include="Core\Services\TagService.cs" />
-    <Compile Include="Models\AddTagModel.cs" />
     <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
     <Compile Include="Models\Container\CategoryViewContainer.cs" />
@@ -304,6 +303,10 @@
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Stats\Index.cshtml" />
+    <Content Include="Content\material\MaterialIcons-Regular.eot" />
+    <Content Include="Content\material\MaterialIcons-Regular.ttf" />
+    <Content Include="Content\material\MaterialIcons-Regular.woff" />
+    <Content Include="Content\material\MaterialIcons-Regular.woff2" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -329,7 +332,6 @@
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Tag\View.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Shared\_PartialAddTag.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />

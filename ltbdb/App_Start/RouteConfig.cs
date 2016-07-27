@@ -31,6 +31,13 @@ namespace ltbdb
 			);
 
 			routes.MapRoute(
+				name: "Tag",
+				url: "tag/{id}",
+				defaults: new { controller = "tag", action = "view", id = UrlParameter.Optional },
+				namespaces: new[] { "ltbdb.Controllers" }
+			);
+
+			routes.MapRoute(
 				name: "Categories",
 				url: "all",
 				defaults: new { controller = "category", action = "index" },
