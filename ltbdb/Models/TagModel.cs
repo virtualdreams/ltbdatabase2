@@ -11,10 +11,20 @@ namespace ltbdb.Models
 	/// </summary>
 	public class TagModel
 	{
+		/// <summary>
+		/// The tag id.
+		/// </summary>
 		public int Id { get; set; }
 
+		/// <summary>
+		/// The tag name.
+		/// </summary>
 		[Required(ErrorMessage="Bitte gib einen Namen ein.")]
 		public string Name { get; set; }
+
+		/// <summary>
+		/// Count of references.
+		/// </summary>
 		public long References { get; set; }
 	}
 
@@ -23,8 +33,14 @@ namespace ltbdb.Models
 	/// </summary>
 	public class AddTagModel
 	{
+		/// <summary>
+		/// The tag id.
+		/// </summary>
 		public int Id { get; set; }
 
+		/// <summary>
+		/// Submitted tags.
+		/// </summary>
 		[Required(ErrorMessage = "Bitte gib einen Namen ein.")]
 		public string Tags { get; set; }
 	}

@@ -126,7 +126,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Delete a book from storage.
+		/// Delete a book.
 		/// </summary>
 		/// <param name="book"></param>
 		/// <returns></returns>

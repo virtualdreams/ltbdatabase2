@@ -28,7 +28,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Get a single tag by id.
+		/// Get a tag by id.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -66,7 +66,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Create a tag if not exists.
+		/// Create a tag if not exists or return existing.
 		/// </summary>
 		/// <param name="name">The tag.</param>
 		/// <returns></returns>
@@ -82,7 +82,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Update en existing tag.
+		/// Update an existing tag.
 		/// </summary>
 		/// <param name="tag">The tag.</param>
 		/// <returns></returns>
@@ -103,7 +103,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Add tag to book.
+		/// Add tags to book.
 		/// </summary>
 		/// <param name="id">The book id.</param>
 		/// <param name="tags">The tags to add.</param>
@@ -126,7 +126,7 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Remove a tag from a book.
+		/// Remove a tag from a book (unlink).
 		/// </summary>
 		/// <param name="id">The book id.</param>
 		/// <param name="tagid">The tag id.</param>

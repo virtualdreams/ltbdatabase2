@@ -26,9 +26,6 @@ namespace ltbdb
 			Container.RegisterPerWebRequest<SqlConfig>(() => new SqlConfig(IOHelper.ConvertToFullPath(GlobalConfig.Get().Database)));
 			Container.RegisterPerWebRequest<SqlContext>(() => Container.GetInstance<SqlConfig>().CreateContext());
 
-
-			Container.Register<DemoService>();
-
 			Container.Verify();
 
 			DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(Container));
