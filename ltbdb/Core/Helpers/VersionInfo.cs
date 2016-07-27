@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace ltbdb.Core
+namespace ltbdb.Core.Helpers
 {
 	static public class VersionInfo
 	{

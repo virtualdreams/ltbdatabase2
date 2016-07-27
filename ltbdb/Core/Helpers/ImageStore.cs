@@ -6,9 +6,8 @@ using System.Web;
 using System.Drawing;
 using System.Diagnostics;
 using log4net;
-using ltbdb.Core.Helpers;
 
-namespace ltbdb.Core
+namespace ltbdb.Core.Helpers
 {
 	/// <summary>
 	/// Type of image to request from storage.

@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using ltbdb.Core.Helpers
+<!DOCTYPE html>
 
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<meta name="version" content="@ltbdb.Core.VersionInfo.ProductVersion" />
+		<meta name="version" content="@VersionInfo.ProductVersion" />
 
 		<link type="text/css" href="@Url.Content("~/Content/material.css")" rel="stylesheet" />		
 		<link type="text/css" href="@Url.Content("~/Content/layout.css")" rel="stylesheet" />
@@ -97,7 +98,7 @@
 			</div>
 
 			<div class="footer">
-				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@ltbdb.Core.VersionInfo.FileVersion</a></div>
+				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@VersionInfo.FileVersion</a></div>
 			</div>
 		</div>
 	</body>
