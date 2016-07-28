@@ -254,6 +254,7 @@
     <Content Include="Content\layout.css" />
     <Content Include="Content\layout.mobile.css" />
     <Content Include="Content\logo.png" />
+    <Content Include="Content\material.css" />
     <Content Include="Content\navigation.css" />
     <Content Include="Content\no-image.png" />
     <Content Include="Content\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
@@ -266,7 +267,13 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\bootstrap.mobile.js" />
+    <Content Include="Scripts\bootstrap.mobile.min.js">
+      <DependentUpon>bootstrap.mobile.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="App_Data\database.xml" />
@@ -303,6 +310,12 @@
     <Content Include="Content\material\MaterialIcons-Regular.woff" />
     <Content Include="Content\material\MaterialIcons-Regular.woff2" />
     <None Include="packages.config" />
+    <Content Include="Scripts\bootstrap.min.js.map">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap.mobile.min.js.map">
+      <DependentUpon>bootstrap.mobile.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

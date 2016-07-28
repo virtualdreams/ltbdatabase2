@@ -20,19 +20,8 @@ function extractLast(term) {
 }
 
 $(function () {
-	$('.tt').tooltip({
-		track: true
-	});
-	
-	$(document).on('click', '.message-hidden-field', function() {
-		$(this).remove();
-	});
-	
-	$(document).on('mouseover', '.message-hidden-field', function() {
-		$(this).tooltip();
-	});
-
-	$("#q").autocomplete({
+	/* autocomplete for search */
+	$('#q').autocomplete({
 		source: '/api/search/title',
 		minLength: 3,
 		select: function (event, ui) {
@@ -46,44 +35,39 @@ $(function () {
 		}
 	});
 
-	$(document).on("keydown.autocomplete", "#t", function (e) {
-		$(this).bind("keydown", function (event) {
-			if (event.keyCode === $.ui.keyCode.TAB && $(this).autocomplete("instance").menu.active) {
-				event.preventDefault();
-			}
-		}).autocomplete({
-			source: function (request, response) {
-				$.getJSON('/api/search/tags', {
-					term: extractLast(request.term)
-				}, response);
-			},
-			search: function () {
-				var term = extractLast(this.value);
-				if (term.length < 3) {
-					return false;
-				}
-			},
-			focus: function () {
+	/* autocomplete for tags */
+	$('#t').autocomplete({
+		source: function (request, response) {
+			$.getJSON('/api/search/tags', {
+				term: extractLast(request.term)
+			}, response);
+		},
+		search: function () {
+			var term = extractLast(this.value);
+			if (term.length < 3) {
 				return false;
-			},
-			select: function (event, ui) {
-				var terms = split(this.value);
-				terms.pop();
-				terms.push(ui.item.value);
-				terms.push("");
-				this.value = terms.join("; ");
-				return false;
-			},
-			open: function () {
-				$(this).autocomplete("widget").width($(this).outerWidth() - 6);
 			}
-		})
+		},
+		focus: function () {
+			return false;
+		},
+		select: function (event, ui) {
+			var terms = split(this.value);
+			terms.pop();
+			terms.push(ui.item.value);
+			terms.push("");
+			this.value = terms.join("; ");
+			return false;
+		},
+		open: function () {
+			$(this).autocomplete("widget").width($(this).outerWidth() - 6);
+		}
 	});
 
-	/* image */
+	/* image box */
 	jbox_image = new jBox('Image');
 
-	/* tag */
+	/* tag message box */
 	jbox_tag = new jBox('Modal', {
 		position: {
 			x: 'left',
@@ -92,12 +76,50 @@ $(function () {
 		offset: {
 			y: 25
 		},
+		attach: $('#addtag'),
+		target: $('#addtag'),
+		content: $('#tag-msg-box'),
 		overlay: false,
 		zIndex: 400,
-		closeOnClick: 'overlay',
-		content: $('#tag-msg-box')
+		closeOnClick: 'overlay'
 	});
 
+	var tag_template = '<div class="tag" style="position: relative;">\
+								<span class="tag-remove" data-id="{1}" data-tagid="{2}"><i class="material-icons bigger" title="Dieses Tag entfernen.">delete</i></span>\
+								<a href="/tag/{0}" title="">{0}</a>\
+							</div>';
+
+	$('#add-button').click(function (e) {
+		data = {
+			id: $('#t').attr('data-id'),
+			tags: $('#t').val()
+		};
+
+		$.ajax({
+			cache: false,
+			url: '/api/tag/add',
+			type: 'POST',
+			data: data,
+			dataType: 'json',
+			statusCode: {
+				403: function () {
+					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+				},
+				404: function () {
+					alert('Resource not found.');
+				}
+			},
+			success: function (data) {
+				$.each(data, function (i, item) {
+					var t = tag_template.replace(/\{0\}/g, item.Name).replace(/\{1\}/g, item.Book).replace(/\{2\}/g, item.Id);
+					$(t).insertBefore('#tag-add');
+				});
+				jbox_tag.close();
+			}
+		});
+	});
+
+	/* remove a tag */
 	$(document).on('click', '.tag-remove', function (e) {
 		var p = $(this).parent();
 
@@ -130,6 +152,7 @@ $(function () {
 		});
 	});
 
+	/* story management */
 	var story_container = $('#story-container');
 	var story_template =	'<div class="form-element-field story">\
 								<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="+" /> <input class="button-red story-rem" type="button" value="&ndash;" />\

@@ -57,47 +57,6 @@
 </div>
 <script type="text/javascript">
 	$(function () {
-		$('#addtag').click(function (e) {
-			jbox_tag.open({
-				target: $(this)
-			})
-		});
-
-		var tag_template = '<div class="tag" style="position: relative;">\
-								<span class="tag-remove" data-id="{1}" data-tagid="{2}"><i class="material-icons bigger" title="Dieses Tag entfernen.">delete</i></span>\
-								<a href="/tag/{0}" title="">{0}</a>\
-							</div>';
-
-		$('#add-button').click(function (e) {
-			data = {
-				id: $('#t').attr('data-id'),
-				tags: $('#t').val()
-			};
-
-			$.ajax({
-				cache: false,
-				url: '/api/tag/add',
-				type: 'POST',
-				data: data,
-				dataType: 'json',
-				statusCode: {
-					403: function () {
-						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-					},
-					404: function () {
-						alert('Resource not found.');
-					}
-				},
-				success: function (data) {
-					$.each(data, function (i, item) {
-						var t = tag_template.replace(/\{0\}/g, item.Name).replace(/\{1\}/g, item.Book).replace(/\{2\}/g, item.Id);
-						$(t).insertBefore('#tag-add');
-					});
-					jbox_tag.close();
-				}
-			});
-		});
-
 		var id = null;
 
 		var jbox_delete = new jBox('Modal', {
@@ -109,7 +68,6 @@
 			closeButton: 'title',
 			getTitle: 'data-title',
 			onOpen: function () {
-				$('#error').text('');
 				id = this.source.attr('data-id');
 			},
 			onClose: function () {
@@ -129,14 +87,11 @@
 						location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
 					},
 					404: function () {
-						alert('Resource not found');
+						alert('Resource not found.');
 					}
 				},
 				success: function (data) {
-					if (data.success == false) {
-						$('#error').text('Buch konnte nicht gelöscht werden');
-					} else {
-						$('#error').text('');
+					if (data.success) {
 						jbox_delete.close();
 						location.href = '/';
 					}
@@ -149,8 +104,6 @@
 <div id="delete-msg-box" style="display: none;">
 	<p>
 		Dieses Buch wirklich löschen?
-	</p>
-	<p id="error" style="color: #ff0000;">
 	</p>
 	<div>
 		<input id="delete-button" class="button-red" type="button" value="Löschen" />
