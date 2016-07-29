@@ -14,12 +14,14 @@
 	<h3>@ViewBag.Headline</h3>
 	<div>
 		<form action="@Url.Action("edit", "category", new { area = "admin" })" method="post" enctype="multipart/form-data" id="category-form">
-			<div class="element">
+			<div class="block">
 				<label for="name">Name</label>
-				<input type="text" id="name" name="name" value="@Model.Category.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
+			</div>
+			<div class="block">
+				<input class="input" type="text" id="name" name="name" value="@Model.Category.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
 			</div>
 
-			<div class="element">
+			<div class="block">
 				<input class="button-green" type="submit" value="Speichern" />
 			</div>
 		</form>

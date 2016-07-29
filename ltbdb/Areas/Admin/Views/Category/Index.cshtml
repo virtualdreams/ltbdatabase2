@@ -12,7 +12,7 @@
 			<li><a href="@Url.Action("edit", "category", new { area = "admin", id = category.Id })">@category.Name</a></li>
 			}
 		</ul>
-		<a href="@Url.Action("create", "category", new { area = "admin" })" class="button-green" style="margin-top: 20px; color: #ffffff;">Neue Kategorie</a>
+		<a href="@Url.Action("create", "category", new { area = "admin" })" class="button-green" style="color: #ffffff;">Neue Kategorie</a>
 	</div>
 </div>
 
@@ -22,12 +22,14 @@
 		<p>
 			Eine Kategorie löschen. Nur leere Kategorien können gelöscht werden.
 		</p>
-		<div class="element">
+		<div class="block">
 			<label for="category">Kategorie</label>
-			<select id="category-delete" name="category"></select>
+		</div>
+		<div class="block">
+			<select class="input" id="category-delete" name="category"></select>
 		</div>
 
-		<div class="element">
+		<div class="block">
 			<input class="button-red" type="button" value="Löschen" id="delete" />
 		</div>
 	</div>
@@ -39,14 +41,20 @@
 		<p>
 			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben. Dies ist z. B. notwendig, um eine Kategorie zu löschen.
 		</p>
-		<div class="element">
+		<div class="block">
 			<label for="category-move-from">Von</label>
-			<select id="category-move-from" name="category"></select>
+		</div>
+		<div class="block">
+			<select class="input" id="category-move-from" name="category"></select>
+		</div>
+		<div class="block">
 			<label for="category-move-to">Nach</label>
-			<select id="category-move-to" name="category"></select>
+		</div>
+		<div class="block">
+			<select class="input" id="category-move-to" name="category"></select>
 		</div>
 
-		<div class="element">
+		<div class="block">
 			<input class="button-red" type="button" value="Verschieben" id="move" />
 		</div>
 	</div>

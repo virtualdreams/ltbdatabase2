@@ -249,6 +249,12 @@
     <Content Include="App_Data\log4net.xml" />
     <Content Include="App_Data\providers.xml" />
     <Content Include="App_Data\sql\general.xml" />
+    <Content Include="Content\admin.css">
+      <DependentUpon>admin.less</DependentUpon>
+    </Content>
+    <Content Include="Content\admin.min.css">
+      <DependentUpon>admin.less</DependentUpon>
+    </Content>
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
     <Content Include="Content\layout.css" />
@@ -309,6 +315,7 @@
     <Content Include="Content\material\MaterialIcons-Regular.ttf" />
     <Content Include="Content\material\MaterialIcons-Regular.woff" />
     <Content Include="Content\material\MaterialIcons-Regular.woff2" />
+    <Content Include="Content\admin.less" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>

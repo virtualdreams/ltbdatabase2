@@ -8,9 +8,9 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta name="version" content="@VersionInfo.ProductVersion" />
 		
-		<link type="text/css" href="@Url.Content("~/Content/layout.css")" rel="stylesheet" media="screen" />
-		<link type="text/css" href="@Url.Content("~/Content/smoothness/jquery-ui.min.css")" rel="stylesheet" media="screen" />
-		<link type="text/css" href="@Url.Content("~/Content/jBox.css")" rel="stylesheet" media="print, screen" />
+		<link type="text/css" href="@Url.Content("~/Content/admin.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/Content/smoothness/jquery-ui.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/Content/jBox.css")" rel="stylesheet" />
 
 		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.min.js")"></script>
 		<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
@@ -24,38 +24,40 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<div class="header">
-				<a href="/admin">
-					<div class="header-left">
-						<h1 class="header-logo">
-							Lustiges Taschenbuch Administration
-						</h1>
+			<div class="wrapper-content">
+				<div class="header">
+					<a href="/admin">
+						<div class="left">
+							<h1 class="logo">
+								Lustiges Taschenbuch Administration
+							</h1>
+						</div>
+					</a>
+					<div class="right">
 					</div>
-				</a>
-				<div class="header-right">
 				</div>
-			</div>
 
-			<div class="content">
-				<div class="one-fourth">
-					<div class="left-box">
-						<nav>
-							<a href="/admin">Home</a>
-							<a href="/">Frontend</a>
-							<a href="@Url.Action("index", "category", new { area = "admin" })">Kategorien</a>
-							<a href="@Url.Action("index", "stats", new { area = "admin" })">Statistik</a>
-						</nav>
+				<div class="content">
+					<div class="one-fourth">
+						<div class="left-box">
+							<nav>
+								<a href="/admin">Home</a>
+								<a href="/">Frontend</a>
+								<a href="@Url.Action("index", "category", new { area = "admin" })">Kategorien</a>
+								<a href="@Url.Action("index", "stats", new { area = "admin" })">Statistik</a>
+							</nav>
+						</div>
+					</div>
+					<div class="three-fourth">
+						<div class="right-box">
+							@RenderBody()
+						</div>
 					</div>
 				</div>
-				<div class="three-fourth">
-					<div class="right-box">
-						@RenderBody()
-					</div>
-				</div>
-			</div>
 
-			<div class="footer">
-				<div class="footer-copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@VersionInfo.FileVersion</a></div>
+				<div class="footer">
+					<div class="copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@VersionInfo.FileVersion</a></div>
+				</div>
 			</div>
 		</div>
 	</body>
