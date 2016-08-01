@@ -172,6 +172,9 @@ a:active {
   color: #6b7b95;
   font-size: 8pt;
 }
+.details {
+  padding-bottom: 20px;
+}
 .details:after {
   content: '';
   display: block;
@@ -254,6 +257,9 @@ a:active {
 .block > label {
   font-weight: bold;
   color: #6b7b95;
+}
+.block:last-child {
+  margin-bottom: 0;
 }
 .block.flow {
   width: 500px;
