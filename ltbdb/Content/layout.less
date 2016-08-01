@@ -149,6 +149,29 @@ a {
 	}
 }
 
+// pager
+.pager {
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	& > a {
+		color: @color-text;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border-radius: 3px;
+		background-image: linear-gradient(#fcfcfc, #eeeeee);
+		border: 1px solid #dddddd;
+		display: inline-block;
+		padding: 6px 10px;
+
+		&:hover {
+			background-color: #dddddd;
+			background-image: linear-gradient(#eeeeee, #dddddd);
+		}
+	}
+}
+
 // book panel
 .book {
 	padding: 0;

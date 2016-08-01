@@ -116,6 +116,25 @@ a:active {
 .content h2 {
   color: #6b7b95;
 }
+.pager {
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.pager > a {
+  color: #6b7b95;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-image: linear-gradient(#fcfcfc, #eeeeee);
+  border: 1px solid #dddddd;
+  display: inline-block;
+  padding: 6px 10px;
+}
+.pager > a:hover {
+  background-color: #dddddd;
+  background-image: linear-gradient(#eeeeee, #dddddd);
+}
 .book {
   padding: 0;
   margin: 0;
