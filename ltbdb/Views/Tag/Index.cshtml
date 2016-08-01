@@ -7,33 +7,29 @@
 }
 
 <h2>Tags</h2>
-<div class="tag-container">
+<div class="tags">
 @foreach (var tag in Model.Tags)
 {
-	<div class="tag" style="position: relative;">
-		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
+	<div class="tag button-gray">
 		@if(Request.IsAuthenticated) {
-		<div class="tag-edit">
-			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
-			<span class="delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
-		</div>
+		<a class="upper" href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
+		<span class="lower delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
 		}
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
 	</div>
 }
 </div>
 @if(Request.IsAuthenticated && Model.UnreferencedTags.Count() > 0) {
 <h2>Unbenutze Tags</h2>
-<div class="tag-container">
+<div class="tags">
 @foreach (var tag in Model.UnreferencedTags)
 {
-	<div class="tag" style="position: relative;">
-		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
+	<div class="tag button-gray">
 		@if(Request.IsAuthenticated) {
-		<div class="tag-edit">
-			<a href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
-			<span class="delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
-		</div>
+		<a class="upper" href="@Url.Action("edit", "tag", new { id = tag.Id })" title="Dieses Tag bearbeiten."><i class="material-icons bigger">edit_mode</i></a>
+		<span class="lower delete" title="Dieses Tag löschen." data-id="@tag.Id" data-title="Tag &quot;@tag.Name&quot;"><i class="material-icons bigger">delete_forever</i></span>
 		}
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })" title="">@tag.Name</a>
 	</div>
 }
 </div>

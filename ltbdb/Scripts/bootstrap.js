@@ -154,8 +154,8 @@ $(function () {
 
 	/* story management */
 	var story_container = $('#story-container');
-	var story_template =	'<div class="form-element-field story">\
-								<input type="text" name="stories" value="" placeholder="Inhalt" /> <input class="button-green story-ins" type="button" value="+" /> <input class="button-red story-rem" type="button" value="&ndash;" />\
+	var story_template =	'<div class="story">\
+								<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
 							</div>';
 
 	$(document).on('click', '#story-add', function (e) {

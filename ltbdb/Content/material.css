@@ -35,4 +35,10 @@
 	font-feature-settings: 'liga';
 
 	vertical-align: text-top;
+
+	font-size: 14pt;
+}
+
+.material-icons-small {
+	font-size: 13pt;
 }

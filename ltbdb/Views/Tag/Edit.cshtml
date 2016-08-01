@@ -9,19 +9,14 @@
 <form action="@Url.Action("edit", "tag")" method="post" enctype="multipart/form-data" id="tag-edit">
 	<h2>Tag</h2>
 
-	<div class="form-element">
-		<div class="form-element-field">
-			<label for="name">Name</label>
-		</div>
-		<div class="form-element-field">
-			<input type="text" id="name" name="name" value="@Model.Tag.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
-		</div>
+	<div class="block">
+		<label for="name">Name</label>
 	</div>
+	<div class="block">	
+		<input class="input" type="text" id="name" name="name" value="@Model.Tag.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
+	</div>	
 
-	<div class="form-element">
-		<div class="form-element-button-bar">
-			<input class="button-green" type="submit" value="Speichern" />
-			<input id="cancel-edit" class="button-red" type="button" value="Abbrechen" />
-		</div>
+	<div class="block">
+		<input class="button-green" type="submit" value="Speichern" />
 	</div>
 </form>

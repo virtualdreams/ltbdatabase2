@@ -257,7 +257,12 @@
     </Content>
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
-    <Content Include="Content\layout.css" />
+    <Content Include="Content\layout.css">
+      <DependentUpon>layout.less</DependentUpon>
+    </Content>
+    <Content Include="Content\layout.min.css">
+      <DependentUpon>layout.less</DependentUpon>
+    </Content>
     <Content Include="Content\layout.mobile.css" />
     <Content Include="Content\logo.png" />
     <Content Include="Content\material.css" />
@@ -316,6 +321,7 @@
     <Content Include="Content\material\MaterialIcons-Regular.woff" />
     <Content Include="Content\material\MaterialIcons-Regular.woff2" />
     <Content Include="Content\admin.less" />
+    <Content Include="Content\layout.less" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>

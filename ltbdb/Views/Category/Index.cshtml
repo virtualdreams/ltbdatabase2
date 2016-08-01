@@ -8,7 +8,7 @@
 }
 
 <div style="position: relative;">
-	<div style="position: absolute; top: 0px; right: 0px; color: #6b7b95; font-size: 8pt;">
+	<div class="panel-menu">
 		Anzahl Bücher in allen Kategorien: @Model.PageOffset.Items
 	</div>
 	<h2>Alle Inhalte</h2>
@@ -16,7 +16,7 @@
 		@foreach (var book in Model.Books) {
 			<li>
 				<a href="@Url.Action("view", "book", new { id = @book.Id })">
-					<div style="min-height: 120px;">
+					<div>
 						<img src="@ImageStore.GetWebPath(book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
 					</div>
 					<span>Nr. @book.Number - @book.Name</span>
