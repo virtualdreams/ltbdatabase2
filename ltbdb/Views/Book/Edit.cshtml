@@ -68,8 +68,10 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img style="cursor: pointer;" id="image" src="@ImageStore.GetWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
+			<img style="cursor: pointer;" id="image" src="@ImageStore.GetWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
+			
 			<input type="hidden" name="filename" value="@ImageStore.GetWebPath(Model.Book.Filename)" />
+			<input type="hidden" name="remove" value="false" id="remove" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
 				<span class="pointer" id="image-reset" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
@@ -86,7 +88,7 @@
 
 		$('#image-upload').change(function () {
 			if (typeof window.FileReader === 'undefined') {
-				alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.")
+				alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.");
 				return;
 			} else {
 				var files = $("#image-upload").get(0).files;
