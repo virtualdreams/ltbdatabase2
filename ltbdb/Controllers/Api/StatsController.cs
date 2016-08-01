@@ -25,54 +25,34 @@ namespace ltbdb.Controllers.Api
 		}
 
 		[HttpGet]
-		public dynamic Books()
+		public dynamic List()
 		{
-			var t = Book.Get().Count();
+			var books = Book.Get().Count();
+			var categories = Category.Get();
+			var stories = Book.Get().SelectMany(s => s.Stories).Count();
+			var tags = Tag.Get();
 
-			return new
+			var stats = new
 			{
-				total = t,
-				used = t,
-				unused = 0
+				Books = new {
+					Total = books
+				},
+				Categories = new {
+					Total = categories.Count(),
+					Used = categories.Where(w => Book.GetByCategory(w.Id).Count() > 0).Count(),
+					Unused = categories.Where(w => Book.GetByCategory(w.Id).Count() == 0).Count()
+				},
+				Stories = new {
+					Total = stories
+				},
+				Tags = new {
+					Total = tags.Count(),
+					Used = tags.Where(w => w.References != 0).Count(),
+					Unused = tags.Where(w => w.References == 0).Count()
+				}
 			};
-		}
 
-		[HttpGet]
-		public dynamic Categories()
-		{
-			var t = Category.Get();
-			return new
-			{
-				total = t.Count(),
-				used = t.Where(w => Book.GetByCategory(w.Id).Count() > 0).Count(),
-				unused = t.Where(w => Book.GetByCategory(w.Id).Count() == 0).Count()
-			};
-		}
-
-		[HttpGet]
-		public dynamic Stories()
-		{
-			var t = Book.Get().SelectMany(s => s.Stories).Count();
-
-			return new
-			{
-				total = t,
-				used = t,
-				unused = 0
-			};
-		}
-
-		[HttpGet]
-		public dynamic Tags()
-		{
-			var t = Tag.Get();
-
-			return new
-			{
-				total = t.Count(),
-				used = t.Where(w => w.References != 0).Count(),
-				unused = t.Where(w => w.References == 0).Count()
-			};
+			return stats;
 		}
 	}
 }
