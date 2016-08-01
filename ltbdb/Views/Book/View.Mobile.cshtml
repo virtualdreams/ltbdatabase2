@@ -3,7 +3,7 @@
 @using ltbdb.Core.Helpers
 
 @{
-	ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.Category.Name);
+	ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Name, Model.Book.Category.Name);
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Header = String.Format("Nr. {0} - {1}", @Model.Book.Number, @Model.Book.Name);
 }
@@ -14,7 +14,7 @@
 	</div>
 	<h3>Kategorie</h3>
 	<ul>
-		<li><a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.Category.Name</a></li>
+		<li><a href="@Url.Action("view", "category", new { id = Model.Book.Category.Id })">@Model.Book.Category.Name</a></li>
 	</ul>
 	<h3>Inhalte</h3>
 	<ul>
@@ -27,7 +27,7 @@
 	<ul>
 	@foreach (var tag in Model.Tags)
 	{
-		<li><a href="@Url.Action("view", "tag", new { id = tag.Id })">@tag.Name</a></li>
+		<li><a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a></li>
 	}
 	</ul>
 </div>
