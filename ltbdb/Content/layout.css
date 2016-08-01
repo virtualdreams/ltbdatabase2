@@ -349,6 +349,10 @@ a:active {
 .button-gray:active {
   color: #6b7b95;
 }
+span.field-validation-error {
+  color: #e43d3d;
+  margin-left: 10px;
+}
 .ui-widget {
   font-size: 11pt;
 }
