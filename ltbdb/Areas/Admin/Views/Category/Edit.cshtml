@@ -2,10 +2,10 @@
 @using ltbdb.Models
 @{
 	if (Model.Category.Id == 0) {
-		ViewBag.Title = "Neue Kategorie | Lustiges Taschenbuch - Administration";
+		ViewBag.Title = "Neue Kategorie";
 		ViewBag.Headline = "Neue Kategorie";
 	} else {
-		ViewBag.Title = String.Format("{0} | Lustiges Taschenbuch - Administration", Model.Category.Name);
+		ViewBag.Title = String.Format("{0}", Model.Category.Name);
 		ViewBag.Headline = "Kategorie bearbeiten";
 	}
 }

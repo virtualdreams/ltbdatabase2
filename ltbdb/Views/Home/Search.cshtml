@@ -3,7 +3,7 @@
 @using ltbdb.Core.Helpers
 
 @{
-	ViewBag.Title = String.Format("Suche nach \"{0}\" | Lustiges Taschenbuch - Datenbank", Model.Query);
+	ViewBag.Title = String.Format("Suche nach \"{0}\"", Model.Query);
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Search = !String.IsNullOrEmpty(Model.Query) ? Model.Query : "";
 }

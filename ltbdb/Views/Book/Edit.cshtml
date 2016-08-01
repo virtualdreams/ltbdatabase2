@@ -4,9 +4,9 @@
 
 @{
 	if(Model.Book.Id == 0) {
-		ViewBag.Title = "Neues Buch | Lustiges Taschenbuch - Datenbank";
+		ViewBag.Title = "Neues Buch";
 	} else {
-		ViewBag.Title = String.Format("Nr. {0} - {1} | {2} | Lustiges Taschenbuch - Datenbank", Model.Book.Number, Model.Book.Name, Model.Book.Category.Name);
+		ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Name, Model.Book.Category.Name);
 	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
