@@ -68,16 +68,6 @@
 			bookid = {id}
 		]]>
 	</statement>
-	<statement id="moveBooks">
-		<![CDATA[
-		update
-			books
-		set
-			catid = {to}
-		where
-			catid = {from}
-		]]>
-	</statement>
 	<statement id="updateBookImage">
 		<![CDATA[
 		update
@@ -130,6 +120,16 @@
 			name = {name}
 		where
 			catid = {id}
+		]]>
+	</statement>
+	<statement id="moveCategory">
+		<![CDATA[
+		update
+			books
+		set
+			catid = {to}
+		where
+			catid = {from}
 		]]>
 	</statement>
 	<statement id="deleteCategory">

@@ -33,29 +33,50 @@ namespace ltbdb.Controllers.Api
 			var t = Category.Get();
 			foreach (var c in t)
 			{
+				var _books = Book.GetByCategory(c.Id);
+
 				yield return new
 				{
-					name = c.Name,
-					id = c.Id,
-					used = Book.GetByCategory(c.Id).Count() != 0
+					Name = c.Name,
+					Id = c.Id,
+					Count = _books.Count(),
+					Used = _books.Count() != 0
 				};
 			}
 		}
 
 		[HttpPost]
-		public dynamic Delete(int? id)
+		public dynamic Delete(int id)
 		{
-			throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not implemented yet."));
-			//if((id ?? 0) == 0)
-			//	throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Id not found."));
+			var _category = Category.Get(id);
+			if (_category == null)
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
 
-			//return new { Deleted = Category.Delete(id ?? 0) };
+			var result = false;
+			if (!(Book.GetByCategory(_category.Id).Count() > 0))
+				result = Category.Delete(_category);
+
+			return new
+			{
+				success = result
+			};
 		}
 
 		[HttpPost]
 		public dynamic Move(int? from, int? to)
 		{
-			throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Not implemented yet."));
+			var _source = Category.Get(from ?? 0);
+			var _target = Category.Get(to ?? 0);
+
+			if(_source == null || _target == null)
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
+
+			var result = Category.Move(_source, _target);
+
+			return new
+			{
+				success = result
+			};
 		}
 	}
 }

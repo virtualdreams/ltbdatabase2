@@ -63,13 +63,24 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
+		/// Move all book from one category to another.
+		/// </summary>
+		/// <param name="from">The current category.</param>
+		/// <param name="to">The target category.</param>
+		/// <returns></returns>
+		public bool Move(Category from, Category to)
+		{
+			return CategoryEntity.Move(new CategoryDTO { Id = from.Id }, new CategoryDTO { Id = to.Id });
+		}
+
+		/// <summary>
 		/// Delete category.
 		/// </summary>
-		/// <param name="category">The category.</param>
+		/// <param name="category">The category to delete.</param>
 		/// <returns></returns>
 		public bool Delete(Category category)
 		{
-			throw new NotImplementedException();
+			return CategoryEntity.Delete(new CategoryDTO { Id = category.Id });
 		}
 	}
 }

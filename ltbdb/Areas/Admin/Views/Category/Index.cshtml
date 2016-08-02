@@ -39,7 +39,7 @@
 	<h3>Kategorie verschieben</h3>
 	<div>
 		<p>
-			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben. Dies ist z. B. notwendig, um eine Kategorie zu löschen.
+			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben. Dies ist z. B. notwendig, um eine Kategorie zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.
 		</p>
 		<div class="block">
 			<label for="category-move-from">Von</label>
@@ -74,58 +74,56 @@
 		Soll diese Kategorie wirklich verschoben werden?
 	</div>
 	<div class="block">
-		<input id="move-button" class="button-red" type="button" value="Löschen" />
+		<input id="move-button" class="button-red" type="button" value="Verschieben" />
 	</div>
 </div>
 
 <script type="text/javascript">
 	$(function () {
 		$.ajax({
+			cache: false,
 			type: 'GET',
 			dataType: 'json',
 			url: '/api/category/list',
 			statusCode: {
 				401: function () {
 					alert("Not authorized.");
+				},
+				404: function () {
+					alert('Resource not found.');
 				}
 			},
 			success: function (data) {
 				$.each(data, function (idx, obj) {
-					if (obj.used != true) {
+					if (obj.Used != true) {
 						$('#category-delete').append(
-							$('<option></option>').val(obj.id).html(obj.name)
-						);
-						$('#category-move-to').append(
-							$('<option></option>').val(obj.id).html(obj.name)
-						);
-					} else {
-						$('#category-move-from').append(
-							$('<option></option>').val(obj.id).html(obj.name)
+							$('<option></option>').val(obj.Id).html(obj.Name)
 						);
 					}
+					
+					$('#category-move-from').append(
+						$('<option></option>').val(obj.Id).html(obj.Name + ' (' + obj.Count + ')')
+					);
+					$('#category-move-to').append(
+						$('<option></option>').val(obj.Id).html(obj.Name + ' (' + obj.Count + ')')
+					);
+
 				});
 			}
 		});
 
-		var jbox_delete = new jBox('Modal', {
+		var jbox_dialog = new jBox('Modal', {
 			overlay: true,
 			closeOnClick: 'body',
-			closeButton: 'title',
-			onOpen: function () {
-				//$('#error').text('');
-				//link = this.source.attr('href');
-			},
-			onClose: function () {
-				//link = null;
-			}
+			closeButton: 'title'
 		});
 
 		$('#delete').click(function () {
-			jbox_delete.setContent($('#delete-msg-box'), true).setTitle('Kategorie löschen').open();
+			jbox_dialog.setContent($('#delete-msg-box'), true).setTitle('Kategorie löschen').open();
 		});
 
 		$('#move').click(function () {
-			jbox_delete.setContent($('#move-msg-box'), true).setTitle('Kategorie verschieben').open();
+			jbox_dialog.setContent($('#move-msg-box'), true).setTitle('Kategorie verschieben').open();
 		});
 
 		$('#delete-button').click(function () {
@@ -134,15 +132,19 @@
 				url: '/api/category/delete/' + $('#category-delete').val(),
 				statusCode: {
 					401: function () {
-						alert("Not authorized.");
+						alert('Not authorized.');
 					},
 					404: function () {
-						alert("An error has occured.");
+						alert('Resource not found.');
 					}
 				},
 				success: function (data) {
-					jbox_delete.close();
-					location.reload(true);
+					if (!data.success) {
+						alert('Kategorie konnte nicht gelöscht werden.');
+					} else {
+						jbox_dialog.close();
+						location.reload(true);
+					}
 				}
 			});
 		});
@@ -153,16 +155,19 @@
 				url: '/api/category/move?from=' + $('#category-move-from').val() + '&to=' + $('#category-move-to').val(),
 				statusCode: {
 					401: function () {
-						jbox_delete.close();
-						alert("Not authorized.");
+						alert('Not authorized.');
 					},
 					404: function () {
-						jbox_delete.close();
-						alert("An error has occured.");
+						alert('Resource not found.');
 					}
 				},
 				success: function (data) {
-					jbox_delete.close();
+					if (!data.success) {
+						alert('Kategorie konnte nicht verschoben werden.');
+					} else {
+						jbox_dialog.close();
+						location.reload(true);
+					}
 				}
 			});
 		});

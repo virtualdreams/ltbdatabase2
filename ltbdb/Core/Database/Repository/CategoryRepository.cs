@@ -89,7 +89,7 @@ namespace ltbdb.Core.Database.Repository
 
 		public bool Move(CategoryDTO from, CategoryDTO to)
 		{
-			var query = this.Config.CreateQuery("moveBooks");
+			var query = this.Config.CreateQuery("moveCategory");
 			query.SetParameter("from", from.Id);
 			query.SetParameter("to", to.Id);
 
