@@ -84,10 +84,12 @@ $(function () {
 		closeOnClick: 'overlay'
 	});
 
-	var tag_template = '<div class="tag" style="position: relative;">\
-								<span class="tag-remove" data-id="{1}" data-tagid="{2}"><i class="material-icons bigger" title="Dieses Tag entfernen.">delete</i></span>\
-								<a href="/tag/{0}" title="">{0}</a>\
-							</div>';
+	
+
+	var tag_template = '<div class="tag button-gray">\
+							<span class="upper tag-remove" data-id="{1}" data-tagid="{2}" title="Dieses Tag entfernen."><i class="material-icons bigger">delete</i></span>\
+							<a href="/tag/{0}" title="">{0}</a>\
+						</div>';
 
 	$('#add-button').click(function (e) {
 		data = {
