@@ -263,7 +263,12 @@
     <Content Include="Content\layout.min.css">
       <DependentUpon>layout.less</DependentUpon>
     </Content>
-    <Content Include="Content\layout.mobile.css" />
+    <Content Include="Content\layout.mobile.css">
+      <DependentUpon>layout.mobile.less</DependentUpon>
+    </Content>
+    <Content Include="Content\layout.mobile.min.css">
+      <DependentUpon>layout.mobile.less</DependentUpon>
+    </Content>
     <Content Include="Content\logo.png" />
     <Content Include="Content\material.css" />
     <Content Include="Content\navigation.css" />
@@ -322,6 +327,7 @@
     <Content Include="Content\material\MaterialIcons-Regular.woff2" />
     <Content Include="Content\admin.less" />
     <Content Include="Content\layout.less" />
+    <Content Include="Content\layout.mobile.less" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -329,6 +335,7 @@
     <Content Include="Scripts\bootstrap.mobile.min.js.map">
       <DependentUpon>bootstrap.mobile.js</DependentUpon>
     </Content>
+    <Content Include="Views\Error\Http404.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />

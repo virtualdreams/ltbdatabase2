@@ -8,10 +8,11 @@
 }
 
 <div class="details">
-	<ul>
-	@foreach (TagModel tag in Model.Tags)
+	<h3>Tags</h3>
+	<div class="tags">
+	@foreach (var tag in Model.Tags)
 	{
-		<li><a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a></li>
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a>
 	}
-	</ul>
+	</div>
 </div>

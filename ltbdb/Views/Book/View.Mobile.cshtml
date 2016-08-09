@@ -9,25 +9,37 @@
 }
 
 <div class="details">
-	<div class="img">
-		<img src="@ImageStore.GetWebPath(Model.Book.Filename, ImageType.Thumbnail)" alt="Cover" />
+	<div class="detail">
+		<div class="img">
+			<img src="@ImageStore.GetWebPath(Model.Book.Filename, ImageType.Thumbnail)" alt="Cover" />
+		</div>
+		<div class="title">
+			<span>Nr. @Model.Book.Number - @Model.Book.Name</span>
+		</div>
 	</div>
+
 	<h3>Kategorie</h3>
+	<div class="category">
+		<a href="@Url.Action("view", "category", new { id = Model.Book.Category.Id })">@Model.Book.Category.Name</a>
+	</div>
+	
+	<h3>Inhalt</h3>
 	<ul>
-		<li><a href="@Url.Action("view", "category", new { id = Model.Book.Category.Id })">@Model.Book.Category.Name</a></li>
-	</ul>
-	<h3>Inhalte</h3>
-	<ul>
-	@foreach (var story in Model.Book.Stories)
+	@if(Model.Book.Stories.Count() > 0) {
+	foreach (var story in Model.Book.Stories)
 	{
 		<li>@story</li>
 	}
-	</ul>
-	<h3>Tags</h3>
-	<ul>
-	@foreach (var tag in Model.Tags)
-	{
-		<li><a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a></li>
+	} else {
+		<li>Keine Inhalte angegeben.</li> 
 	}
 	</ul>
+
+	<h3>Tags</h3>
+	<div class="tags">
+	@foreach (var tag in Model.Tags)
+	{
+		<a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a>
+	}
+	</div>
 </div>
