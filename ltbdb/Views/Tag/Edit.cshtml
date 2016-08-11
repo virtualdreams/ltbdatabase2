@@ -8,15 +8,16 @@
 
 <form action="@Url.Action("edit", "tag")" method="post" enctype="multipart/form-data" id="tag-edit">
 	<h2>Tag</h2>
+	<div class="details">
+		<div class="block">
+			<label for="name">Name</label>
+		</div>
+		<div class="block">	
+			<input class="input" type="text" id="name" name="name" value="@Model.Tag.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
+		</div>	
 
-	<div class="block">
-		<label for="name">Name</label>
-	</div>
-	<div class="block">	
-		<input class="input" type="text" id="name" name="name" value="@Model.Tag.Name" placeholder="Titel der Kategorie" /> @Html.ValidationMessage("name")
-	</div>	
-
-	<div class="block">
-		<input class="button-green" type="submit" value="Speichern" />
+		<div class="block">
+			<input class="button-green" type="submit" value="Speichern" />
+		</div>
 	</div>
 </form>

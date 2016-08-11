@@ -173,7 +173,7 @@ a:active {
   font-size: 8pt;
 }
 .details {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 .details:after {
   content: '';
@@ -196,7 +196,7 @@ a:active {
 }
 .tags {
   margin-left: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 .tags:after {
   content: '';
