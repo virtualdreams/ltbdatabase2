@@ -19,6 +19,23 @@ function extractLast(term) {
 	return split(term).pop();
 }
 
+String.prototype.format = function () {
+	var s = this, i = arguments.length;
+
+	while (i--) {
+		s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+	}
+	return s;
+}
+
+String.prototype.formatEx = function (placeholders) {
+	var s = this;
+	for (var propertyName in placeholders) {
+		s = s.replace(new RegExp('\\{' + propertyName + '\\}', 'gm'), placeholders[propertyName]);
+	}
+	return s;
+};
+
 $(function () {
 	/* autocomplete for search */
 	$('#q').autocomplete({
@@ -84,8 +101,6 @@ $(function () {
 		closeOnClick: 'overlay'
 	});
 
-	
-
 	var tag_template = '<div class="tag button-gray">\
 							<span class="upper tag-remove" data-id="{1}" data-tagid="{2}" title="Dieses Tag entfernen."><i class="material-icons bigger">delete</i></span>\
 							<a href="/tag/{0}" title="">{0}</a>\
@@ -113,9 +128,10 @@ $(function () {
 			},
 			success: function (data) {
 				$.each(data, function (i, item) {
-					var t = tag_template.replace(/\{0\}/g, item.Name).replace(/\{1\}/g, item.Book).replace(/\{2\}/g, item.Id);
+					var t = tag_template.format(item.Name, item.Book, item.Id);
 					$(t).insertBefore('#tag-add');
 				});
+				$('#t').val('');
 				jbox_tag.close();
 			}
 		});
