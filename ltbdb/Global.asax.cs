@@ -24,6 +24,8 @@ namespace ltbdb
 		{
 			log4net.Config.XmlConfigurator.Configure(new FileInfo(IOHelper.ConvertToFullPath("./App_Data/log4net.xml")));
 
+			GlobalConfig.Get();
+
 			DisplayModeProvider.Instance.Modes.Insert(0, new MobileDisplayMode());
 
 			MvcHandler.DisableMvcResponseHeader = true;
