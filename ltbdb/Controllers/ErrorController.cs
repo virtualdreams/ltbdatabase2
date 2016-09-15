@@ -17,7 +17,7 @@ namespace ltbdb.Controllers
         {
 			var exception = RouteData.Values["exception"] as Exception ?? new Exception("Internal Server Error");
 
-			var view = new ErrorModel { Exception = exception };
+			var view = new HandleErrorInfo(exception, "<unkown>", "<unknown>");
 
 			return View(view);
         }

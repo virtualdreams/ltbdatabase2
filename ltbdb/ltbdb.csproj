@@ -255,6 +255,12 @@
     <Content Include="Content\admin.min.css">
       <DependentUpon>admin.less</DependentUpon>
     </Content>
+    <Content Include="Content\error.css">
+      <DependentUpon>error.less</DependentUpon>
+    </Content>
+    <Content Include="Content\error.min.css">
+      <DependentUpon>error.less</DependentUpon>
+    </Content>
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
     <Content Include="Content\layout.css">
@@ -328,6 +334,7 @@
     <Content Include="Content\admin.less" />
     <Content Include="Content\layout.less" />
     <Content Include="Content\layout.mobile.less" />
+    <Content Include="Content\error.less" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
@@ -336,6 +343,7 @@
       <DependentUpon>bootstrap.mobile.js</DependentUpon>
     </Content>
     <Content Include="Views\Error\Http404.Mobile.cshtml" />
+    <Content Include="Views\Shared\_LayoutError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Layout.cshtml" />
