@@ -249,41 +249,47 @@
     <Content Include="App_Data\log4net.xml" />
     <Content Include="App_Data\providers.xml" />
     <Content Include="App_Data\sql\general.xml" />
-    <Content Include="Content\admin.css">
+    <None Include="Content\admin.css">
       <DependentUpon>admin.less</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\admin.min.css">
       <DependentUpon>admin.less</DependentUpon>
     </Content>
-    <Content Include="Content\error.css">
+    <None Include="Content\error.css">
       <DependentUpon>error.less</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\error.min.css">
       <DependentUpon>error.less</DependentUpon>
     </Content>
-    <Content Include="Content\error.mobile.css">
+    <None Include="Content\error.mobile.css">
       <DependentUpon>error.mobile.less</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\error.mobile.min.css">
       <DependentUpon>error.mobile.less</DependentUpon>
     </Content>
     <Content Include="Content\glass_light.png" />
     <Content Include="Content\jBox.css" />
-    <Content Include="Content\layout.css">
+    <None Include="Content\layout.css">
       <DependentUpon>layout.less</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\layout.min.css">
       <DependentUpon>layout.less</DependentUpon>
     </Content>
-    <Content Include="Content\layout.mobile.css">
+    <None Include="Content\layout.mobile.css">
       <DependentUpon>layout.mobile.less</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\layout.mobile.min.css">
       <DependentUpon>layout.mobile.less</DependentUpon>
     </Content>
     <Content Include="Content\logo.png" />
-    <Content Include="Content\material.css" />
-    <Content Include="Content\navigation.css" />
+    <None Include="Content\material.css" />
+    <Content Include="Content\material.min.css">
+      <DependentUpon>material.css</DependentUpon>
+    </Content>
+    <None Include="Content\navigation.css" />
+    <Content Include="Content\navigation.min.css">
+      <DependentUpon>navigation.css</DependentUpon>
+    </Content>
     <Content Include="Content\no-image.png" />
     <Content Include="Content\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
     <Content Include="Content\smoothness\images\ui-icons_222222_256x240.png" />
@@ -294,11 +300,11 @@
     <Content Include="Content\smoothness\jquery-ui.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
+    <None Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\bootstrap.mobile.js" />
+    <None Include="Scripts\bootstrap.mobile.js" />
     <Content Include="Scripts\bootstrap.mobile.min.js">
       <DependentUpon>bootstrap.mobile.js</DependentUpon>
     </Content>
@@ -337,11 +343,11 @@
     <Content Include="Content\material\MaterialIcons-Regular.ttf" />
     <Content Include="Content\material\MaterialIcons-Regular.woff" />
     <Content Include="Content\material\MaterialIcons-Regular.woff2" />
-    <Content Include="Content\admin.less" />
-    <Content Include="Content\layout.less" />
-    <Content Include="Content\layout.mobile.less" />
-    <Content Include="Content\error.less" />
-    <Content Include="Content\error.mobile.less" />
+    <None Include="Content\admin.less" />
+    <None Include="Content\layout.less" />
+    <None Include="Content\layout.mobile.less" />
+    <None Include="Content\error.less" />
+    <None Include="Content\error.mobile.less" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
