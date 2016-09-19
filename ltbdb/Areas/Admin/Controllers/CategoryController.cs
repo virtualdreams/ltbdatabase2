@@ -45,7 +45,7 @@ namespace ltbdb.Areas.Admin.Controllers
 		{
 			var _category = Category.Get(id ?? 0);
 			if (_category == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var category = Mapper.Map<CategoryModel>(_category);
 

@@ -53,7 +53,7 @@ namespace ltbdb.Controllers
 		{
 			var _category = Category.Get(id ?? 0);
 			if(_category == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var _books = Book.GetByCategory(_category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);

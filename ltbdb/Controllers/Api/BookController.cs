@@ -49,7 +49,7 @@ namespace ltbdb.Controllers.Api
 		{
 			var _book = Book.Get(id);
 			if(_book == null)
-				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Id not found."));
+				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
 
 			var result = Book.Delete(_book);
 

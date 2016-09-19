@@ -55,7 +55,7 @@ namespace ltbdb.Controllers
         {
 			var _tag = Tag.GetByName(id);
 			if (_tag == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var _books = Book.GetByTag(_tag.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
@@ -80,7 +80,7 @@ namespace ltbdb.Controllers
 		{
 			var _tag = Tag.Get(id ?? 0);
 			if(_tag == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var tag = Mapper.Map<TagModel>(_tag);
 

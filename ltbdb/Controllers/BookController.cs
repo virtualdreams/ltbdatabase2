@@ -36,7 +36,7 @@ namespace ltbdb.Controllers
 		{
 			var _book = Book.Get(id ?? 0);
 			if (_book == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var _tags = Tag.GetByBook(_book.Id);
 
@@ -78,7 +78,7 @@ namespace ltbdb.Controllers
 		{
 			var _book = Book.Get(id ?? 0);
 			if (_book == null)
-				throw new HttpException(404, "Ressource not found.");
+				throw new HttpException(404, "Resource not found.");
 
 			var _categories = Category.Get();
 
