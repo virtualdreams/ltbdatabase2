@@ -60,8 +60,20 @@
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.3.0\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.3.0\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.3.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.GridFS, Version=2.3.0.157, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.GridFS.2.3.0\lib\net45\MongoDB.Driver.GridFS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,10 +98,6 @@
     </Reference>
     <Reference Include="SimpleInjector.Integration.WebApi, Version=3.1.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.Integration.WebApi.3.1.5\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="SqlDataMapper, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlDataMapper.dll.5.0.0-beta2\lib\net45\SqlDataMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -161,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutomapperConfig.cs" />
+    <Compile Include="App_Start\ModelBinderConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs">
@@ -196,43 +205,30 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
+    <Compile Include="Core\Filter\IsAjaxRequestAttribute.cs" />
     <Compile Include="Core\Filter\LogErrorAttribute.cs" />
     <Compile Include="Core\Helpers\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\IOHelper.cs" />
+    <Compile Include="Core\Helpers\ObjectIdModelBinder.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringExtensions.cs" />
     <Compile Include="Core\Helpers\ImageStore.cs" />
+    <Compile Include="Core\Models\Book.cs" />
     <Compile Include="Core\Services\BookService.cs" />
     <Compile Include="Core\Services\CategoryService.cs" />
+    <Compile Include="Core\Services\MongoContext.cs" />
     <Compile Include="Core\Services\TagService.cs" />
-    <Compile Include="Models\Container\CategoryEditContainer.cs" />
     <Compile Include="Models\Container\BookEditContainer.cs" />
     <Compile Include="Models\Container\CategoryViewContainer.cs" />
     <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PageOffset.cs" />
     <Compile Include="Core\Helpers\VersionInfo.cs" />
-    <Compile Include="Core\Models\Category.cs" />
-    <Compile Include="Core\Models\Book.cs" />
-    <Compile Include="Core\Database\DatabaseContext.cs" />
-    <Compile Include="Core\Database\DTO\Tag2BookDTO.cs" />
-    <Compile Include="Core\Database\Repository\CategoryRepository.cs" />
-    <Compile Include="Core\Database\Repository\Tag2BookRepository.cs" />
-    <Compile Include="Core\Database\Repository\TagRepository.cs" />
-    <Compile Include="Core\Models\Tag.cs" />
-    <Compile Include="Core\Database\Repository\BookRepository.cs" />
-    <Compile Include="Core\Database\Repository\Repository.cs" />
-    <Compile Include="Core\Database\DTO\BookDTO.cs" />
-    <Compile Include="Core\Database\DTO\CategoryDTO.cs" />
-    <Compile Include="Core\Database\DTO\TagDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BookModel.cs" />
-    <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\Container\TagEditContainer.cs" />
-    <Compile Include="Models\TagModel.cs" />
     <Compile Include="Models\Container\TagViewContainer.cs" />
     <Compile Include="Models\Container\BookViewAllContainer.cs" />
     <Compile Include="Models\Container\BookViewCategoryContainer.cs" />
@@ -337,7 +333,6 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Stats\Index.cshtml" />
     <Content Include="Content\material\MaterialIcons-Regular.eot" />
     <Content Include="Content\material\MaterialIcons-Regular.ttf" />
@@ -387,7 +382,6 @@
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
-    <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\Http404.cshtml" />
     <Content Include="Views\Home\Index.Mobile.cshtml" />

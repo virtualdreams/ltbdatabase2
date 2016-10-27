@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The book id.
 		/// </summary>
-		public int Id { get; set; }
+		public ObjectId Id { get; set; }
 
 		/// <summary>
 		/// The book number.
@@ -26,7 +27,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The category of the book.
 		/// </summary>
-		public CategoryModel Category { get; set; }
+		public string Category { get; set; }
 
 		/// <summary>
 		/// The book creation date and time.
@@ -34,9 +35,15 @@ namespace ltbdb.Models
 		public DateTime Created { get; set; }
 
 		/// <summary>
+		/// The image filename.
+		/// </summary>
+		public string Filename { get; set; }
+
+		private string[] _stories = new string[] { };
+
+		/// <summary>
 		/// The stories in the book.
 		/// </summary>
-		private string[] _stories = new string[] { };
 		public string[] Stories
 		{
 			get
@@ -52,10 +59,25 @@ namespace ltbdb.Models
 			}
 		}
 
+		private string[] _tags = new string[] { };
+
 		/// <summary>
-		/// The image filename.
+		/// The tags for the book.
 		/// </summary>
-		public string Filename { get; set; }
+		public string[] Tags
+		{
+			get
+			{
+				return _tags;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_tags = value;
+				}
+			}
+		}
 	}
 
 	public class BookWriteModel
@@ -63,7 +85,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The book id.
 		/// </summary>
-		public int Id { get; set; }
+		public ObjectId Id { get; set; }
 
 		/// <summary>
 		/// The book number.
@@ -80,17 +102,19 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The category of the book.
 		/// </summary>
-		public CategoryModel Category { get; set; }
+		[Required(ErrorMessage = "Bitte gib eine Kategorie ein.")]
+		public string Category { get; set; }
 
 		/// <summary>
-		/// The target category.
+		/// The image filename.
 		/// </summary>
-		public int TargetCategory { get; set; }
+		public string Filename { get; set; }
+
+		private string[] _stories = new string[] { };
 
 		/// <summary>
 		/// The stories in the book.
 		/// </summary>
-		private string[] _stories = new string[] { };
 		public string[] Stories
 		{
 			get
@@ -107,9 +131,10 @@ namespace ltbdb.Models
 		}
 
 		/// <summary>
-		/// The image filename.
+		/// The tags for the book.
 		/// </summary>
-		public string Filename { get; set; }
+		public string Tags { get; set; }
+		
 
 		/// <summary>
 		/// The posted image.

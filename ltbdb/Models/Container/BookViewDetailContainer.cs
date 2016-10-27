@@ -8,6 +8,5 @@ namespace ltbdb.Models
 	public class BookViewDetailContainer
 	{
 		public BookModel Book { get; set; }
-		public TagModel[] Tags { get; set; }
 	}
 }

@@ -24,10 +24,13 @@ namespace ltbdb
 		{
 			log4net.Config.XmlConfigurator.Configure(new FileInfo(IOHelper.ConvertToFullPath("./App_Data/log4net.xml")));
 
+			// load config
 			GlobalConfig.Get();
 
+			// add mobile view
 			DisplayModeProvider.Instance.Modes.Insert(0, new MobileDisplayMode());
 
+			// supress mvc header
 			MvcHandler.DisableMvcResponseHeader = true;
 			
 			AreaRegistration.RegisterAllAreas();
@@ -38,11 +41,14 @@ namespace ltbdb
 
 			AutomapperConfig.RegisterAutomapper();
 			SimpleInjectorConfig.Register();
+			ModelBinderConfig.RegisterModelBinder();
+
+			Log.InfoFormat("Application start finished.");
 		}
 
 		protected void Application_End()
 		{
-			
+			Log.InfoFormat("Application shutdown.");
 		}
 
 		protected void Application_Error(object sender, EventArgs e)

@@ -7,6 +7,6 @@ namespace ltbdb.Models
 {
 	public class CategoryViewContainer
 	{
-		public CategoryModel[] Categories { get; set; }
+		public IEnumerable<string> Categories { get; set; }
 	}
 }

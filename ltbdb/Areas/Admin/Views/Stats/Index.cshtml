@@ -22,10 +22,10 @@
 					}
 				},
 				success: function (data) {
-					$('#books').text(data.Books.Total);
-					$('#categories').text(data.Categories.Used);
-					$('#stories').text(data.Stories.Total);
-					$('#tags').text(data.Tags.Used);
+					$('#books').text(data.Books);
+					$('#categories').text(data.Categories);
+					$('#stories').text(data.Stories);
+					$('#tags').text(data.Tags);
 				}
 			});
 		}

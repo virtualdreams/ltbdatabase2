@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using ltbdb.Core.Database;
-using ltbdb.Core.Database.DTO;
+﻿using log4net;
 using ltbdb.Core.Models;
-using SqlDataMapper;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,77 +8,49 @@ using System.Web;
 
 namespace ltbdb.Core.Services
 {
-	public class CategoryService: DatabaseContextNew
+	public class CategoryService : MongoContext
 	{
-		public CategoryService(SqlConfig config, SqlContext context)
-			: base(config, context)
+		private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryService));
+
+		public CategoryService(IMongoClient client)
+			: base(client)
 		{ }
 
 		/// <summary>
-		/// Get all categories.
+		/// Get all available categories.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Category> Get()
+		public IEnumerable<string> Get()
 		{
-			return Mapper.Map<Category[]>(CategoryEntity.GetAll());
+			return Book.Find(_ => true).ToEnumerable().Select(s => s.Category).Distinct();
 		}
 
 		/// <summary>
-		/// Get a category by id.
+		/// Rename a category. Returns false if no document modified.
 		/// </summary>
-		/// <param name="id">The category id.</param>
+		/// <param name="from">The original category name.</param>
+		/// <param name="to">The target category name.</param>
 		/// <returns></returns>
-		public Category Get(int id)
+		public bool Rename(string from, string to)
 		{
-			var _category = CategoryEntity.Get(id);
-			if (_category == null)
-				return null;
+			var _filter = Builders<Book>.Filter;
+			var _from = _filter.Eq(f => f.Category, from);
 
-			return Mapper.Map<Category>(_category);
-		}
+			var _update = Builders<Book>.Update;
+			var _set = _update.Set(s => s.Category, to);
 
-		/// <summary>
-		/// Save the category.
-		/// </summary>
-		/// <param name="category">The category.</param>
-		/// <returns></returns>
-		public Category Save(Category category)
-		{
-			var _category = Mapper.Map<CategoryDTO>(category);
+			var _result = Book.UpdateMany(_from, _set);
 
-			if (category.Id == 0)
+			if (_result.IsAcknowledged && _result.ModifiedCount > 0)
 			{
-				var _ret = CategoryEntity.Add(_category);
-
-				return Mapper.Map<Category>(_ret);
+				Log.InfoFormat("Rename category '{0}' to '{1}'. Modified {2} documents.", from, to, _result.ModifiedCount);
+				return true;
 			}
 			else
 			{
-				var _ret = CategoryEntity.Update(_category);
-
-				return Mapper.Map<Category>(_ret);
+				Log.ErrorFormat("Rename category '{0}' failed. No document was modified.", from);
+				return false;
 			}
-		}
-
-		/// <summary>
-		/// Move all book from one category to another.
-		/// </summary>
-		/// <param name="from">The current category.</param>
-		/// <param name="to">The target category.</param>
-		/// <returns></returns>
-		public bool Move(Category from, Category to)
-		{
-			return CategoryEntity.Move(new CategoryDTO { Id = from.Id }, new CategoryDTO { Id = to.Id });
-		}
-
-		/// <summary>
-		/// Delete category.
-		/// </summary>
-		/// <param name="category">The category to delete.</param>
-		/// <returns></returns>
-		public bool Delete(Category category)
-		{
-			return CategoryEntity.Delete(new CategoryDTO { Id = category.Id });
 		}
 	}
 }

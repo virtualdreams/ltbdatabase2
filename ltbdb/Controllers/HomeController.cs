@@ -2,6 +2,7 @@
 using log4net;
 using ltbdb.Core.Filter;
 using ltbdb.Core.Helpers;
+using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 using System;
@@ -20,20 +21,20 @@ namespace ltbdb.Controllers
 		private static readonly ILog Log = LogManager.GetLogger(typeof(HomeController));
 
 		private readonly BookService Book;
-		private readonly TagService Tag;
 		private readonly CategoryService Category;
+		private readonly TagService Tag;
 
-		public HomeController(BookService book, TagService tag, CategoryService category)
+		public HomeController(BookService book, CategoryService category, TagService tag)
 		{
 			Book = book;
-			Tag = tag;
 			Category = category;
+			Tag = tag;
 		}
 
 		[HttpGet]
         public ActionResult Index()
         {
-			var _books = Book.RecentlyAdded();
+			var _books = Book.GetRecentlyAdded();
 
 			var books = Mapper.Map<BookModel[]>(_books);
 
@@ -46,7 +47,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult Search(string q, int? ofs)
 		{
-			var _books = Book.Search(q ?? String.Empty).OrderBy(o => o.Category.Id);
+			var _books = Book.Search(q ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -62,26 +63,22 @@ namespace ltbdb.Controllers
 			return View(view);
 		}
 
-		//TODO move to the right controller
 		[ChildActionOnly]
 		public ActionResult Tags()
 		{
-			var _tags = Tag.Get().OrderByDescending(o => o.References).Take(5);
+			var _tags = Tag.Get().Take(5);
 
-			var tags = Mapper.Map<TagModel[]>(_tags);
+			var view = new TagViewContainer { Tags = _tags };
 
-			return View("_PartialTags", tags);
+			return View("_PartialTags", view);
 		}
 
-		//TODO move to the right controller
 		[ChildActionOnly]
 		public ActionResult Categories()
 		{
-			var _categories = Category.Get().Where(w => Book.GetByCategory(w.Id).Count() > 0);
+			var _categories = Category.Get();
 
-			var categories = Mapper.Map<CategoryModel[]>(_categories);
-
-			var view = new CategoryViewContainer { Categories = categories };
+			var view = new CategoryViewContainer { Categories = _categories };
 
 			return View("_PartialCategories", view);
 		}

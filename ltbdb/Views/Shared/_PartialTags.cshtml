@@ -1,11 +1,11 @@
-﻿@model ltbdb.Models.TagModel[]
+﻿@model ltbdb.Models.TagViewContainer
 @using ltbdb.Models;
 
 @{
    Layout = null;
 }
 
-@foreach (TagModel tag in Model)
+@foreach (var tag in Model.Tags)
 {
-	<li><a href="@Url.Action("view", "tag", new { id = tag.Name })">@tag.Name</a></li>
+	<li><a href="@Url.Action("view", "tag", new { id = tag })">@tag</a></li>
 }

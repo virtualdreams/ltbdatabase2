@@ -16,67 +16,17 @@ namespace ltbdb.Controllers.Api
 	{
 		private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
-		private readonly BookService Book;
-		private readonly TagService Tag;
 		private readonly CategoryService Category;
 
-		public CategoryController(BookService book, TagService tag, CategoryService category)
+		public CategoryController(CategoryService category)
 		{
-			Book = book;
-			Tag = tag;
 			Category = category;
 		}
 
 		[HttpGet]
-		public IEnumerable<dynamic> List()
+		public dynamic List()
 		{
-			var t = Category.Get();
-			foreach (var c in t)
-			{
-				var _books = Book.GetByCategory(c.Id);
-
-				yield return new
-				{
-					Name = c.Name,
-					Id = c.Id,
-					Count = _books.Count(),
-					Used = _books.Count() != 0
-				};
-			}
-		}
-
-		[HttpPost]
-		public dynamic Delete(int id)
-		{
-			var _category = Category.Get(id);
-			if (_category == null)
-				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
-
-			var result = false;
-			if (!(Book.GetByCategory(_category.Id).Count() > 0))
-				result = Category.Delete(_category);
-
-			return new
-			{
-				success = result
-			};
-		}
-
-		[HttpPost]
-		public dynamic Move(int? from, int? to)
-		{
-			var _source = Category.Get(from ?? 0);
-			var _target = Category.Get(to ?? 0);
-
-			if(_source == null || _target == null)
-				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
-
-			var result = Category.Move(_source, _target);
-
-			return new
-			{
-				success = result
-			};
+			return Category.Get();
 		}
 	}
 }

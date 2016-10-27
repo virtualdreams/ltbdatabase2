@@ -9,6 +9,35 @@ namespace ltbdb.Core.Helpers
 	static public class StringExtensions
 	{
 		/// <summary>
+		/// Escape regex characters, except '?' and '*'.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
+		static public string EscapeRegex(this string str)
+		{
+			if (String.IsNullOrEmpty(str))
+				return String.Empty;
+
+			str = Regex.Replace(str, @"\*{2,}", "*");
+
+			return str
+				.Replace(@"\", @"\\")
+				.Replace(@"+", @"\+")
+				.Replace(@"|", @"\|")
+				.Replace(@"(", @"\(")
+				.Replace(@")", @"\)")
+				.Replace(@"{", @"\{")
+				.Replace(@"[", @"\[")
+				.Replace(@"^", @"\^")
+				.Replace(@"$", @"\$")
+				.Replace(@".", @"\.")
+				.Replace(@"#", @"\#")
+				.Replace(@" ", @"\ ")
+				.Replace(@"*", @".*") // wildcard
+				.Replace(@"?", @"."); // wildcard
+		}
+
+		/// <summary>
 		/// Escape string to insert.
 		/// </summary>
 		/// <param name="str"></param>

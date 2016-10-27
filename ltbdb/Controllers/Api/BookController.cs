@@ -16,47 +16,42 @@ namespace ltbdb.Controllers.Api
 		private static readonly ILog Log = LogManager.GetLogger(typeof(BookController));
 
 		private readonly BookService Book;
-		private readonly TagService Tag;
-		private readonly CategoryService Category;
 
-		public BookController(BookService book, TagService tag, CategoryService category)
+		public BookController(BookService book)
 		{
 			Book = book;
-			Tag = tag;
-			Category = category;
 		}
 
 		[HttpGet]
 		public IEnumerable<dynamic> List()
 		{
-			foreach (var book in Book.Get().OrderBy(o => o.Category.Name).ThenBy(o => o.Number))
+			foreach (var book in Book.Get().OrderBy(o => o.Category).ThenBy(o => o.Number))
 			{
 				yield return new
 				{
 					Number = book.Number,
-					Title = book.Name,
-					Category = book.Category.Name,
-					Added = book.Created,
+					Title = book.Title,
+					Category = book.Category,
+					Created = book.Created,
+					Filename = book.Filename,
 					Stories = book.Stories,
-					Tags = Tag.GetByBook(book.Id).Select(s => s.Name)
+					Tags = book.Tags
 				};
 			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		public dynamic Delete(int id)
-		{
-			var _book = Book.Get(id);
-			if(_book == null)
-				throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "Resource not found."));
-
-			var result = Book.Delete(_book);
-
-			return new
-			{
-				success = result
-			};
+			
+			//foreach (var book in Book.Get().OrderBy(o => o.Category.Name).ThenBy(o => o.Number))
+			//{
+			//	yield return new
+			//	{
+			//		Number = book.Number,
+			//		Title = book.Name,
+			//		Category = book.Category.Name,
+			//		Created = book.Created,
+			//		Filename = book.Filename,
+			//		Stories = book.Stories,
+			//		Tags = Tag.GetByBook(book.Id).Select(s => s.Name)
+			//	};
+			//}
 		}
 	}
 }

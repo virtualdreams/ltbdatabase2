@@ -39,8 +39,15 @@ namespace ltbdb
 
 			routes.MapRoute(
 				name: "Categories",
-				url: "all",
+				url: "categories",
 				defaults: new { controller = "category", action = "index" },
+				namespaces: new[] { "ltbdb.Controllers" }
+			);
+
+			routes.MapRoute(
+				name: "Category",
+				url: "category/{id}",
+				defaults: new { controller = "category", action = "view", id = UrlParameter.Optional },
 				namespaces: new[] { "ltbdb.Controllers" }
 			);
 

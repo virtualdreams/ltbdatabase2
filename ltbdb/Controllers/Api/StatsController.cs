@@ -14,45 +14,33 @@ namespace ltbdb.Controllers.Api
 		private static readonly ILog Log = LogManager.GetLogger(typeof(StatsController));
 
 		private readonly BookService Book;
-		private readonly TagService Tag;
 		private readonly CategoryService Category;
+		private readonly TagService Tag;
 
-		public StatsController(BookService book, TagService tag, CategoryService category)
+		public StatsController(BookService book, CategoryService category, TagService tag)
 		{
 			Book = book;
-			Tag = tag;
 			Category = category;
+			Tag = tag;
 		}
 
 		[HttpGet]
 		public dynamic List()
 		{
-			var books = Book.Get().Count();
-			var categories = Category.Get();
-			var stories = Book.Get().SelectMany(s => s.Stories).Count();
-			var tags = Tag.Get();
+			var _books = Book.Get().Count();
+			var _categories = Category.Get().Count();
+			var _stories = Book.Get().SelectMany(s => s.Stories).Distinct().Count();
+			var _tags = Tag.Get().Count();
 
-			var stats = new
+			var _stats = new
 			{
-				Books = new {
-					Total = books
-				},
-				Categories = new {
-					Total = categories.Count(),
-					Used = categories.Where(w => Book.GetByCategory(w.Id).Count() > 0).Count(),
-					Unused = categories.Where(w => Book.GetByCategory(w.Id).Count() == 0).Count()
-				},
-				Stories = new {
-					Total = stories
-				},
-				Tags = new {
-					Total = tags.Count(),
-					Used = tags.Where(w => w.References != 0).Count(),
-					Unused = tags.Where(w => w.References == 0).Count()
-				}
+				Books = _books,
+				Categories = _categories,
+				Stories = _stories,
+				Tags = _tags
 			};
 
-			return stats;
+			return _stats;
 		}
 	}
 }

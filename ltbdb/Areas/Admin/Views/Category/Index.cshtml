@@ -6,67 +6,31 @@
 }
 
 <div class="box">
-	<h3>Kategorien verwalten</h3>
-	<div>
-		<ul class="list">
-			@foreach(var category in Model.Categories) {
-			<li><a href="@Url.Action("edit", "category", new { area = "admin", id = category.Id })">@category.Name</a></li>
-			}
-		</ul>
-		<a href="@Url.Action("create", "category", new { area = "admin" })" class="button-green" style="color: #ffffff;">Neue Kategorie</a>
-	</div>
-</div>
-
-<div class="box">
-	<h3>Kategorie löschen</h3>
+	<h3>Kategorie umbennen/verschieben</h3>
 	<div>
 		<p>
-			Eine Kategorie löschen. Nur leere Kategorien können gelöscht werden.
+			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben oder umbenennen. Diese Aktion kann nicht rückgängig gemacht werden.
 		</p>
+		
+		<!-- category from -->
 		<div class="block">
-			<label for="category-delete">Kategorie</label>
+			<label for="from">Von</label>
 		</div>
 		<div class="block">
-			<select class="input" id="category-delete" name="category"></select>
+			<input class="input" type="text" id="from" name="from" value="" placeholder="Titel der Kategorie" />
 		</div>
 
+		<!-- category to -->
 		<div class="block">
-			<input class="button-red" type="button" value="Löschen" id="delete" />
-		</div>
-	</div>
-</div>
-
-<div class="box">
-	<h3>Kategorie verschieben</h3>
-	<div>
-		<p>
-			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben. Dies ist z. B. notwendig, um eine Kategorie zu löschen. Diese Aktion kann nicht rückgängig gemacht werden.
-		</p>
-		<div class="block">
-			<label for="category-move-from">Von</label>
+			<label for="to">Nach</label>
 		</div>
 		<div class="block">
-			<select class="input" id="category-move-from" name="category"></select>
-		</div>
-		<div class="block">
-			<label for="category-move-to">Nach</label>
-		</div>
-		<div class="block">
-			<select class="input" id="category-move-to" name="category"></select>
+			<input class="input" type="text" id="to" name="to" value="" placeholder="Titel der Kategorie" />
 		</div>
 
 		<div class="block">
 			<input class="button-red" type="button" value="Verschieben" id="move" />
 		</div>
-	</div>
-</div>
-
-<div id="delete-msg-box" style="display: none;">
-	<div class="block">
-		Soll diese Kategorie wirklich gelöscht werden?
-	</div>
-	<div class="block">
-		<input id="delete-button" class="button-red" type="button" value="Löschen" />
 	</div>
 </div>
 
@@ -81,79 +45,20 @@
 
 <script type="text/javascript">
 	$(function () {
-		$.ajax({
-			cache: false,
-			type: 'GET',
-			dataType: 'json',
-			url: '/api/category/list',
-			statusCode: {
-				401: function () {
-					alert("Not authorized.");
-				},
-				404: function () {
-					alert('Resource not found.');
-				}
-			},
-			success: function (data) {
-				$.each(data, function (idx, obj) {
-					if (obj.Used != true) {
-						$('#category-delete').append(
-							$('<option></option>').val(obj.Id).html(obj.Name)
-						);
-					}
-					
-					$('#category-move-from').append(
-						$('<option></option>').val(obj.Id).html(obj.Name + ' (' + obj.Count + ')')
-					);
-					$('#category-move-to').append(
-						$('<option></option>').val(obj.Id).html(obj.Name + ' (' + obj.Count + ')')
-					);
-
-				});
-			}
-		});
-
 		var jbox_dialog = new jBox('Modal', {
 			overlay: true,
 			closeOnClick: 'body',
 			closeButton: 'title'
 		});
 
-		$('#delete').click(function () {
-			jbox_dialog.setContent($('#delete-msg-box'), true).setTitle('Kategorie löschen').open();
-		});
-
 		$('#move').click(function () {
 			jbox_dialog.setContent($('#move-msg-box'), true).setTitle('Kategorie verschieben').open();
-		});
-
-		$('#delete-button').click(function () {
-			$.ajax({
-				type: 'POST',
-				url: '/api/category/delete/' + $('#category-delete').val(),
-				statusCode: {
-					401: function () {
-						alert('Not authorized.');
-					},
-					404: function () {
-						alert('Resource not found.');
-					}
-				},
-				success: function (data) {
-					if (!data.success) {
-						alert('Kategorie konnte nicht gelöscht werden.');
-					} else {
-						jbox_dialog.close();
-						location.reload(true);
-					}
-				}
-			});
 		});
 
 		$('#move-button').click(function () {
 			$.ajax({
 				type: 'POST',
-				url: '/api/category/move?from=' + $('#category-move-from').val() + '&to=' + $('#category-move-to').val(),
+				url: '/admin/category/move?from=' + $('#from').val() + '&to=' + $('#to').val(),
 				statusCode: {
 					401: function () {
 						alert('Not authorized.');
@@ -163,7 +68,7 @@
 					}
 				},
 				success: function (data) {
-					if (!data.success) {
+					if (!data.Success) {
 						alert('Kategorie konnte nicht verschoben werden.');
 					} else {
 						jbox_dialog.close();

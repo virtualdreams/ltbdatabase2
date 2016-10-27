@@ -7,8 +7,8 @@ namespace ltbdb.Models
 {
 	public class BookViewTagContainer
 	{
-		public BookModel[] Books { get; set; }
-		public TagModel Tag { get; set; }
+		public IEnumerable<BookModel> Books { get; set; }
+		public string Tag { get; set; }
 		public PageOffset PageOffset { get; set; }
 	}
 }

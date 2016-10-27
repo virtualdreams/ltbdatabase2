@@ -20,20 +20,16 @@ namespace ltbdb.Controllers
 		private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
 		private readonly BookService Book;
-		private readonly TagService Tag;
-		private readonly CategoryService Category;
 
-		public CategoryController(BookService book, TagService tag, CategoryService category)
+		public CategoryController(BookService book)
 		{
 			Book = book;
-			Tag = tag;
-			Category = category;
 		}
 
 		[HttpGet]
         public ActionResult Index(int? ofs)
         {
-			var _books = Book.Get().OrderBy(o => o.Category.Name);
+			var _books = Book.Get().OrderBy(o => o.Category);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -49,23 +45,21 @@ namespace ltbdb.Controllers
         }
 
 		[HttpGet]
-		public ActionResult View(int? id, int? ofs)
+		public ActionResult View(string id, int? ofs)
 		{
-			var _category = Category.Get(id ?? 0);
-			if(_category == null)
+			var _books = Book.GetByCategory(id);
+			if (_books.Count() == 0)
 				throw new HttpException(404, "Resource not found.");
 
-			var _books = Book.GetByCategory(_category.Id);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
-			var category = Mapper.Map<CategoryModel>(_category);
 			var books = Mapper.Map<BookModel[]>(_page);
 			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
 			var view = new BookViewCategoryContainer
 			{
 				Books = books,
-				Category = category,
+				Category = id,
 				PageOffset = offset
 			};
 

@@ -7,8 +7,8 @@ namespace ltbdb.Models
 {
 	public class BookViewCategoryContainer
 	{
-		public BookModel[] Books { get; set; }
-		public CategoryModel Category { get; set; }
+		public IEnumerable<BookModel> Books { get; set; }
+		public string Category { get; set; }
 		public PageOffset PageOffset { get; set; }
 	}
 }

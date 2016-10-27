@@ -7,7 +7,7 @@ namespace ltbdb.Models
 {
 	public class BookViewAllContainer
 	{
-		public BookModel[] Books { get; set; }
+		public IEnumerable<BookModel> Books { get; set; }
 		public PageOffset PageOffset { get; set; }
 	}
 }

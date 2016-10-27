@@ -1,174 +1,236 @@
-﻿using AutoMapper;
+﻿using log4net;
 using ltbdb.Core.Helpers;
-using SqlDataMapper;
+using ltbdb.Core.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
-using ltbdb.Core.Database;
-using ltbdb.Core.Models;
-using ltbdb.Core.Database.DTO;
-using System.IO;
 
 namespace ltbdb.Core.Services
 {
-	public class BookService: DatabaseContextNew
+	public class BookService: MongoContext
 	{
-		public BookService(SqlConfig config, SqlContext context)
-			: base(config, context)
+		private static readonly ILog Log = LogManager.GetLogger(typeof(BookService));
+
+		/// <summary>
+		/// Initializes the BookService class.
+		/// </summary>
+		/// <param name="client"></param>
+		public BookService(IMongoClient client)
+			: base(client)
 		{ }
 
 		/// <summary>
-		/// Get all books.
+		/// Get all book from storage.
 		/// </summary>
-		/// <returns>List of books.</returns>
+		/// <returns></returns>
 		public IEnumerable<Book> Get()
 		{
-			return Mapper.Map<Book[]>(BookEntity.GetAll());
+			// TODO - is order necessary?
+			var _filter = Builders<Book>.Filter;
+			var _all = _filter.Empty;
+
+			var _order = Builders<Book>.Sort;
+			var _created = _order.Descending(o => o.Created);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_all).Sort(_created).ToString());
+			}
+
+			return Book.Find(_all).Sort(_created).ToEnumerable();
 		}
 
 		/// <summary>
 		/// Get book by id.
 		/// </summary>
-		/// <param name="id">The book id.</param>
+		/// <param name="id"></param>
 		/// <returns></returns>
-		public Book Get(int id)
+		public Book GetById(ObjectId id)
 		{
-			var _book = BookEntity.Get(id);
-			if (_book == null)
-				return null;
+			var _filter = Builders<Book>.Filter;
+			var _id = _filter.Eq(f => f.Id, id);
 
-			return Mapper.Map<Book>(_book);
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_id).ToString());
+			}
+
+			return Book.Find(_id).SingleOrDefault();
 		}
 
 		/// <summary>
 		/// Get books by category.
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="category"></param>
 		/// <returns></returns>
-		public IEnumerable<Book> GetByCategory(int id)
+		public IEnumerable<Book> GetByCategory(string category)
 		{
-			return Mapper.Map<Book[]>(BookEntity.GetByCategory(id));
+			var _filter = Builders<Book>.Filter;
+			var _category = _filter.Eq(f => f.Category, category);
+
+			var _order = Builders<Book>.Sort;
+			var _number = _order.Ascending(f => f.Number);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_category).Sort(_number).ToString());
+			}
+
+			return Book.Find(_category).Sort(_number).ToEnumerable();
 		}
 
 		/// <summary>
 		/// Get books by tag.
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="tag"></param>
 		/// <returns></returns>
-		public IEnumerable<Book> GetByTag(int id)
+		public IEnumerable<Book> GetByTag(string tag)
 		{
-			return Mapper.Map<Book[]>(BookEntity.GetByTag(id));
+			var _filter = Builders<Book>.Filter;
+			var _tag = _filter.AnyIn("Tags", new string[] { tag });
+
+			var _order = Builders<Book>.Sort;
+			var _number = _order.Ascending(f => f.Number).Ascending(f => f.Title);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_tag).Sort(_number).ToString());
+			}
+
+			return Book.Find(_tag).Sort(_number).ToEnumerable();
 		}
 
 		/// <summary>
-		/// Get the recently added books.
+		/// Get recently added books.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Book> RecentlyAdded()
+		public IEnumerable<Book> GetRecentlyAdded()
 		{
+			// TODO - recently added book handled by database
+
 			return Get().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems);
 		}
 
 		/// <summary>
-		/// Search for book by term.
+		/// Search for books.
 		/// </summary>
 		/// <param name="term"></param>
 		/// <returns></returns>
 		public IEnumerable<Book> Search(string term)
 		{
-			var _escapedTerm = term.Escape().EscapeForSearch().Trim();
+			// TODO search in number, title and in stories
+			var _filter = Builders<Book>.Filter;
+			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
+			//var _stories = _filter.AnyIn(f => f.Stories, new string[] { new BsonRegularExpression(term, "i").ToString() });
 
-			if (String.IsNullOrEmpty(_escapedTerm))
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Title);
+
+			if (Log.IsDebugEnabled)
 			{
-				return Enumerable.Empty<Book>();
+				Log.Debug(Book.Find(_title).Sort(_order).ToString());
 			}
 
-			return Mapper.Map<Book[]>(BookEntity.GetByTerm(_escapedTerm));
+			return Book.Find(_title).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
-		/// Get a suggestion list.
+		/// Get a suggestion list for term.
 		/// </summary>
 		/// <param name="term"></param>
 		/// <returns></returns>
-		public IEnumerable<string> Suggestion(string term)
+		public IEnumerable<string> Suggestions(string term)
 		{
-			var _escapedTerm = term.Escape().EscapeForSearch().Trim();
-			if (String.IsNullOrEmpty(_escapedTerm))
+			var _filter = Builders<Book>.Filter;
+			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
+
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(f => f.Title);
+
+			if (Log.IsDebugEnabled)
 			{
-				return Enumerable.Empty<string>();
+				Log.Debug(Book.Find(_title).Sort(_order).ToString());
 			}
 
-			return BookEntity.GetSuggestionList(_escapedTerm);
+			return Book.Find(_title).Sort(_order).ToEnumerable().Select(s => s.Title);
 		}
 
 		/// <summary>
-		/// Save the book.
-		/// </summary>
-		/// <param name="book">The new or updated book.</param>
-		public Book Save(Book book)
-		{
-			var _book = Mapper.Map<BookDTO>(book);
-			
-			if (book.Id == 0)
-			{
-				var _ret = BookEntity.Add(_book);
-
-				return Mapper.Map<Book>(_ret);
-			}
-			else
-			{
-				var _ret = BookEntity.Update(_book);
-
-				return Mapper.Map<Book>(_ret);
-			}
-		}
-
-		/// <summary>
-		/// Delete a book.
+		/// Create a new book.
 		/// </summary>
 		/// <param name="book"></param>
-		/// <returns></returns>
-		public bool Delete(Book book)
+		public ObjectId Create(Book book)
 		{
-			if (ImageStore.Exists(book.Filename))
-			{
-				ImageStore.Remove(book.Filename, true);
-			}
-			
-			return BookEntity.Delete(new BookDTO { Id = book.Id });
-		}
+			book.Filename = null;
+			book.Created = DateTime.Now;
 
-		/// <summary>
-		/// Set the book image. If stream is set to null, is the image removed.
-		/// </summary>
-		/// <param name="id">The id of the book.</param>
-		/// <param name="stream">The stream that hold the uploaded image.</param>
-		public bool SetImage(Book book, Stream stream)
-		{
-			if (stream == null)
+			Book.InsertOne(book);
+
+			if (book.Id == ObjectId.Empty)
 			{
-				//Remove image
-				ImageStore.Remove(book.Filename, true);
-				book.Filename = null;
+				Log.ErrorFormat("Insert new book failed.");
+				return ObjectId.Empty;
 			}
 			else
 			{
-				//Save image
-				var filename = ImageStore.Save(stream, true);
-				if (String.IsNullOrEmpty(filename))
-				{
-					return false;
-				}
-				book.Filename = filename;
+				Log.InfoFormat("Insert new book with id '{0}'.", book.Id);
+				return book.Id;
+			}
+		}
+
+		/// <summary>
+		/// Update an existing book.
+		/// </summary>
+		/// <param name="book"></param>
+		public ObjectId Update(Book book)
+		{
+			var _filter = Builders<Book>.Filter;
+			var _id = _filter.Eq(f => f.Id, book.Id);
+
+			var _update = Builders<Book>.Update;
+			var _set = _update
+				.Set(s => s.Number, book.Number)
+				.Set(s => s.Title, book.Title)
+				.Set(s => s.Category, book.Category)
+				.Set(s => s.Stories, book.Stories)
+				.Set(s => s.Tags, book.Tags);
+
+			var _result = Book.UpdateOne(_id, _set);
+			if (_result.IsAcknowledged && _result.MatchedCount > 0)
+			{
+				Log.InfoFormat("Update book '{0}'", book.Id);
+				return book.Id;
+			}
+			else
+			{
+				Log.ErrorFormat("Update book '{0}' failed.", book.Id);
+				return ObjectId.Empty;
+			}
+		}
+
+		/// <summary>
+		/// Delete an existing book.
+		/// </summary>
+		/// <param name="id"></param>
+		public bool Delete(ObjectId id)
+		{
+			var _filter = Builders<Book>.Filter;
+			var _id = _filter.Eq(f => f.Id, id);
+
+			var _result = Book.DeleteOne(_id);
+			if (_result.IsAcknowledged && _result.DeletedCount != 0)
+			{
+				Log.InfoFormat("Delete book '{0}'", id);
+				return true;
 			}
 
-			var _update = Mapper.Map<BookDTO>(book);
+			// TODO - delete image assigned to book
 
-			BookEntity.UpdateImage(_update);
-
-			return true;
+			return false;
 		}
 	}
 }

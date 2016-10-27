@@ -7,6 +7,6 @@ namespace ltbdb.Models
 {
 	public class BookViewContainer
 	{
-		public BookModel[] Books { get; set; }
+		public IEnumerable<BookModel> Books { get; set; }
 	}
 }

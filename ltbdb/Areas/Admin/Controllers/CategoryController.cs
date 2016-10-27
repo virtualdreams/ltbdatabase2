@@ -18,68 +18,27 @@ namespace ltbdb.Areas.Admin.Controllers
 		private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
 
 		private readonly BookService Book;
-		private readonly TagService Tag;
 		private readonly CategoryService Category;
 
-		public CategoryController(BookService book, TagService tag, CategoryService category)
+		public CategoryController(BookService book, CategoryService category)
 		{
 			Book = book;
-			Tag = tag;
 			Category = category;
 		}
 
 		[HttpGet]
         public ActionResult Index()
         {
-			var _categories = Category.Get().OrderBy(o => o.Name);
-
-			var categories = Mapper.Map<CategoryModel[]>(_categories);
-
-			var view = new CategoryViewContainer { Categories = categories };
-
-            return View(view);
+            return View();
         }
 
-		[HttpGet]
-		public ActionResult Edit(int? id)
-		{
-			var _category = Category.Get(id ?? 0);
-			if (_category == null)
-				throw new HttpException(404, "Resource not found.");
-
-			var category = Mapper.Map<CategoryModel>(_category);
-
-			var view = new CategoryEditContainer { Category = category };
-
-			return View(view);
-		}
-
-		[HttpGet]
-		public ActionResult Create()
-		{
-			var _category = new Category();
-
-			var category = Mapper.Map<CategoryModel>(_category);
-
-			var view = new CategoryEditContainer { Category = category };
-
-			return View("edit", view);
-		}
-
+		[IsAjaxRequest]
 		[HttpPost]
-		public ActionResult Edit(CategoryModel model)
+		public ActionResult Move(string from, string to)
 		{
-			if (!ModelState.IsValid)
-			{
-				var view = new CategoryEditContainer { Category = model };
-
-				return View("edit", view);
-			}
-
-			var category = Mapper.Map<Category>(model);
-			Category.Save(category);
-
-			return RedirectToAction("index", "category");
+			var _result = Category.Rename(from.Trim(), to.Trim());
+			
+			return new JsonResult { Data = new { Success = _result }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
 		}
     }
 }
