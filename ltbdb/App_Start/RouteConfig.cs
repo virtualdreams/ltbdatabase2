@@ -24,6 +24,13 @@ namespace ltbdb
 			);
 
 			routes.MapRoute(
+				name: "Book",
+				url: "book/{id}/{slug}",
+				defaults: new { controller = "book", action = "view", id = UrlParameter.Optional, slug = UrlParameter.Optional },
+				namespaces: new[] { "ltbdb.Controllers" },
+				constraints: new { id = @"^[a-f0-9]{24}$" }
+			);
+			routes.MapRoute(
 				name: "Tags",
 				url: "tags",
 				defaults: new { controller = "tag", action = "index" },
