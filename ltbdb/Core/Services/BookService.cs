@@ -29,19 +29,18 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<Book> Get()
 		{
-			// TODO - is order necessary?
 			var _filter = Builders<Book>.Filter;
 			var _all = _filter.Empty;
 
-			var _order = Builders<Book>.Sort;
-			var _created = _order.Descending(o => o.Created);
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(o => o.Number).Ascending(o => o.Category);
 
 			if (Log.IsDebugEnabled)
 			{
-				Log.Debug(Book.Find(_all).Sort(_created).ToString());
+				Log.Debug(Book.Find(_all).Sort(_order).ToString());
 			}
 
-			return Book.Find(_all).Sort(_created).ToEnumerable();
+			return Book.Find(_all).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -72,15 +71,15 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _category = _filter.Eq(f => f.Category, category);
 
-			var _order = Builders<Book>.Sort;
-			var _number = _order.Ascending(f => f.Number);
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(f => f.Number);
 
 			if (Log.IsDebugEnabled)
 			{
-				Log.Debug(Book.Find(_category).Sort(_number).ToString());
+				Log.Debug(Book.Find(_category).Sort(_order).ToString());
 			}
 
-			return Book.Find(_category).Sort(_number).ToEnumerable();
+			return Book.Find(_category).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -93,15 +92,15 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _tag = _filter.AnyIn("Tags", new string[] { tag });
 
-			var _order = Builders<Book>.Sort;
-			var _number = _order.Ascending(f => f.Number).Ascending(f => f.Title);
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Category);
 
 			if (Log.IsDebugEnabled)
 			{
-				Log.Debug(Book.Find(_tag).Sort(_number).ToString());
+				Log.Debug(Book.Find(_tag).Sort(_order).ToString());
 			}
 
-			return Book.Find(_tag).Sort(_number).ToEnumerable();
+			return Book.Find(_tag).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -110,9 +109,18 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<Book> GetRecentlyAdded()
 		{
-			// TODO - recently added book handled by database
+			var _filter = Builders<Book>.Filter;
+			var _all = _filter.Empty;
 
-			return Get().OrderByDescending(o => o.Created).Take(GlobalConfig.Get().RecentItems);
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Descending(o => o.Created);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_all).Sort(_order).ToString());
+			}
+
+			return Book.Find(_all).Sort(_order).Limit(GlobalConfig.Get().RecentItems).ToEnumerable();
 		}
 
 		/// <summary>
