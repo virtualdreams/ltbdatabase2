@@ -243,8 +243,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\log4net.xml" />
-    <Content Include="App_Data\providers.xml" />
-    <Content Include="App_Data\sql\general.xml" />
     <None Include="Content\admin.css">
       <DependentUpon>admin.less</DependentUpon>
     </None>
@@ -306,7 +304,6 @@
     </Content>
     <Content Include="Scripts\jBox.min.js" />
     <Content Include="Scripts\jquery.min.js" />
-    <Content Include="App_Data\database.xml" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Web.config">
