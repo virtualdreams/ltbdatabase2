@@ -4,6 +4,7 @@
 
 @{
 	ViewBag.Title = String.Format("{0}", Model.Category);
+	ViewBag.Description = String.Format("{0}", Model.Category);
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	ViewBag.Header = String.Format("Kategorie \"{0}\"", @Model.Category);
 }

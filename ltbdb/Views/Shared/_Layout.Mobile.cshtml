@@ -3,10 +3,14 @@
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="version" content="@VersionInfo.ProductVersion" />
+		@if(!String.IsNullOrEmpty(ViewBag.Description)) {
+		<meta name="description" content="@ViewBag.Description" />
+		}
+		<meta name="application-name" content="Lustiges Taschenbuch Datenbank" />
+		<meta name="keywords" content="Lustiges Taschenbuch, Datenbank, LTB, @ViewBag.Keywords" />
 
 		<link type="text/css" href="@Url.Content("~/Content/layout.mobile.min.css")" rel="stylesheet" />
 
