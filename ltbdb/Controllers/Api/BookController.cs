@@ -36,7 +36,8 @@ namespace ltbdb.Controllers.Api
 					Number = book.Number,
 					Title = book.Name,
 					Category = book.Category.Name,
-					Added = book.Created,
+					Created = book.Created,
+					Filename = book.Filename,
 					Stories = book.Stories,
 					Tags = Tag.GetByBook(book.Id).Select(s => s.Name)
 				};
