@@ -33,14 +33,13 @@ namespace ltbdb.Controllers.Api
 		[HttpGet]
 		public dynamic Categories(string term)
 		{
-			return Enumerable.Empty<string>();
+			return Category.Suggestions(term ?? String.Empty);
 		}
 
 		[HttpGet]
 		public dynamic Tags(string term)
 		{
-			return Enumerable.Empty<string>();
-			//return MySqlTag.Get().Where(w => w.Name.ToLower().Contains(term.ToLower())).Select(s => s.Name);
+			return Tag.Suggestions(term ?? String.Empty);
 		}
     }
 }

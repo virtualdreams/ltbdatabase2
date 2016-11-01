@@ -1,9 +1,11 @@
 ﻿using log4net;
 using ltbdb.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace ltbdb.Core.Services
@@ -22,7 +24,8 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			return Book.Find(_ => true).ToEnumerable().Select(s => s.Category).Distinct();
+			return Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+			//return Book.Find(_ => true).ToEnumerable().Select(s => s.Category).Distinct();
 		}
 
 		/// <summary>
@@ -51,6 +54,27 @@ namespace ltbdb.Core.Services
 				Log.ErrorFormat("Rename category '{0}' failed. No document was modified.", from);
 				return false;
 			}
+		}
+
+		/// <summary>
+		/// Get a list of suggestions for term.
+		/// </summary>
+		/// <param name="term">The term to search for.</param>
+		/// <returns></returns>
+		public IEnumerable<string> Suggestions(string term)
+		{
+			var _filter = Builders<Book>.Filter;
+			var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(Regex.Escape(term), "i"));
+
+			var _sort = Builders<Book>.Sort;
+			var _order = _sort.Ascending(f => f.Category);
+
+			if (Log.IsDebugEnabled)
+			{
+				Log.Debug(Book.Find(_category).Sort(_order).ToString());
+			}
+
+			return Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
 		}
 	}
 }
