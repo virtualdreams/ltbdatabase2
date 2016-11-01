@@ -35,6 +35,9 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public bool Rename(string from, string to)
 		{
+			if (String.IsNullOrEmpty(from) && String.IsNullOrEmpty(to))
+				return false;
+
 			var _filter = Builders<Book>.Filter;
 			var _from = _filter.Eq(f => f.Category, from);
 
