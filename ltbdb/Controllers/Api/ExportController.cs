@@ -11,13 +11,13 @@ using System.Net;
 namespace ltbdb.Controllers.Api
 {
 	[LogError(Order = 0)]
-	public class BookController : ApiController
+	public class ExportController : ApiController
 	{
-		private static readonly ILog Log = LogManager.GetLogger(typeof(BookController));
+		private static readonly ILog Log = LogManager.GetLogger(typeof(ExportController));
 
 		private readonly BookService Book;
 
-		public BookController(BookService book)
+		public ExportController(BookService book)
 		{
 			Book = book;
 		}
