@@ -133,24 +133,24 @@ namespace ltbdb.Core.Services
 			// TODO search in number, title and in stories
 			var _filter = Builders<Book>.Filter;
 			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
-			//var _stories = _filter.AnyIn(f => f.Stories, new string[] { new BsonRegularExpression(term, "i").ToString() });
+			var _stories = _filter.Regex("Stories", new BsonRegularExpression(Regex.Escape(term), "i"));
 
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Title);
 
 			if (Log.IsDebugEnabled)
 			{
-				Log.Debug(Book.Find(_title).Sort(_order).ToString());
+				Log.Debug(Book.Find(_title | _stories).Sort(_order).ToString());
 			}
 
-			return Book.Find(_title).Sort(_order).ToEnumerable();
+			return Book.Find(_title | _stories).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
-		/// Get a suggestion list for term.
+		/// Get a list of suggestions for term.
 		/// </summary>
-		/// <param name="term"></param>
-		/// <returns></returns>
+		/// <param name="term">The term to search for.</param>
+		/// <returns>List of categories.</returns>
 		public IEnumerable<string> Suggestions(string term)
 		{
 			var _filter = Builders<Book>.Filter;
