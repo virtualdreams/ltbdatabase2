@@ -53,7 +53,7 @@ $(function () {
 	});
 
 	/* autocomplete for tags */
-	$('#t').autocomplete({
+	$('.t').autocomplete({
 		source: function (request, response) {
 			$.getJSON('/api/search/tags', {
 				term: extractLast(request.term)
@@ -79,6 +79,20 @@ $(function () {
 		open: function () {
 			$(this).autocomplete("widget").width($(this).outerWidth() - 6);
 		}
+	});
+
+	/* autocomplete for categories */
+	$('.c').autocomplete({
+		source: '/api/search/categories',
+		minLength: 0,
+		select: function (event, ui) {
+			if (ui.item) {
+				$(event.target).val(ui.item.value);
+			}
+			$(event.target.form).submit();
+		}
+	}).focus(function() {
+		$(this).autocomplete("search", $(this).val());
 	});
 
 	/* image box */
@@ -224,6 +238,10 @@ $(function () {
 			name: {
 				required: true,
 				nowhitespace: true
+			},
+			category: {
+				required: true,
+				nowhitespace: true
 			}
 		},
 		messages: {
@@ -235,6 +253,10 @@ $(function () {
 			name: {
 				required: 'Bitte gib einen Titel ein.',
 				nowhitespace: 'Bitte gib einen Titel ein.'
+			},
+			category: {
+				required: 'Bitte gib eine Kategorie ein.',
+				nowhitespace: 'Bitte gib eine Kategorie ein.'
 			}
 		}
 	});

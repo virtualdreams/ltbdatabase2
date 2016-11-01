@@ -25,7 +25,6 @@ namespace ltbdb.Core.Services
 		public IEnumerable<string> Get()
 		{
 			return Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
-			//return Book.Find(_ => true).ToEnumerable().Select(s => s.Category).Distinct();
 		}
 
 		/// <summary>
@@ -63,8 +62,13 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Suggestions(string term)
 		{
+			if (String.IsNullOrEmpty(term))
+				term = ".*";
+			else
+				term = Regex.Escape(term);
+
 			var _filter = Builders<Book>.Filter;
-			var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(Regex.Escape(term), "i"));
+			var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(term, "i"));
 
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Category);
