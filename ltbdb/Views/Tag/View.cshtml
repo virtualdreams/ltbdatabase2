@@ -12,11 +12,11 @@
 <ul class="book">
 	@foreach (var book in Model.Books) {
 		<li>
-			<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Name.ToSlug() })">
+			<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
 				<div>
 					<img src="@ImageStore.GetWebPath(book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
 				</div>
-				<span>Nr. @book.Number - @book.Name</span>
+				<span>Nr. @book.Number - @book.Title</span>
 			</a>
 		</li>
 	 }

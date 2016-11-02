@@ -22,7 +22,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The book title.
 		/// </summary>
-		public string Name { get; set; }
+		public string Title { get; set; }
 
 		/// <summary>
 		/// The category of the book.
@@ -97,7 +97,7 @@ namespace ltbdb.Models
 		/// The book title.
 		/// </summary>
 		[Required(ErrorMessage = "Bitte gib einen Titel ein.")]
-		public string Name { get; set; }
+		public string Title { get; set; }
 
 		/// <summary>
 		/// The category of the book.

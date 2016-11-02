@@ -7,7 +7,7 @@
 	if(Model.Book.Id == ObjectId.Empty) {
 		ViewBag.Title = "Neues Buch";
 	} else {
-		ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Name, Model.Book.Category);
+		ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Title, Model.Book.Category);
 	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -30,7 +30,7 @@
 				<label for="name">Titel</label>
 			</div>
 			<div class="block">
-				<input class="input" type="text" id="name" name="name" value="@Model.Book.Name" placeholder="Titel der Ausgabe" /> @Html.ValidationMessage("name")
+				<input class="input" type="text" id="name" name="name" value="@Model.Book.Title" placeholder="Titel der Ausgabe" /> @Html.ValidationMessage("name")
 			</div>
 
 			<!-- category -->

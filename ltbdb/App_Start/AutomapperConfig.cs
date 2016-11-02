@@ -13,17 +13,15 @@ namespace ltbdb
 		{
 			//Mapper.Configuration.AllowNullDestinationValues = false;
 
-			Mapper.CreateMap<Book, BookModel>()
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Title)); // TODO rename from name to title
+			Mapper.CreateMap<Book, BookModel>();
 
 			Mapper.CreateMap<Book, BookWriteModel>()
-				.ForMember(d => d.Name, map => map.MapFrom(s => s.Title)) // TODO rename from name to title
 				.ForMember(d => d.Tags, map => map.MapFrom(s => String.Join("; ", s.Tags)))
 				.ForMember(d => d.Image, map => map.Ignore())
 				.ForMember(d => d.Remove, map => map.Ignore());
 
 			Mapper.CreateMap<BookWriteModel, Book>()
-				.ForMember(d => d.Title, map => map.MapFrom(s => s.Name.Trim()))
+				.ForMember(d => d.Title, map => map.MapFrom(s => s.Title.Trim()))
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Trim()))
 				.ForMember(s => s.Created, map => map.Ignore())
 				.ForMember(d => d.Filename, map => map.Ignore())
