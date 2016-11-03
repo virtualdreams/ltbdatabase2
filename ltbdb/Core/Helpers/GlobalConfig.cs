@@ -53,9 +53,15 @@ namespace ltbdb.Core.Helpers
 		
 		/// <summary>
 		/// Storage path, where the images be saved.
+		/// Can be a relative path or a full qualified url.
 		/// </summary>
 		public string Storage { get; private set; }
-		
+
+		/// <summary>
+		/// CDN path, where the images are located.
+		/// </summary>
+		public string CDNPath { get; private set; }
+
 		/// <summary>
 		/// Path to image, if no cover exists.
 		/// </summary>
@@ -86,6 +92,9 @@ namespace ltbdb.Core.Helpers
 
 			this.Storage = config.TryGetValue<string>("storage", true);
 			Log.InfoFormat("Set storage path to {0}.", this.Storage);
+
+			this.CDNPath = config.TryGetValue<string>("cdn", true);
+			Log.InfoFormat("Set cdn to {0}.", this.CDNPath);
 
 			this.NoImage = config.GetValue<string>("no_image", "/Content/no-image.png", true);
 			Log.InfoFormat("Set no image path to {0}.", this.NoImage);

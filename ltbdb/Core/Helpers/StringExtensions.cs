@@ -39,6 +39,23 @@ namespace ltbdb.Core.Helpers
 		}
 
 		/// <summary>
+		/// Combines two pathes.
+		/// </summary>
+		/// <param name="baseUri">The base path.</param>
+		/// <param name="relativeUri">The additional path.</param>
+		/// <returns></returns>
+		public static string Combine(this string baseUri, string relativeUri)
+		{
+			if (baseUri == null) throw new ArgumentNullException("baseUri");
+			if (relativeUri == null) throw new ArgumentNullException("relativeUri");
+
+			if (!baseUri.EndsWith("/"))
+				baseUri += "/";
+
+			return String.Format("{0}{1}", baseUri, relativeUri);
+		}
+
+		/// <summary>
 		/// Escape regex characters, except '?' and '*'.
 		/// </summary>
 		/// <param name="str"></param>

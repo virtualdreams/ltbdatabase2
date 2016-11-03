@@ -101,18 +101,18 @@ namespace ltbdb.Controllers
 			else
 				id = Book.Update(book);
 
-			// TODO - save image to gridfs
-			//if (model.Image != null || model.Remove)
-			//{
-			//	if (model.Remove)
-			//	{
-			//		MySqlBook.SetImage(result, null);
-			//	}
-			//	else
-			//	{
-			//		MySqlBook.SetImage(result, model.Image.InputStream);
-			//	}
-			//}
+			// save image
+			if (model.Image != null || model.Remove)
+			{
+				if (model.Remove)
+				{
+					Book.SetImage(id, null);
+				}
+				else
+				{
+					Book.SetImage(id, model.Image.InputStream);
+				}
+			}
 
 			return RedirectToAction("view", "book", new { id = id });
 		}

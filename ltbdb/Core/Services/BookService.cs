@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -226,19 +227,80 @@ namespace ltbdb.Core.Services
 		/// <param name="id"></param>
 		public bool Delete(ObjectId id)
 		{
+			var _book = GetById(id);
+
+			if (_book == null)
+				return false;
+
 			var _filter = Builders<Book>.Filter;
-			var _id = _filter.Eq(f => f.Id, id);
+			var _id = _filter.Eq(f => f.Id, _book.Id);
 
 			var _result = Book.DeleteOne(_id);
 			if (_result.IsAcknowledged && _result.DeletedCount != 0)
 			{
+				RemoveImage(_book.Filename);
+
 				Log.InfoFormat("Delete book '{0}'", id);
 				return true;
 			}
 
-			// TODO - delete image assigned to book
+			return false;
+		}
+
+		/// <summary>
+		/// Set the cover for the book. If stream is null, the image get removed.
+		/// </summary>
+		/// <param name="id">The id of the book.</param>
+		/// <param name="stream">The image stream.</param>
+		/// <returns>True on success.</returns>
+		public bool SetImage(ObjectId id, Stream stream)
+		{
+			var _book = GetById(id);
+
+			if (_book == null)
+				return false;
+
+			if (stream == null)
+			{
+				// remove the old images
+				RemoveImage(_book.Filename);
+				_book.Filename = null;
+			}
+			else
+			{
+				// remove the old images and store the new one
+				RemoveImage(_book.Filename);
+				var _filename = ImageStore.Save(stream, true);
+				if (String.IsNullOrEmpty(_filename))
+					return false;
+
+				_book.Filename = _filename;
+			}
+
+			var _filter = Builders<Book>.Filter;
+			var _id = _filter.Eq(f => f.Id, id);
+
+			var _update = Builders<Book>.Update;
+			var _set = _update.Set(f => f.Filename, _book.Filename);
+
+			var _result = Book.UpdateOne(_id, _set);
+
+			if (_result.IsAcknowledged && _result.ModifiedCount != 0)
+			{
+				Log.InfoFormat("Update filename for book '{0}'", id);
+				return true;
+			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Remove image from storage.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		private void RemoveImage(string filename)
+		{
+			ImageStore.Remove(filename, true);
 		}
 	}
 }

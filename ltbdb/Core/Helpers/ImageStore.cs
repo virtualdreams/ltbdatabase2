@@ -149,30 +149,31 @@ namespace ltbdb.Core.Helpers
 		}
 
 		/// <summary>
-		/// Get web path.
+		/// Get CDN path or return default image.
 		/// </summary>
 		/// <param name="filename">The image filename.</param>
 		/// <param name="imageType">Select type of image to load.</param>
-		/// <returns>The web path.</returns>
-		static public string GetWebPath(string filename, ImageType imageType = ImageType.Normal)
+		/// <returns>The CDN path.</returns>
+		static public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
 		{
-			var _directory = new DirectoryInfo(GetStoragePath());
+			var _cdn = GlobalConfig.Get().CDNPath;
 			
 			switch (imageType)
 			{
 				case ImageType.Thumbnail:
 					if (Exists(filename, true))
-						return String.Format("/{0}/{1}/{2}", _directory.Name, thumbnailDirectory, filename);
+						return _cdn.Combine(thumbnailDirectory).Combine(filename);
 					goto default;
 
 				case ImageType.PreferThumbnail:
 					if (Exists(filename, true))
-						return String.Format("/{0}/{1}/{2}", _directory.Name, thumbnailDirectory, filename);
+						return _cdn.Combine(thumbnailDirectory).Combine(filename);
+
 					goto case ImageType.Normal;
 
 				case ImageType.Normal:
 					if (Exists(filename))
-						return String.Format("/{0}/{1}", _directory.Name, filename);
+						return _cdn.Combine(filename);
 					goto default;
 
 				default:

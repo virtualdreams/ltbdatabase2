@@ -209,11 +209,13 @@
     <Compile Include="Core\Filter\LogErrorAttribute.cs" />
     <Compile Include="Core\Helpers\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
+    <Compile Include="Core\Helpers\ImageStore.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Helpers\IOHelper.cs" />
     <Compile Include="Core\Helpers\ObjectIdModelBinder.cs" />
     <Compile Include="Core\Helpers\SingletonProvider.cs" />
     <Compile Include="Core\Helpers\StringExtensions.cs" />
-    <Compile Include="Core\Helpers\ImageStore.cs" />
     <Compile Include="Core\Models\Book.cs" />
     <Compile Include="Core\Services\BookService.cs" />
     <Compile Include="Core\Services\CategoryService.cs" />
