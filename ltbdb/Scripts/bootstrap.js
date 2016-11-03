@@ -98,92 +98,6 @@ $(function () {
 	/* image box */
 	jbox_image = new jBox('Image');
 
-	/* tag message box */
-	jbox_tag = new jBox('Modal', {
-		position: {
-			x: 'left',
-			y: 'top'
-		},
-		offset: {
-			y: 25
-		},
-		attach: $('#addtag'),
-		target: $('#addtag'),
-		content: $('#tag-msg-box'),
-		overlay: false,
-		zIndex: 400,
-		closeOnClick: 'overlay'
-	});
-
-	var tag_template = '<div class="tag button-gray">\
-							<span class="upper tag-remove" data-id="{1}" data-tagid="{2}" title="Dieses Tag entfernen."><i class="material-icons bigger">delete</i></span>\
-							<a href="/tag/{0}" title="">{0}</a>\
-						</div>';
-
-	$('#add-button').click(function (e) {
-		data = {
-			id: $('#t').attr('data-id'),
-			tags: $('#t').val()
-		};
-
-		$.ajax({
-			cache: false,
-			url: '/api/tag/add',
-			type: 'POST',
-			data: data,
-			dataType: 'json',
-			statusCode: {
-				403: function () {
-					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-				},
-				404: function () {
-					alert('Resource not found.');
-				}
-			},
-			success: function (data) {
-				$.each(data, function (i, item) {
-					var t = tag_template.format(item.Name, item.Book, item.Id);
-					$(t).insertBefore('#tag-add');
-				});
-				$('#t').val('');
-				jbox_tag.close();
-			}
-		});
-	});
-
-	/* remove a tag */
-	$(document).on('click', '.tag-remove', function (e) {
-		var p = $(this).parent();
-
-		data = {
-			id: $(this).attr('data-id'),
-			tagid: $(this).attr('data-tagid')
-		};
-
-		$.ajax({
-			cache: false,
-			url: '/api/tag/remove',
-			type: 'POST',
-			data: data,
-			dataType: 'json',
-			statusCode: {
-				403: function () {
-					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-				},
-				404: function () {
-					alert("Resource not found.");
-				}
-			},
-			success: function(data){
-				if (data.success) {
-					$(p).remove();
-				} else {
-					alert("Dieses Tag konnte nicht entfernt werden.");
-				}
-			}
-		});
-	});
-
 	/* story management */
 	var story_container = $('#story-container');
 	var story_template =	'<div class="story">\
@@ -202,10 +116,6 @@ $(function () {
 	$(document).on('click', '.story-rem', function (e) {
 		var p = $(this).parent();
 		p.remove();
-	});
-
-	$('#cancel-edit').click(function () {
-		location.href = '/';
 	});
 
 	/* validation */
@@ -261,42 +171,6 @@ $(function () {
 				required: 'Bitte gib eine Kategorie ein.',
 				nowhitespace: 'Bitte gib eine Kategorie ein.',
 				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
-			}
-		}
-	});
-
-	$('#category-form').validate({
-		errorClass: 'field-validation-error',
-		validClass: 'field-validation-valid',
-		errorElement: 'span',
-		rules: {
-			name: {
-				required: true,
-				nowhitespace: true
-			}
-		},
-		messages: {
-			name: {
-				required: 'Bitte gib einen Namen ein.',
-				nowhitespace: 'Bitte gib einen Namen ein.'
-			}
-		}
-	});
-
-	$('#tag-edit').validate({
-		errorClass: 'field-validation-error',
-		validClass: 'field-validation-valid',
-		errorElement: 'span',
-		rules: {
-			name: {
-				required: true,
-				nowhitespace: true
-			}
-		},
-		messages: {
-			name: {
-				required: 'Bitte gib einen Namen ein.',
-				nowhitespace: 'Bitte gib einen Namen ein.'
 			}
 		}
 	});
