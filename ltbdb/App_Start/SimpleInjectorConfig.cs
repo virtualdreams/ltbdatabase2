@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using ltbdb.Core.Helpers;
+using MongoDB.Driver;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 using SimpleInjector.Integration.WebApi;
@@ -15,8 +16,7 @@ namespace ltbdb
 		{
 			Container = new Container();
 
-			// TODO - mongo server address
-			Container.RegisterPerWebRequest<IMongoClient>(() => new MongoClient());
+			Container.RegisterPerWebRequest<IMongoClient>(() => new MongoClient(GlobalConfig.Get().MongoDB));
 
 			Container.Verify();
 

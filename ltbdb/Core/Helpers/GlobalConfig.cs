@@ -27,9 +27,9 @@ namespace ltbdb.Core.Helpers
 		#region Public members
 
 		/// <summary>
-		/// Path to database configuration.
+		/// MongoDB connection string.
 		/// </summary>
-		public string Database { get; private set; }
+		public string MongoDB { get; private set; }
 		
 		/// <summary>
 		/// Items per page to display.
@@ -75,8 +75,8 @@ namespace ltbdb.Core.Helpers
 
 			var config = new ConfigReader(IOHelper.ConvertToFullPath("./App_Data/application.conf"));
 
-			this.Database = config.TryGetValue<string>("database", true);
-			Log.InfoFormat("Set database configuration to {0}.", this.Database);
+			this.MongoDB = config.GetValue<string>("mongodb", "mongodb://127.0.0.1/", true);
+			Log.InfoFormat("Set mongodb connection string to {0}.", this.MongoDB);
 
 			this.ItemsPerPage = config.GetValue<int>("items_per_page", 18, true);
 			Log.InfoFormat("Set items per page to {0}.", this.ItemsPerPage);
