@@ -29,16 +29,22 @@ namespace ltbdb.Areas.Admin.Controllers
 		[HttpGet]
         public ActionResult Index()
         {
-            return View();
+			var _categories = Category.Get().OrderBy(s => s);
+
+			var view = new CategoryViewContainer
+			{
+				Categories = _categories
+			};
+			
+			return View(view);
         }
 
-		[IsAjaxRequest]
 		[HttpPost]
 		public ActionResult Move(string from, string to)
 		{
-			var _result = Category.Rename(from.Trim(), to.Trim());
-			
-			return new JsonResult { Data = new { Success = _result }, JsonRequestBehavior = JsonRequestBehavior.DenyGet };
+			Category.Rename(from.Trim(), to.Trim());
+
+			return Redirect("index");
 		}
     }
 }

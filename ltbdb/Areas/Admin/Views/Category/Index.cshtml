@@ -6,76 +6,45 @@
 }
 
 <div class="box">
+	<h3>Kategorien</h3>
+	<div>
+		<ul class="list">
+		@foreach(var category in Model.Categories) {
+			<li>&bullet; @category</li>	
+		}
+		</ul>
+	</div>
+</div>
+
+<div class="box">
 	<h3>Kategorie umbennen/verschieben</h3>
 	<div>
 		<p>
 			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben oder umbenennen. Diese Aktion kann nicht rückgängig gemacht werden.
 		</p>
 		
-		<!-- category from -->
-		<div class="block">
-			<label for="from">Von</label>
-		</div>
-		<div class="block">
-			<input class="input c" type="text" id="from" name="from" value="" placeholder="Titel der Kategorie" />
-		</div>
+		<form action="@Url.Action("move", "category", new { area = "admin" })" method="post" enctype="multipart/form-data" id="category-move-form">
 
-		<!-- category to -->
-		<div class="block">
-			<label for="to">Nach</label>
-		</div>
-		<div class="block">
-			<input class="input c" type="text" id="to" name="to" value="" placeholder="Titel der Kategorie" />
-		</div>
+			<!-- category from -->
+			<div class="block">
+				<label for="from">Von</label>
+			</div>
+			<div class="block">
+				<input class="input c" type="text" id="from" name="from" value="" placeholder="Titel der Kategorie" />
+			</div>
 
-		<div class="block">
-			<input class="button-red" type="button" value="Verschieben" id="move" />
-		</div>
+			<!-- category to -->
+			<div class="block">
+				<label for="to">Nach</label>
+			</div>
+			<div class="block">
+				<input class="input c" type="text" id="to" name="to" value="" placeholder="Titel der Kategorie" />
+			</div>
+
+			<div class="block">
+				<input class="button-red" type="submit" value="Verschieben" />
+			</div>
+
+		</form>
 	</div>
 </div>
-
-<div id="move-msg-box" style="display: none;">
-	<div class="block">
-		Soll diese Kategorie wirklich verschoben werden?
-	</div>
-	<div class="block">
-		<input id="move-button" class="button-red" type="button" value="Verschieben" />
-	</div>
-</div>
-
-<script type="text/javascript">
-	$(function () {
-		var jbox_dialog = new jBox('Modal', {
-			overlay: true,
-			closeOnClick: 'body',
-			closeButton: 'title'
-		});
-
-		$('#move').click(function () {
-			jbox_dialog.setContent($('#move-msg-box'), true).setTitle('Kategorie verschieben').open();
-		});
-
-		$('#move-button').click(function () {
-			$.ajax({
-				type: 'POST',
-				url: '/admin/category/move?from=' + $('#from').val() + '&to=' + $('#to').val(),
-				statusCode: {
-					401: function () {
-						alert('Not authorized.');
-					},
-					404: function () {
-						alert('Resource not found.');
-					}
-				},
-				success: function (data) {
-					if (!data.Success) {
-						alert('Kategorie konnte nicht verschoben werden.');
-					} else {
-						jbox_dialog.close();
-						location.reload(true);
-					}
-				}
-			});
-		});
-	});
-</script>

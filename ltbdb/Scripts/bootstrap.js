@@ -89,7 +89,6 @@ $(function () {
 			if (ui.item) {
 				$(event.target).val(ui.item.value);
 			}
-			$(event.target.form).submit();
 		}
 	}).focus(function() {
 		$(this).autocomplete("search", $(this).val());
@@ -197,6 +196,36 @@ $(function () {
 			password: {
 				required: 'Bitte gib ein Passwort ein.',
 				nowhitespace: 'Bitte gib ein Passwort ein.'
+			}
+		}
+	});
+
+	$('#category-move-form').validate({
+		errorClass: 'field-validation-error',
+		validClass: 'field-validation-valid',
+		errorElement: 'span',
+		rules: {
+			from: {
+				required: true,
+				nowhitespace: true,
+				maxlength: 100
+			},
+			to: {
+				required: true,
+				nowhitespace: true,
+				maxlength: 100
+			}
+		},
+		messages: {
+			from: {
+				required: 'Bitte gib eine Kategorie ein.',
+				nowhitespace: 'Bitte gib eine Kategorie ein.',
+				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
+			},
+			to: {
+				required: 'Bitte gib eine Kategorie ein.',
+				nowhitespace: 'Bitte gib eine Kategorie ein.',
+				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
 			}
 		}
 	});
