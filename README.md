@@ -1,10 +1,8 @@
-LTB-DB v2
-=========
+# Lustiges Taschenbuch Datenbank v2
 
-Neuentwicklung der alten **Lustiges Taschenbuch Datenbank**.
+Datenbank, um die private Sammlung von Lustigen Taschenbüchern zu tracken.
 
-Features
---------
+## Features
 
 * Bücher + Inhalte
 * Kategorien
@@ -13,15 +11,12 @@ Features
 * Tags
 * Authentifizierung
 
-Frameworks
-----------
+## Frameworks / Tools
 
-* C#, .NET4.0, MVC4-Framework, mono 3.2.8+
-* [jQuery 1.10.2](http://jquery.com/)
-* [jQuery-ui 1.10.4](http://jqueryui.com/)
+* C#, .NET4.5, MVC4-Framework, mono 3.2.8+
+* [MongoDB](https://www.mongodb.com/)
+* [jQuery](http://jquery.com/)
+* [jQuery-ui](http://jqueryui.com/)
 * [jBox](https://github.com/StephanWagner/jBox)
-
-Bildverarbeitung
-----------------
-
-Die Bildverarbeitung wird mit [GraphicsMagick](http://www.graphicsmagick.org/) erledigt. Dieses Paket ist dann entweder unter Linux oder Windows zu installieren.
+* [jquery validation](https://jqueryvalidation.org/)
+* [GraphicsMagick](http://www.graphicsmagick.org/)
