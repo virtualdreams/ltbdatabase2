@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using ltbdb.Core.Helpers;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -97,12 +98,14 @@ namespace ltbdb.Models
 		/// The book title.
 		/// </summary>
 		[Required(ErrorMessage = "Bitte gib einen Titel ein.")]
+		[MaxLength(100, ErrorMessage = "Der Titel darf max. 100 Zeichen lang sein.")]
 		public string Title { get; set; }
 
 		/// <summary>
 		/// The category of the book.
 		/// </summary>
 		[Required(ErrorMessage = "Bitte gib eine Kategorie ein.")]
+		[MaxLength(100, ErrorMessage = "Die Kategorie darf max. 100 Zeichen lang sein.")]
 		public string Category { get; set; }
 
 		/// <summary>
@@ -115,6 +118,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The stories in the book.
 		/// </summary>
+		[ArrayItemMaxLength(100, ErrorMessage = "Der Inhalt darf max. 100 Zeichen lang sein.")]
 		public string[] Stories
 		{
 			get

@@ -207,6 +207,7 @@
     <Compile Include="Core\Filter\AjaxAuthorizeAttribute.cs" />
     <Compile Include="Core\Filter\IsAjaxRequestAttribute.cs" />
     <Compile Include="Core\Filter\LogErrorAttribute.cs" />
+    <Compile Include="Core\Helpers\CustomDataAnnotations.cs" />
     <Compile Include="Core\Helpers\GlobalConfig.cs" />
     <Compile Include="Core\Helpers\GraphicsMagick.cs" />
     <Compile Include="Core\Helpers\ImageStore.cs">

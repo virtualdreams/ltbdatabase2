@@ -235,13 +235,15 @@ $(function () {
 				nowhitespace: true,
 				regex: '[0-9]+'
 			},
-			name: {
+			title: {
 				required: true,
-				nowhitespace: true
+				nowhitespace: true,
+				maxlength: 100
 			},
 			category: {
 				required: true,
-				nowhitespace: true
+				nowhitespace: true,
+				maxlength: 100
 			}
 		},
 		messages: {
@@ -250,13 +252,15 @@ $(function () {
 				nowhitespace: 'Bitte gib eine Nummer ein.',
 				regex: 'Bitte gib eine Nummer ein.'
 			},
-			name: {
+			title: {
 				required: 'Bitte gib einen Titel ein.',
-				nowhitespace: 'Bitte gib einen Titel ein.'
+				nowhitespace: 'Bitte gib einen Titel ein.',
+				maxlength: 'Der Titel darf max. 100 Zeichen lang sein.'
 			},
 			category: {
 				required: 'Bitte gib eine Kategorie ein.',
-				nowhitespace: 'Bitte gib eine Kategorie ein.'
+				nowhitespace: 'Bitte gib eine Kategorie ein.',
+				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
 			}
 		}
 	});
