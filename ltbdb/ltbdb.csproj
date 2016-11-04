@@ -246,69 +246,69 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Data\log4net.xml" />
-    <None Include="Content\admin.css">
+    <None Include="static\css\admin.css">
       <DependentUpon>admin.less</DependentUpon>
     </None>
-    <Content Include="Content\admin.min.css">
+    <Content Include="static\css\admin.min.css">
       <DependentUpon>admin.less</DependentUpon>
     </Content>
-    <None Include="Content\error.css">
+    <None Include="static\css\error.css">
       <DependentUpon>error.less</DependentUpon>
     </None>
-    <Content Include="Content\error.min.css">
+    <Content Include="static\css\error.min.css">
       <DependentUpon>error.less</DependentUpon>
     </Content>
-    <None Include="Content\error.mobile.css">
+    <None Include="static\css\error.mobile.css">
       <DependentUpon>error.mobile.less</DependentUpon>
     </None>
-    <Content Include="Content\error.mobile.min.css">
+    <Content Include="static\css\error.mobile.min.css">
       <DependentUpon>error.mobile.less</DependentUpon>
     </Content>
-    <Content Include="Content\glass_light.png" />
-    <Content Include="Content\jBox.css" />
-    <None Include="Content\layout.css">
+    <Content Include="static\content\glass_light.png" />
+    <Content Include="static\css\jBox.css" />
+    <None Include="static\css\layout.css">
       <DependentUpon>layout.less</DependentUpon>
     </None>
-    <Content Include="Content\layout.min.css">
+    <Content Include="static\css\layout.min.css">
       <DependentUpon>layout.less</DependentUpon>
     </Content>
-    <None Include="Content\layout.mobile.css">
+    <None Include="static\css\layout.mobile.css">
       <DependentUpon>layout.mobile.less</DependentUpon>
     </None>
-    <Content Include="Content\layout.mobile.min.css">
+    <Content Include="static\css\layout.mobile.min.css">
       <DependentUpon>layout.mobile.less</DependentUpon>
     </Content>
-    <Content Include="Content\logo.png" />
-    <None Include="Content\material.css" />
-    <Content Include="Content\material.min.css">
+    <Content Include="static\content\logo.png" />
+    <None Include="static\css\material.css" />
+    <Content Include="static\css\material.min.css">
       <DependentUpon>material.css</DependentUpon>
     </Content>
-    <None Include="Content\navigation.css" />
-    <Content Include="Content\navigation.min.css">
+    <None Include="static\css\navigation.css" />
+    <Content Include="static\css\navigation.min.css">
       <DependentUpon>navigation.css</DependentUpon>
     </Content>
-    <Content Include="Content\no-image.png" />
-    <Content Include="Content\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\smoothness\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\smoothness\jquery-ui.min.css" />
+    <Content Include="static\content\no-image.png" />
+    <Content Include="static\css\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="static\css\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="static\css\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="static\css\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="static\css\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="static\css\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="static\css\smoothness\jquery-ui.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js">
+    <None Include="static\js\bootstrap.js" />
+    <Content Include="static\js\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
-    <None Include="Scripts\bootstrap.mobile.js" />
-    <Content Include="Scripts\bootstrap.mobile.min.js">
+    <None Include="static\js\bootstrap.mobile.js" />
+    <Content Include="static\js\bootstrap.mobile.min.js">
       <DependentUpon>bootstrap.mobile.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jBox.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery-ui.min.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="static\js\jBox.min.js" />
+    <Content Include="static\js\jquery.min.js" />
+    <Content Include="static\js\jquery-ui.min.js" />
+    <Content Include="static\js\jquery.validate.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -334,20 +334,20 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Stats\Index.cshtml" />
-    <Content Include="Content\material\MaterialIcons-Regular.eot" />
-    <Content Include="Content\material\MaterialIcons-Regular.ttf" />
-    <Content Include="Content\material\MaterialIcons-Regular.woff" />
-    <Content Include="Content\material\MaterialIcons-Regular.woff2" />
-    <None Include="Content\admin.less" />
-    <None Include="Content\layout.less" />
-    <None Include="Content\layout.mobile.less" />
-    <None Include="Content\error.less" />
-    <None Include="Content\error.mobile.less" />
+    <Content Include="static\css\material\MaterialIcons-Regular.eot" />
+    <Content Include="static\css\material\MaterialIcons-Regular.ttf" />
+    <Content Include="static\css\material\MaterialIcons-Regular.woff" />
+    <Content Include="static\css\material\MaterialIcons-Regular.woff2" />
+    <None Include="static\css\admin.less" />
+    <None Include="static\css\layout.less" />
+    <None Include="static\css\layout.mobile.less" />
+    <None Include="static\css\error.less" />
+    <None Include="static\css\error.mobile.less" />
     <None Include="packages.config" />
-    <Content Include="Scripts\bootstrap.min.js.map">
+    <Content Include="static\js\bootstrap.min.js.map">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\bootstrap.mobile.min.js.map">
+    <Content Include="static\js\bootstrap.mobile.min.js.map">
       <DependentUpon>bootstrap.mobile.js</DependentUpon>
     </Content>
     <Content Include="Views\Error\Http404.Mobile.cshtml" />
