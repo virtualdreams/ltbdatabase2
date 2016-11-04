@@ -96,7 +96,7 @@ namespace ltbdb.Core.Helpers
 			this.CDNPath = config.TryGetValue<string>("cdn", true);
 			Log.InfoFormat("Set cdn to {0}.", this.CDNPath);
 
-			this.NoImage = config.GetValue<string>("no_image", "/Content/no-image.png", true);
+			this.NoImage = config.GetValue<string>("no_image", "");
 			Log.InfoFormat("Set no image path to {0}.", this.NoImage);
 
 			this.GraphicsMagick = config.GetValue<string>("gm", "gm", true);
