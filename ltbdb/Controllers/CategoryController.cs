@@ -47,7 +47,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(string id, int? ofs)
 		{
-			var _books = Book.GetByCategory(id);
+			var _books = Book.GetByCategory(id ?? String.Empty);
 			if (_books.Count() == 0)
 				throw new HttpException(404, "Resource not found.");
 

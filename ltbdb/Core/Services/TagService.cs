@@ -42,6 +42,8 @@ namespace ltbdb.Core.Services
 		/// <returns>List of tags.</returns>
 		public IEnumerable<string> Suggestions(string term)
 		{
+			term = term.Trim();
+
 			return Book.Aggregate()
 				.Unwind("Tags")
 				.Match(new BsonDocument { { "Tags", new BsonRegularExpression(Regex.Escape(term), "i") } })

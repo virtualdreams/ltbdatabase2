@@ -69,6 +69,8 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<Book> GetByCategory(string category)
 		{
+			category = category.Trim();
+
 			var _filter = Builders<Book>.Filter;
 			var _category = _filter.Eq(f => f.Category, category);
 
@@ -90,6 +92,8 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<Book> GetByTag(string tag)
 		{
+			tag = tag.Trim();
+
 			var _filter = Builders<Book>.Filter;
 			var _tag = _filter.AnyIn("Tags", new string[] { tag });
 
@@ -131,6 +135,8 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<Book> Search(string term)
 		{
+			term = term.Trim();
+
 			// TODO search in number, title and in stories
 			var _filter = Builders<Book>.Filter;
 			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
@@ -154,6 +160,8 @@ namespace ltbdb.Core.Services
 		/// <returns>List of categories.</returns>
 		public IEnumerable<string> Suggestions(string term)
 		{
+			term = term.Trim();
+
 			var _filter = Builders<Book>.Filter;
 			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
 

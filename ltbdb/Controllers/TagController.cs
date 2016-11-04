@@ -45,7 +45,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public ActionResult View(string id, int? ofs)
 		{
-			var _books = Book.GetByTag(id);
+			var _books = Book.GetByTag(id ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_books);

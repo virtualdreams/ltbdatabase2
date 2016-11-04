@@ -35,9 +35,12 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public bool Rename(string from, string to)
 		{
+			from = from.Trim();
+			to = to.Trim();
+			
 			if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
 				return false;
-
+			
 			var _filter = Builders<Book>.Filter;
 			var _from = _filter.Eq(f => f.Category, from);
 
@@ -65,6 +68,8 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Suggestions(string term)
 		{
+			term = term.Trim();
+
 			if (String.IsNullOrEmpty(term))
 				term = ".*";
 			else

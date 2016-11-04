@@ -4,6 +4,7 @@ using ltbdb.Core.Filter;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -42,7 +43,7 @@ namespace ltbdb.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult Move(string from, string to)
 		{
-			Category.Rename(from.Trim(), to.Trim());
+			Category.Rename(from ?? String.Empty, to ?? String.Empty);
 
 			return Redirect("index");
 		}
